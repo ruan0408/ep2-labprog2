@@ -1,0 +1,6 @@
+class Robo
+
+Robo()
+{
+
+}
