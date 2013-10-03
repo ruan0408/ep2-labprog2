@@ -1,6 +1,0 @@
-class Arena
-
-Arena()
-{
-
-}
