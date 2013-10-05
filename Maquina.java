@@ -31,11 +31,99 @@ public class Maquina
   private void executaCmd(Comando cmd)
   {
     String code = cmd.getCode();
-    Numero valor = cmd.getValor();
+    Empilhavel valor = cmd.getValor();
+    Empilhavel aux1, aux2;
 
-    if(code == "PUSH")
+    if(code.equalsIgnoreCase("PUSH"))
     {
       this.dados.push(valor);
+    }
+    else if(code.equalsIgnoreCase("POP"))
+    {
+      this.dados.pop();
+    }
+    else if(code.equalsIgnoreCase("DUP"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("ADD"))
+    {
+      aux1 = this.dados.pop();
+      aux2 = this.dados.pop();
+      if(aux1 instanceof Numero && aux2 instanceof Numero)
+      {
+        this.dados.push(aux1+aux2);
+      }
+      else
+      {
+        System.out.println("ERRO: tentativa de somar não-números");
+        this.dados.push(aux2);
+        this.dados.push(aux1);
+      }
+    }
+    else if(code.equalsIgnoreCase("SUB"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("MUL"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("DIV"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("EQ"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("GT"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("GE"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("LT"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("LE"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("NE"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("JMP"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("JIT"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("JIF"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("STO"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("RCL"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("END"))
+    {
+      this.dados.push(this.dados.look());
+    }
+    else if(code.equalsIgnoreCase("PRN"))
+    {
+      this.dados.push(this.dados.look());
     }
   }
 }

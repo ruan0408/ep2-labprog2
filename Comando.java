@@ -1,9 +1,9 @@
 public class Comando
 {
 	private String code;
-	private Numero valor;
+	private Empilhavel valor;
 
-	Comando(String code, Numero valor)
+	Comando(String code, Empilhavel valor)
 	{
 		 this.code = code;
 		 this.valor = valor;
@@ -14,7 +14,7 @@ public class Comando
 		this.code = codigo;
 	}
 	
-	void setValor(Numero valor)
+	void setValor(Empilhavel valor)
 	{
 		this.valor = valor;
 	}
@@ -24,7 +24,7 @@ public class Comando
 		return this.code;
 	}
 	
-	Numero getValor()
+	Empilhavel getValor()
 	{
 		return this.valor;
 	}
