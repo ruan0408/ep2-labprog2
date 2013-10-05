@@ -28,9 +28,14 @@ public class Maquina
   //private Empilhavel getMem
   //
 
-  /*private void executaCmd(Comando cmd)
+  private void executaCmd(Comando cmd)
   {
     String code = cmd.getCode();
-    String valor = cmd.getValor();
-  }*/
+    Numero valor = cmd.getValor();
+
+    if(code == "PUSH")
+    {
+      this.dados.push(valor);
+    }
+  }
 }
