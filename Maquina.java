@@ -60,8 +60,8 @@ public class Maquina
       else
       {
         System.out.println("ERRO: tentativa de somar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
+       /* this.dados.push(aux2);
+        this.dados.push(aux1);*/
       }
     }
     else if(code.equalsIgnoreCase("SUB"))
