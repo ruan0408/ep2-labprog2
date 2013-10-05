@@ -52,7 +52,9 @@ public class Maquina
       aux2 = this.dados.pop();
       if(aux1 instanceof Numero && aux2 instanceof Numero)
       {
-        this.dados.push(aux1+aux2);
+        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+        Numero resu = new Numero(n1.getVal() + n2.getVal());
+        this.dados.push(resu);
       }
       else
       {

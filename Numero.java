@@ -8,7 +8,6 @@ public class Numero implements Empilhavel
     numero = n;
   }
 
-
   public int getVal()
   {
     return numero;
