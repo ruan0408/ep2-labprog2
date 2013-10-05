@@ -1,9 +1,9 @@
 public class Mapa
 {
 
-  Mapa()
+  /*Mapa()
   {
 
-  }
+  }*/
 
 }

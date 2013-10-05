@@ -6,7 +6,6 @@ public class Numero implements Empilhavel
   public Numero(int n)
   {
     numero = n;
-
   }
 
 

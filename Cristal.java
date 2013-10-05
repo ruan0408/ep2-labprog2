@@ -1,1 +1,4 @@
-//vetor = { new Comando("cmd","vlr"), new Comando("cmd")
+public class Cristal
+{
+	
+}

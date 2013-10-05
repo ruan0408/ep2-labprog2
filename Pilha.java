@@ -4,7 +4,6 @@ import java.util.*;
 public class Pilha
 {
 
-
   private Stack<Empilhavel> pilha;
 
   public Pilha()

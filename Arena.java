@@ -1,17 +1,19 @@
+import java.util.*;
+
 public class Arena
 {
   private Mapa mapa;
-//  private List Robo
-  private long int tempo;
+  private List<Robo> robos;
+  private int tempo;
 
-  Arena(Mapa mapArg)
+  Arena(Mapa mapa)
   {
-    mapa = mapArg;
+    this.mapa = mapa;
     tempo = 0;
-    //cria lista robos(vazia a principio)
+    this.robos = new ArrayList<Robo>();//cria lista de robos vazia a principio
   }
 
-  public Empilhavel sistema(Acao act, Robo bot)
+  /*public Empilhavel sistema(Acao act, Robo bot)
   {
     
   }
@@ -20,7 +22,7 @@ public class Arena
 
   public int insereExercito(){}
 
-  public int removeExercito(){}
+  public int removeExercito(){}*/
 }
 
 
