@@ -1,3 +1,4 @@
+import java.util.*;
 public class Teste
 {
   public static void main(String args[])
@@ -11,7 +12,7 @@ public class Teste
     }
 
     temp = (Numero) pilha.look();
-
+    
     System.out.println("HUE: " + temp.getVal() );
   }
 

@@ -5,14 +5,14 @@ public class Maquina
 {
   private Pilha dados;
   private List<Empilhavel> mem;
-  private List<Comando> prog;
+  private Programa prog;
   private Arena arena;
   
   Maquina(Arena arena)
   {
     this.arena = arena;
     mem = new ArrayList<Empilhavel>();
-    prog = new ArrayList<Comando>();
+    prog = new Programa();
     dados = new Pilha();
   }
 
@@ -214,6 +214,7 @@ public class Maquina
     {
       aux1 = this.dados.pop();
       aux2 = this.dados.pop();
+      //aux1.ne(aux2);
       if(aux1 instanceof Numero && aux2 instanceof Numero)
       {
         Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
@@ -258,8 +259,7 @@ public class Maquina
       aux1 = this.dados.pop();
       if(aux1 instanceof Numero)
       {
-        String str = Integer.toString(((Numero)aux1).getVal());
-        System.out.println(str);
+        System.out.println(((Numero)aux1).getVal());
       }
       else//acho que da pra encapsular todas essas coisas e fazer as porras imprimirem a si mesmo.
       {

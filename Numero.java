@@ -13,6 +13,10 @@ public class Numero implements Empilhavel
     return numero;
   }
 
+  /*public boolean ne(Numero n)
+  {
+  	return this.getVal() != n.getVal();
+  }*/
 
 
 }
