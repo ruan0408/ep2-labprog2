@@ -35,6 +35,28 @@ public class Mapa
 	}
 
 
+	public boolean putRobo(Robo roboTemp, int x, int y)
+	{
+		if(x < largura && y < altura && y > 0 && x > 0)
+		{
+			if(!matriz[x][y].temRobo())
+			{
+				matriz[x][y].putRobo(roboTemp);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public void removeRobo(int x, int y)
+	{
+		if(x < largura && y < altura && y > 0 && x > 0)
+		{
+			matriz[x][y].removeRobo();
+		}
+	}
+
 
 /* *************** Falta o tratamento de erros ************ */
 
