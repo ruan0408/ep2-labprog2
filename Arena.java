@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.Enum;
 
 public class Arena
 {
@@ -18,16 +19,56 @@ public class Arena
     
   }
 */
-  public void atualiza(){}
+  public void atualiza()
+  {
+    Robo roboTemp;
+    Iterator<Robo> it;
+    
+    for(it = robos.iterator(); it.hasNext();)
+    {
+      roboTemp = it.next();
+      roboTemp.executaAcao();
+    }
+    this.tempo++;
+  }
+
+  public boolean sistema(Comando cmd, Robo robo)
+  {
+    /*O comando que entra é do tipo bolado, existem alguns comandos bolados.
+    reconheceremos eles aqui e daremos a resposta dizendo se executamos ou 
+    não(de acordo com o estado do sistema)*/
+    if(cmd.getCode().equalsIgnoreCase("WALK"))
+    {
+      //verifica estado do sistema
+    }
+    else if(cmd.getCode().equalsIgnoreCase("COLLECT"))
+    {
+      if(cmd.getValor().equalsIgnoreCase("UP"))
+    }
+    else if(cmd.getCode().equalsIgnoreCase("DROP"))
+    {
+
+    }
+    else if(cmd.getCode().equalsIgnoreCase("ATKDIST"))
+    {
+
+    }
+    else if(cmd.getCode().equalsIgnoreCase("ATKMEELE"))
+    {
+
+    }
+  }
 
 
 
   /* ******************
     Cria um robo na posição x,y 
-    Retorna 1 caso tenha conseguido inserir
-    0 c.c.
+    {
+      Retorna 1 caso tenha conseguido inserir,
+      0 c.c.
+    }
     ***************** */
-  public int insereExercito(int x, int y, int team)
+  public boolean insereExercito(int x, int y, int team)
   {
     /* Cria uma máquina, em teoria, vazia. Talvez mudemos depois.*/
     Maquina maqTemp = new Maquina(this); 
@@ -41,10 +82,10 @@ public class Arena
     if(mapa.putRobo(roboTemp,x,y))
     {
       this.robos.add(roboTemp);
-      return 1;
+      return true;
     }
 
-    return 0;
+    return false;
 
 
     
