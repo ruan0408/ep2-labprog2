@@ -14,5 +14,18 @@ public class Robo
     this.time = time;
   }
 
+  private void setVida(int vida)
+  {
+    this.vida = vida;
+  }
   
+  private int getVida()
+  {
+    return this.vida;
+  }
+
+  private void executaAcao()
+  {
+    this.vm.executaProx();
+  }
 }
