@@ -261,15 +261,20 @@ public class Maquina
     {
       aux1 = this.dados.pop();
       if(aux1 instanceof Numero)
+      {
        if(((Numero)aux1).getVal() != 0) novoIndice = (int) ((Numero)valor).getVal();
+      }
       else
         System.out.println("Tentando comparar não-numeros");
     }
     else if(code.equalsIgnoreCase("JIF"))
     {
       aux1 = this.dados.pop();
+      System.out.println(aux1);
       if(aux1 instanceof Numero)
+      {
        if(((Numero)aux1).getVal() == 0) novoIndice = (int) ((Numero)valor).getVal();
+      }
       else
         System.out.println("Tentando comparar não-numeros");
     }
