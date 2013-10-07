@@ -7,6 +7,7 @@ public class Maquina
   private List<Empilhavel> mem;
   private List<Comando> prog;
   private Arena arena;
+  private int index;
   
   Maquina(Arena arena)
   {
@@ -14,6 +15,15 @@ public class Maquina
     mem = new ArrayList<Empilhavel>();
     prog = new ArrayList<Comando>();
     dados = new Pilha();
+
+    this.index = 0;
+  }
+
+
+  public void carregaPrograma(List<Comando> progTemp)
+  {
+    prog = progTemp;
+    this.index = 0;
   }
 
   /*private void pushDados(Empilhavel emp)
@@ -29,12 +39,26 @@ public class Maquina
   //private Empilhavel getMem
   //
 
+ public boolean temProx()
+ {
+    return !(index >= prog.size());
+
+ }
+
+ public void executaProx()
+ {
+    if(!this.temProx()) return;
+        
+    this.index = executaCmd( prog.get(this.index) );
+    
+  }
+
  private int executaCmd(Comando cmd)
  {
   String code = cmd.getCode();
   Empilhavel valor = cmd.getValor();
   Empilhavel aux1, aux2;
-  int novoIndice = -1;
+  int novoIndice = this.index + 1;
 
   if(code.equalsIgnoreCase("PUSH"))
   {
@@ -231,13 +255,13 @@ public class Maquina
   }
     else if(code.equalsIgnoreCase("JMP"))//assumo que os labels ja foram substituidos por numeros
     {
-      novoIndice = ((Numero)valor).getVal();//valor-1 talvez
+      novoIndice = (int) ((Numero)valor).getVal();
     }
     else if(code.equalsIgnoreCase("JIT"))
     {
       aux1 = this.dados.pop();
       if(aux1 instanceof Numero)
-        if(((Numero)aux1).getVal() != 0) novoIndice = ((Numero)valor).getVal();
+       if(((Numero)aux1).getVal() != 0) novoIndice = (int) ((Numero)valor).getVal();
       else
         System.out.println("Tentando comparar não-numeros");
     }
@@ -245,18 +269,21 @@ public class Maquina
     {
       aux1 = this.dados.pop();
       if(aux1 instanceof Numero)
-        if(((Numero)aux1).getVal() == 0) novoIndice = ((Numero)valor).getVal();
+       if(((Numero)aux1).getVal() == 0) novoIndice = (int) ((Numero)valor).getVal();
       else
         System.out.println("Tentando comparar não-numeros");
     }
     else if(code.equalsIgnoreCase("STO"))
     {
       aux1 = this.dados.pop();
-      this.mem.add(((Numero)valor).getVal(), aux1);
+      this.mem.add(( (int)((Numero)valor).getVal()), aux1);
     }
     else if(code.equalsIgnoreCase("RCL"))
     {
-      this.dados.push(this.mem.remove(((Numero)valor).getVal()));
+      int index = (int) ((Numero)valor).getVal();
+      this.dados.push( this.mem.get(index) );
+      this.mem.remove(index);
+      
     }
     else if(code.equalsIgnoreCase("END"))
     {
@@ -274,6 +301,7 @@ public class Maquina
         System.out.println("erro");
       }
     }
+    System.out.println("HUE");
     return novoIndice;
   }
 }
