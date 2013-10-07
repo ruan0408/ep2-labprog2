@@ -1,14 +1,14 @@
 public class Numero implements Empilhavel
 {
 
-  private int numero;
+  private double numero;
   
-  public Numero(int n)
+  public Numero(double n)
   {
     numero = n;
   }
 
-  public int getVal()
+  public double getVal()
   {
     return numero;
   }

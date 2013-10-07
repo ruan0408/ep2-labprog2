@@ -23,214 +23,212 @@ public class Maquina
   private Empilhavel popDados()
   {
    return this.pilha.pop(); 
-  }*/
+ }*/
   //private Empilhavel peekDados
   //private void setMem
   //private Empilhavel getMem
   //
 
-  private int executaCmd(Comando cmd)
-  {
-    String code = cmd.getCode();
-    Empilhavel valor = cmd.getValor();
-    Empilhavel aux1, aux2;
-    int novoIndice = -1;
+ private int executaCmd(Comando cmd)
+ {
+  String code = cmd.getCode();
+  Empilhavel valor = cmd.getValor();
+  Empilhavel aux1, aux2;
+  int novoIndice = -1;
 
-    if(code.equalsIgnoreCase("PUSH"))
+  if(code.equalsIgnoreCase("PUSH"))
+  {
+    this.dados.push(valor);
+  }
+  else if(code.equalsIgnoreCase("POP"))
+  {
+    this.dados.pop();
+  }
+  else if(code.equalsIgnoreCase("DUP"))
+  {
+    this.dados.push(this.dados.look());
+  }
+  else if(code.equalsIgnoreCase("ADD"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      this.dados.push(valor);
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu = new Numero(n1.getVal() + n2.getVal());
+      this.dados.push(resu);
     }
-    else if(code.equalsIgnoreCase("POP"))
+    else
     {
-      this.dados.pop();
+      System.out.println("ERRO: tentativa de somar não-números");
     }
-    else if(code.equalsIgnoreCase("DUP"))
+   }
+   else if(code.equalsIgnoreCase("SUB"))
+   {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      this.dados.push(this.dados.look());
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu = new Numero(n2.getVal() - n1.getVal());
+      this.dados.push(resu);
     }
-    else if(code.equalsIgnoreCase("ADD"))
+    else
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu = new Numero(n1.getVal() + n2.getVal());
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de somar não-números");
-       /* this.dados.push(aux2);
-        this.dados.push(aux1);*/
-      }
+      System.out.println("ERRO: tentativa de subtrair não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
     }
-    else if(code.equalsIgnoreCase("SUB"))
+  }
+  else if(code.equalsIgnoreCase("MUL"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu = new Numero(n2.getVal() - n1.getVal());
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de subtrair não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu = new Numero(n2.getVal() * n1.getVal());
+      this.dados.push(resu);
     }
-    else if(code.equalsIgnoreCase("MUL"))
+    else
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu = new Numero(n1.getVal() * n2.getVal());
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de multiplicar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      System.out.println("ERRO: tentativa de multiplicar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
     }
-    else if(code.equalsIgnoreCase("DIV"))
+  }
+  else if(code.equalsIgnoreCase("DIV"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu = new Numero(n2.getVal()/ n1.getVal());
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de dividir não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu = new Numero(n2.getVal()/n1.getVal());
+      this.dados.push(resu);
     }
-    else if(code.equalsIgnoreCase("EQ"))
+    else
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu;
-        if(n2.getVal() == n1.getVal()) resu = new Numero(1);
-        else resu = new Numero(0);
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de comparar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      System.out.println("ERRO: tentativa de dividir não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
     }
-    else if(code.equalsIgnoreCase("GT"))
+  }
+  else if(code.equalsIgnoreCase("EQ"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu;
-        if(n2.getVal() > n1.getVal()) resu = new Numero(1);
-        else resu = new Numero(0);
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de comparar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu;
+      if(n2.getVal() == n1.getVal()) resu = new Numero(1);
+      else resu = new Numero(0);
+      this.dados.push(resu);
     }
-    else if(code.equalsIgnoreCase("GE"))
+    else
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu;
-        if(n2.getVal() >= n1.getVal()) resu = new Numero(1);
-        else resu = new Numero(0);
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de comparar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      System.out.println("ERRO: tentativa de comparar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
     }
-    else if(code.equalsIgnoreCase("LT"))
+  }
+  else if(code.equalsIgnoreCase("GT"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu;
-        if(n2.getVal() < n1.getVal()) resu = new Numero(1);
-        else resu = new Numero(0);
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de comparar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu;
+      if(n2.getVal() > n1.getVal()) resu = new Numero(1);
+      else resu = new Numero(0);
+      this.dados.push(resu);
     }
-    else if(code.equalsIgnoreCase("LE"))
+    else
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu;
-        if(n2.getVal() <= n1.getVal()) resu = new Numero(1);
-        else resu = new Numero(0);
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de comparar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+      System.out.println("ERRO: tentativa de comparar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
     }
-    else if(code.equalsIgnoreCase("NE"))
+  }
+  else if(code.equalsIgnoreCase("GE"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
-      aux1 = this.dados.pop();
-      aux2 = this.dados.pop();
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu;
+      if(n2.getVal() >= n1.getVal()) resu = new Numero(1);
+      else resu = new Numero(0);
+      this.dados.push(resu);
+    }
+    else
+    {
+      System.out.println("ERRO: tentativa de comparar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
+    }
+  }
+  else if(code.equalsIgnoreCase("LT"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
+    {
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu;
+      if(n2.getVal() < n1.getVal()) resu = new Numero(1);
+      else resu = new Numero(0);
+      this.dados.push(resu);
+    }
+    else
+    {
+      System.out.println("ERRO: tentativa de comparar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
+    }
+  }
+  else if(code.equalsIgnoreCase("LE"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
+    {
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu;
+      if(n2.getVal() <= n1.getVal()) resu = new Numero(1);
+      else resu = new Numero(0);
+      this.dados.push(resu);
+    }
+    else
+    {
+      System.out.println("ERRO: tentativa de comparar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
+    }
+  }
+  else if(code.equalsIgnoreCase("NE"))
+  {
+    aux1 = this.dados.pop();
+    aux2 = this.dados.pop();
       //aux1.ne(aux2);
-      if(aux1 instanceof Numero && aux2 instanceof Numero)
-      {
-        Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-        Numero resu;
-        if(n2.getVal() != n1.getVal()) resu = new Numero(1);
-        else resu = new Numero(0);
-        this.dados.push(resu);
-      }
-      else
-      {
-        System.out.println("ERRO: tentativa de comparar não-números");
-        this.dados.push(aux2);
-        this.dados.push(aux1);
-      }
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
+    {
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      Numero resu;
+      if(n2.getVal() != n1.getVal()) resu = new Numero(1);
+      else resu = new Numero(0);
+      this.dados.push(resu);
     }
+    else
+    {
+      System.out.println("ERRO: tentativa de comparar não-números");
+      this.dados.push(aux2);
+      this.dados.push(aux1);
+    }
+  }
     else if(code.equalsIgnoreCase("JMP"))//assumo que os labels ja foram substituidos por numeros
     {
       novoIndice = ((Numero)valor).getVal();//valor-1 talvez
