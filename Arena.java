@@ -35,6 +35,7 @@ public class Arena
 
   public boolean sistema(Operacao op)
   {
+    Move enumMove;
 
     Comando cmd = op.getCmd();
     Robo robo = (Robo) op.getOrigem();
