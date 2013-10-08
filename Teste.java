@@ -6,7 +6,9 @@ public class Teste
     List<Comando> programa = new ArrayList<Comando>();
     Mapa mapa = new Mapa(5,5);
     Arena arena = new Arena(mapa);
-    Maquina vm = new Maquina(arena);
+    Robo robo1, robo2;
+
+    robo1 = new Robo(arena,2,2,1);
 
 programa.add( new Comando("PUSH", new Numero(0) ));
 programa.add( new Comando("STO", new Numero(0) ));
@@ -31,9 +33,30 @@ programa.add( new Comando("PRN", null));
 programa.add( new Comando("END", null));
 
 
-    vm.carregaPrograma(programa);
+    robo1.carregaPrograma(programa);
 
-    while(vm.temProx()){ vm.executaProx(); }
+
+    robo2 = new Robo(arena, 1,1, 2);
+
+
+    programa = new ArrayList<Comando>();
+    programa.add( new Comando("PUSH", new Numero(10) ));
+    programa.add( new Comando("PUSH", new Numero(4) ));
+    programa.add( new Comando("ADD", null));
+    programa.add( new Comando("PUSH", new Numero(3) ));
+    programa.add( new Comando("MUL", null));
+    programa.add( new Comando("PRN", null));
+    programa.add( new Comando("END", null));
+
+    robo2.carregaPrograma(programa);
+
+    arena.insereExercito(robo1);
+    arena.insereExercito(robo2);
+
+
+
+
+   for(int i = 0; i < 100; i++) arena.atualiza();
 
 
 

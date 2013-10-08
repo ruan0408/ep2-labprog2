@@ -279,7 +279,6 @@ public class Maquina
     else if(cmd.codeEquals("JIF"))
     {
       aux1 = this.dados.pop();
-      System.out.println(aux1);
       if(aux1 instanceof Numero)
       {
        if(((Numero)aux1).getVal() == 0) novoIndice = (int) ((Numero)valor).getVal();
@@ -315,7 +314,6 @@ public class Maquina
         System.out.println("erro");
       }
     }
-    System.out.println("HUE");
     return novoIndice;
   }
 

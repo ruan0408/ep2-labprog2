@@ -92,18 +92,18 @@ public class Arena
       0 c.c.
     }
     ***************** */
-  public boolean insereExercito(int x, int y, int team)
+  public boolean insereExercito(Robo rb)
   {
 
 
-    Robo roboTemp = new Robo(this, x, y, team);
+    
 
 
      /*Tenta colocar o robo no mapa. Caso já 
       Exista um robo, a função irá retornar 0*/
-    if(mapa.putRobo(roboTemp,x,y))
+    if(mapa.putRobo(rb,rb.getX(),rb.getY()))
     {
-      this.robos.add(roboTemp);
+      this.robos.add(rb);
       return true;
     }
 
