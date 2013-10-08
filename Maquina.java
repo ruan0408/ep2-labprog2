@@ -324,7 +324,22 @@ public class Maquina
   private void sistema(Comando cmd)
   {
     Empilhavel resp;
-    arena.sistema(cmd, (Robo) obj); //Cast temporário de (Robo)
+    Operacao op;
+
+    op = new Operacao(cmd,obj);
+
+    /* Verifica qual operação é, e coloca no obj operação
+      os empilhaveis necessários */
+
+
+      //Para testes, automaticamente adiciona um empilhavel na operação
+
+      op.pushArg(this.dados.pop());
+
+
+
+
+    arena.sistema(op); //Cast temporário de (Robo)
 
     //Push resp
   }

@@ -33,8 +33,11 @@ public class Arena
     this.tempo++;
   }
 
-  public boolean sistema(Comando cmd, Robo robo)
+  public boolean sistema(Operacao op)
   {
+
+    Comando cmd = op.getCmd();
+    Robo robo = (Robo) op.getOrigem();
     /*O comando que entra é do tipo bolado, existem alguns comandos bolados.
     reconheceremos eles aqui  daremos a resposta dizendo se executamos ou 
     não(de acordo com o estado do sistema)*/
