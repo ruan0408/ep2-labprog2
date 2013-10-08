@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.String;
 import java.lang.Enum;
 
 public class Arena
@@ -35,13 +36,26 @@ public class Arena
   public boolean sistema(Comando cmd, Robo robo)
   {
     /*O comando que entra é do tipo bolado, existem alguns comandos bolados.
-    reconheceremos eles aqui e daremos a resposta dizendo se executamos ou 
+    reconheceremos eles aqui  daremos a resposta dizendo se executamos ou 
     não(de acordo com o estado do sistema)*/
-    if(cmd.getCode().equalsIgnoreCase("WALK"))
+    int x = robo.getX();
+    int y = robo.getY();
+    Terreno terrAtual = mapa.get(x, y);
+    Terreno terrTemp;
+
+    if(cmd.getValor() == 1)terrTemp = mapa.getUp(x, y);
+    else if(cmd.getValor() == 2)terrTemp = mapa.getUpRight(x, y);
+    else if(cmd.getValor() == 3)terrTemp = mapa.getDownRight(x, y);
+    else if(cmd.getValor() == 4)terrTemp = mapa.getDown(x, y);   
+    else if(cmd.getValor() == 5)terrTemp = mapa.getDownLeft(x, y);
+    else if(cmd.getValor() == 6)terrTemp = mapa.getUpLeft(x, y);
+
+    if(cmd.getCode().equalsIgnoreCase("WALK") && !terrTemp.temRobo())
     {
-      //verifica estado do sistema
+      terrAtual.removeRobo();
+      terrTemp.putRobo(robo);
     }
-    else if(cmd.getCode().equalsIgnoreCase("COLLECT"))
+    /*else if(cmd.getCode().equalsIgnoreCase("COLLECT"))
     {
       if(cmd.getValor().equalsIgnoreCase("UP"))
     }
@@ -56,7 +70,7 @@ public class Arena
     else if(cmd.getCode().equalsIgnoreCase("ATKMEELE"))
     {
 
-    }
+    }*/
   }
 
 
