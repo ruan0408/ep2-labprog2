@@ -23,6 +23,17 @@ public class Comando
 	{
 		return this.code;
 	}
+
+
+	/*
+		Função que recebe uma string e 
+		retorna TRUE caso o código do comanbdo seja
+		igual a string. Retorna FALSE c.c.
+	*/
+	public boolean codeEquals(String str)
+	{
+		return this.code.equals(str);
+	}
 	
 	public Empilhavel getValor()
 	{
