@@ -28,7 +28,20 @@ public class Arena
     for(it = robos.iterator(); it.hasNext();)
     {
       roboTemp = it.next();
-      roboTemp.executaAcao();
+      if(!roboTemp.temAtraso())
+        roboTemp.executaAcao();
+      else
+      {
+
+        Atraso at = roboTemp.getAtraso();
+        if(at.getTempo() <= 0)
+        {
+         this.sistema( at.getOperacao());
+         roboTemp.tiraAtraso();
+        }
+        else at.somaTempo(-1);
+
+      }
     }
     this.tempo++;
   }
@@ -57,9 +70,15 @@ public class Arena
     else if(valor == 6)terrTemp = mapa.getUpLeft(x, y);
 
     if(cmd.codeEquals("WALK") && !terrTemp.temRobo())
-    {
-      terrAtual.removeRobo();
-      terrTemp.putRobo(robo);
+    { 
+
+      if(terrAtual instanceof Rugoso) 
+        robo.setAtraso(new Atraso(op,3));
+      else
+      {
+        terrAtual.removeRobo();
+        terrTemp.putRobo(robo);
+      }
       return true;
     }
     else if(terrTemp instanceof Deposito && cmd.codeEquals("COLLECT")) 
