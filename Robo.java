@@ -14,17 +14,27 @@ public class Robo implements Programavel
     this.time = time;
   }
 
-  private void setVida(int vida)
+  public int getX()
+  {
+    return this.x;
+  }
+
+  public int getY()
+  {
+    return this.y;
+  }
+
+  public void setVida(int vida)
   {
     this.vida = vida;
   }
   
-  private int getVida()
+  public int getVida()
   {
     return this.vida;
   }
 
-  private void executaAcao()
+  public void executaAcao()
   {
     this.vm.executaProx();
   }

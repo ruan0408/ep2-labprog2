@@ -85,7 +85,7 @@ public class Mapa
 		}
 	}
 
-	public Terreno getUpRigh(int i, int j)
+	public Terreno getUpRight(int i, int j)
 	{
 		if(j%2 == 1) // j é impar
 		{
@@ -110,7 +110,7 @@ public class Mapa
 		}
 	}
 
-	public Terreno getDownRigh(int i, int j)
+	public Terreno getDownRight(int i, int j)
 	{
 		if(j%2 == 1) // j é impar
 		{
