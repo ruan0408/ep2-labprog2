@@ -41,19 +41,23 @@ public class Arena
     int x = robo.getX();
     int y = robo.getY();
     Terreno terrAtual = mapa.get(x, y);
-    Terreno terrTemp;
+    Terreno terrTemp = null;
 
-    if(cmd.getValor() == 1)terrTemp = mapa.getUp(x, y);
-    else if(cmd.getValor() == 2)terrTemp = mapa.getUpRight(x, y);
-    else if(cmd.getValor() == 3)terrTemp = mapa.getDownRight(x, y);
-    else if(cmd.getValor() == 4)terrTemp = mapa.getDown(x, y);   
-    else if(cmd.getValor() == 5)terrTemp = mapa.getDownLeft(x, y);
-    else if(cmd.getValor() == 6)terrTemp = mapa.getUpLeft(x, y);
+    String code = cmd.getCode();
+    int valor = (int)(((Numero)cmd.getValor()).getVal());
 
-    if(cmd.getCode().equalsIgnoreCase("WALK") && !terrTemp.temRobo())
+    if(valor == 1)terrTemp = mapa.getUp(x, y);
+    else if(valor == 2)terrTemp = mapa.getUpRight(x, y);
+    else if(valor == 3)terrTemp = mapa.getDownRight(x, y);
+    else if(valor == 4)terrTemp = mapa.getDown(x, y);   
+    else if(valor == 5)terrTemp = mapa.getDownLeft(x, y);
+    else if(valor == 6)terrTemp = mapa.getUpLeft(x, y);
+
+    if(code.equalsIgnoreCase("WALK") && !terrTemp.temRobo())
     {
       terrAtual.removeRobo();
       terrTemp.putRobo(robo);
+      return true;
     }
     /*else if(cmd.getCode().equalsIgnoreCase("COLLECT"))
     {
@@ -71,6 +75,7 @@ public class Arena
     {
 
     }*/
+    return false;
   }
 
 
