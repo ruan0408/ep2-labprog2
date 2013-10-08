@@ -8,15 +8,25 @@ public class Maquina
   private List<Comando> prog;
   private Arena arena;
   private int index;
+  private Programavel obj;
   
-  Maquina(Arena arena)
+  public Maquina(Arena arena)
   {
     this.arena = arena;
     mem = new ArrayList<Empilhavel>();
     prog = new ArrayList<Comando>();
     dados = new Pilha();
 
+    obj = null;
+
     this.index = 0;
+  }
+
+  public Maquina(Arena arena, Programavel obj)
+  {
+    this(arena); // Contrutor com um argumento só sendo chamado
+    this.obj = obj;
+
   }
 
 
@@ -55,24 +65,23 @@ public class Maquina
 
  private int executaCmd(Comando cmd)
  {
-  String code = cmd.getCode();
   Empilhavel valor = cmd.getValor();
   Empilhavel aux1, aux2;
   int novoIndice = this.index + 1;
 
-  if(code.equalsIgnoreCase("PUSH"))
+  if(cmd.codeEquals("PUSH"))
   {
     this.dados.push(valor);
   }
-  else if(code.equalsIgnoreCase("POP"))
+  else if(cmd.codeEquals("POP"))
   {
     this.dados.pop();
   }
-  else if(code.equalsIgnoreCase("DUP"))
+  else if(cmd.codeEquals("DUP"))
   {
     this.dados.push(this.dados.look());
   }
-  else if(code.equalsIgnoreCase("ADD"))
+  else if(cmd.codeEquals("ADD"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -87,7 +96,7 @@ public class Maquina
       System.out.println("ERRO: tentativa de somar não-números");
     }
    }
-   else if(code.equalsIgnoreCase("SUB"))
+   else if(cmd.codeEquals("SUB"))
    {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -104,7 +113,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("MUL"))
+  else if(cmd.codeEquals("MUL"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -121,7 +130,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("DIV"))
+  else if(cmd.codeEquals("DIV"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -138,7 +147,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("EQ"))
+  else if(cmd.codeEquals("EQ"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -157,7 +166,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("GT"))
+  else if(cmd.codeEquals("GT"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -176,7 +185,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("GE"))
+  else if(cmd.codeEquals("GE"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -195,7 +204,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("LT"))
+  else if(cmd.codeEquals("LT"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -214,7 +223,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("LE"))
+  else if(cmd.codeEquals("LE"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -233,7 +242,7 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-  else if(code.equalsIgnoreCase("NE"))
+  else if(cmd.codeEquals("NE"))
   {
     aux1 = this.dados.pop();
     aux2 = this.dados.pop();
@@ -253,11 +262,11 @@ public class Maquina
       this.dados.push(aux1);
     }
   }
-    else if(code.equalsIgnoreCase("JMP"))//assumo que os labels ja foram substituidos por numeros
+    else if(cmd.codeEquals("JMP"))//assumo que os labels ja foram substituidos por numeros
     {
       novoIndice = (int) ((Numero)valor).getVal();
     }
-    else if(code.equalsIgnoreCase("JIT"))
+    else if(cmd.codeEquals("JIT"))
     {
       aux1 = this.dados.pop();
       if(aux1 instanceof Numero)
@@ -267,7 +276,7 @@ public class Maquina
       else
         System.out.println("Tentando comparar não-numeros");
     }
-    else if(code.equalsIgnoreCase("JIF"))
+    else if(cmd.codeEquals("JIF"))
     {
       aux1 = this.dados.pop();
       System.out.println(aux1);
@@ -278,23 +287,23 @@ public class Maquina
       else
         System.out.println("Tentando comparar não-numeros");
     }
-    else if(code.equalsIgnoreCase("STO"))
+    else if(cmd.codeEquals("STO"))
     {
       aux1 = this.dados.pop();
       this.mem.add(( (int)((Numero)valor).getVal()), aux1);
     }
-    else if(code.equalsIgnoreCase("RCL"))
+    else if(cmd.codeEquals("RCL"))
     {
       int index = (int) ((Numero)valor).getVal();
       this.dados.push( this.mem.get(index) );
       this.mem.remove(index);
       
     }
-    else if(code.equalsIgnoreCase("END"))
+    else if(cmd.codeEquals("END"))
     {
       novoIndice = this.prog.size();
     }
-    else if(code.equalsIgnoreCase("PRN"))
+    else if(cmd.codeEquals("PRN"))
     {
       aux1 = this.dados.pop();
       if(aux1 instanceof Numero)
@@ -308,5 +317,17 @@ public class Maquina
     }
     System.out.println("HUE");
     return novoIndice;
+  }
+
+/*Função que faz chamada ao sistema (arena).
+  Retorna um empilhável como resposta que será colocado na
+  pilha(? talvez)*/
+
+  private void sistema(Comando cmd)
+  {
+    Empilhavel resp;
+    arena.sistema(cmd, (Robo) obj); //Cast temporário de (Robo)
+
+    //Push resp
   }
 }

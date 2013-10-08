@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Robo implements Programavel
 {
   private Maquina vm;
@@ -5,13 +7,18 @@ public class Robo implements Programavel
   private int x, y;
   private int time;
 
-  Robo(Maquina vm, int x, int y, int time)
+  Robo(Arena arena,int x, int y, int time)
   {
-    this.vm = vm;
+    this.vm = new Maquina(arena,this);
     this.vida = 100; //Total de vida
     this.x = x;
     this.y = y;
     this.time = time;
+  }
+
+  public void carregaPrograma(List<Comando> prog)
+  {
+    this.vm.carregaPrograma(prog);
   }
 
   public int getX()
