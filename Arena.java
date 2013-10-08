@@ -1,5 +1,4 @@
 import java.util.*;
-import java.lang.String;
 import java.lang.Enum;
 
 public class Arena
@@ -24,7 +23,8 @@ public class Arena
   {
     Robo roboTemp;
     Iterator<Robo> it;
-    
+    Collections.shuffle(robos);
+
     for(it = robos.iterator(); it.hasNext();)
     {
       roboTemp = it.next();
@@ -52,7 +52,7 @@ public class Arena
          if(valor == 1)terrTemp = mapa.getUp(x, y);
     else if(valor == 2)terrTemp = mapa.getUpRight(x, y);
     else if(valor == 3)terrTemp = mapa.getDownRight(x, y);
-    else if(valor == 4)terrTemp = mapa.getDown(x, y);   
+    else if(valor == 4)terrTemp = mapa.getDown(x, y);
     else if(valor == 5)terrTemp = mapa.getDownLeft(x, y);
     else if(valor == 6)terrTemp = mapa.getUpLeft(x, y);
 
@@ -68,21 +68,22 @@ public class Arena
       if(dep.temCristal() && !robo.temCristal())
       {
         robo.coletaCristal(dep.popCristal());
-      }
-      
+        return true;
+      } 
     }
     else if((terrTemp instanceof Terreno) && cmd.codeEquals("DROP"))
     {
       if(terrTemp instanceof Base)
       {
         ((Base)terrTemp).putCristal(robo.dropCristal());
+        return true;
       }
       else
       {
-
         Cristal cris = robo.dropCristal();
         Terreno depTemp = mapa.get(cris.getX(), cris.getY());
         ((Deposito)depTemp).putCristal(cris);
+        return true;
       }
     }
     /*else if(code.equalsIgnoreCase("ATKDIST"))

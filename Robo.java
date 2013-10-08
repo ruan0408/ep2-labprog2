@@ -6,6 +6,7 @@ public class Robo implements Programavel
   private int vida;
   private int x, y;
   private int time;
+  private int atraso;
   private Cristal cristal;
 
   Robo(Arena arena,int x, int y, int time)
@@ -14,6 +15,7 @@ public class Robo implements Programavel
     this.vida = 100; //Total de vida
     this.x = x;
     this.y = y;
+    this.atraso = 0; 
     this.time = time;
     cristal = null;
   }
@@ -49,6 +51,10 @@ public class Robo implements Programavel
     return this.vida;
   }
 
+  public void setAtraso(int atraso)
+  {
+    this.atraso = atraso;
+  }
   public Cristal dropCristal()
   {
     Cristal cris = this.cristal;
