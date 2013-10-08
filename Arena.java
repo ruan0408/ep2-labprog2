@@ -46,7 +46,7 @@ public class Arena
     //String code = cmd.getCode();
     int valor = (int)(((Numero)cmd.getValor()).getVal());
 
-    if(valor == 1)terrTemp = mapa.getUp(x, y);
+         if(valor == 1)terrTemp = mapa.getUp(x, y);
     else if(valor == 2)terrTemp = mapa.getUpRight(x, y);
     else if(valor == 3)terrTemp = mapa.getDownRight(x, y);
     else if(valor == 4)terrTemp = mapa.getDown(x, y);   
@@ -59,9 +59,14 @@ public class Arena
       terrTemp.putRobo(robo);
       return true;
     }
-    else if(terrTemp instanceof Deposito && cmd.codeEquals("COLLECT") && terrTemp.temCristal() && robo.pegaCristal(terrTeḿp.getCristal()))
+    else if(terrTemp instanceof Deposito && cmd.codeEquals("COLLECT")) 
     {
-      terrTemp.removeCristal();
+      Deposito dep = (Deposito) terrTemp;
+      if(dep.temCristal() && !robo.temCristal())
+      {
+        robo.getCristal(dep.popCristal());
+      }
+      
     }
     /*else if(code.equalsIgnoreCase("DROP"))
     {
@@ -89,11 +94,9 @@ public class Arena
     ***************** */
   public boolean insereExercito(int x, int y, int team)
   {
-    /* Cria uma máquina, em teoria, vazia. Talvez mudemos depois.*/
-    Maquina maqTemp = new Maquina(this); 
 
 
-    Robo roboTemp = new Robo(maqTemp, x, y, team);
+    Robo roboTemp = new Robo(this, x, y, team);
 
 
      /*Tenta colocar o robo no mapa. Caso já 

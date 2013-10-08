@@ -17,15 +17,11 @@ public class Deposito extends Terreno
 		this.cristal = cristal;
 	}
 
-	public Cristal getCristal()
+	public Cristal popCristal()
 	{
-		return this.cristal;
-	}
-
-	public void removeCristal()
-	{
-		if(this.temCristal()) 
-			this.cristal = null;
+		Cristal crisTemp = this.cristal;
+		this.cristal = null;
+		return crisTemp;
 	}
 
 }

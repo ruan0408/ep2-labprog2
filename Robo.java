@@ -6,6 +6,7 @@ public class Robo implements Programavel
   private int vida;
   private int x, y;
   private int time;
+  private Cristal cristal;
 
   Robo(Arena arena,int x, int y, int time)
   {
@@ -14,11 +15,23 @@ public class Robo implements Programavel
     this.x = x;
     this.y = y;
     this.time = time;
+    cristal = null;
   }
 
   public void carregaPrograma(List<Comando> prog)
   {
     this.vm.carregaPrograma(prog);
+  }
+
+  public void getCristal(Cristal cr)
+  {
+    this.cristal = cr;
+  }
+
+  public boolean temCristal()
+  {
+    if(this.cristal == null) return false;
+    return true;
   }
 
   public int getX()
