@@ -23,7 +23,7 @@ public class Robo implements Programavel
     this.vm.carregaPrograma(prog);
   }
 
-  public void getCristal(Cristal cr)
+  public void coletaCristal(Cristal cr)
   {
     this.cristal = cr;
   }
@@ -43,17 +43,23 @@ public class Robo implements Programavel
   {
     return this.y;
   }
-
-  public void setVida(int vida)
-  {
-    this.vida = vida;
-  }
   
   public int getVida()
   {
     return this.vida;
   }
 
+  public Cristal dropCristal()
+  {
+    Cristal cris = this.cristal;
+    this.cristal = null;
+    return cris;
+  }
+
+  public void setVida(int vida)
+  {
+    this.vida = vida;
+  }
   public void executaAcao()
   {
     this.vm.executaProx();

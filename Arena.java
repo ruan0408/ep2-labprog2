@@ -64,21 +64,31 @@ public class Arena
       Deposito dep = (Deposito) terrTemp;
       if(dep.temCristal() && !robo.temCristal())
       {
-        robo.getCristal(dep.popCristal());
+        robo.coletaCristal(dep.popCristal());
       }
       
     }
-    /*else if(code.equalsIgnoreCase("DROP"))
+    else if((terrTemp instanceof Terreno) && cmd.codeEquals("DROP"))
     {
+      if(terrTemp instanceof Base)
+      {
+        ((Base)terrTemp).putCristal(robo.dropCristal());
+      }
+      else
+      {
 
+        Cristal cris = robo.dropCristal();
+        Terreno depTemp = mapa.get(cris.getX(), cris.getY());
+        ((Deposito)depTemp).putCristal(cris);
+      }
     }
-    else if(code.equalsIgnoreCase("ATKDIST"))
+    /*else if(code.equalsIgnoreCase("ATKDIST"))
     {
-
+      //peitos
     }
     else if(code.equalsIgnoreCase("ATKMEELE"))
     {
-
+      //+peitos
     }*/
     return false;
   }
