@@ -1,4 +1,4 @@
-public class Robo
+public class Robo implements Programavel
 {
   private Maquina vm;
   private int vida;
