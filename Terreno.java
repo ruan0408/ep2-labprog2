@@ -2,7 +2,7 @@ public class Terreno
 {
 	Robo robo;
 
-	public Terreno()
+	Terreno()
 	{
 		this.robo = null;
 	}
@@ -29,4 +29,5 @@ public class Terreno
 	{
 		this.robo = null;
 	}
+
 }

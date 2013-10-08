@@ -43,7 +43,7 @@ public class Arena
     Terreno terrAtual = mapa.get(x, y);
     Terreno terrTemp = null;
 
-    String code = cmd.getCode();
+    //String code = cmd.getCode();
     int valor = (int)(((Numero)cmd.getValor()).getVal());
 
     if(valor == 1)terrTemp = mapa.getUp(x, y);
@@ -53,25 +53,25 @@ public class Arena
     else if(valor == 5)terrTemp = mapa.getDownLeft(x, y);
     else if(valor == 6)terrTemp = mapa.getUpLeft(x, y);
 
-    if(code.equalsIgnoreCase("WALK") && !terrTemp.temRobo())
+    if(cmd.codeEquals("WALK") && !terrTemp.temRobo())
     {
       terrAtual.removeRobo();
       terrTemp.putRobo(robo);
       return true;
     }
-    /*else if(cmd.getCode().equalsIgnoreCase("COLLECT"))
+    else if(terrTemp instanceof Deposito && cmd.codeEquals("COLLECT") && terrTemp.temCristal() && robo.pegaCristal(terrTeḿp.getCristal()))
     {
-      if(cmd.getValor().equalsIgnoreCase("UP"))
+      terrTemp.removeCristal();
     }
-    else if(cmd.getCode().equalsIgnoreCase("DROP"))
-    {
-
-    }
-    else if(cmd.getCode().equalsIgnoreCase("ATKDIST"))
+    /*else if(code.equalsIgnoreCase("DROP"))
     {
 
     }
-    else if(cmd.getCode().equalsIgnoreCase("ATKMEELE"))
+    else if(code.equalsIgnoreCase("ATKDIST"))
+    {
+
+    }
+    else if(code.equalsIgnoreCase("ATKMEELE"))
     {
 
     }*/
