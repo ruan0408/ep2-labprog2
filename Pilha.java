@@ -11,6 +11,12 @@ public class Pilha
       pilha = new Stack<Empilhavel>();
   }
 
+
+
+  public boolean vazio()
+  {
+    return pilha.empty();
+  }
   
   public void push(Empilhavel emp)
   {

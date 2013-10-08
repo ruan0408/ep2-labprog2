@@ -33,8 +33,11 @@ public class Arena
     this.tempo++;
   }
 
-  public boolean sistema(Comando cmd, Robo robo)
+  public boolean sistema(Operacao op)
   {
+
+    Comando cmd = op.getCmd();
+    Robo robo = (Robo) op.getOrigem();
     /*O comando que entra é do tipo bolado, existem alguns comandos bolados.
     reconheceremos eles aqui  daremos a resposta dizendo se executamos ou 
     não(de acordo com o estado do sistema)*/
@@ -102,18 +105,18 @@ public class Arena
       0 c.c.
     }
     ***************** */
-  public boolean insereExercito(int x, int y, int team)
+  public boolean insereExercito(Robo rb)
   {
 
 
-    Robo roboTemp = new Robo(this, x, y, team);
+    
 
 
      /*Tenta colocar o robo no mapa. Caso já 
       Exista um robo, a função irá retornar 0*/
-    if(mapa.putRobo(roboTemp,x,y))
+    if(mapa.putRobo(rb,rb.getX(),rb.getY()))
     {
-      this.robos.add(roboTemp);
+      this.robos.add(rb);
       return true;
     }
 

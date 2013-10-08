@@ -279,7 +279,6 @@ public class Maquina
     else if(cmd.codeEquals("JIF"))
     {
       aux1 = this.dados.pop();
-      System.out.println(aux1);
       if(aux1 instanceof Numero)
       {
        if(((Numero)aux1).getVal() == 0) novoIndice = (int) ((Numero)valor).getVal();
@@ -315,7 +314,6 @@ public class Maquina
         System.out.println("erro");
       }
     }
-    System.out.println("HUE");
     return novoIndice;
   }
 
@@ -326,7 +324,22 @@ public class Maquina
   private void sistema(Comando cmd)
   {
     Empilhavel resp;
-    arena.sistema(cmd, (Robo) obj); //Cast temporário de (Robo)
+    Operacao op;
+
+    op = new Operacao(cmd,obj);
+
+    /* Verifica qual operação é, e coloca no obj operação
+      os empilhaveis necessários */
+
+
+      //Para testes, automaticamente adiciona um empilhavel na operação
+
+      op.pushArg(this.dados.pop());
+
+
+
+
+    arena.sistema(op); //Cast temporário de (Robo)
 
     //Push resp
   }
