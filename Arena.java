@@ -1,6 +1,5 @@
 import java.util.*;
 import java.lang.Enum;
-import java.util.Random;
 
 public class Arena
 {

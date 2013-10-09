@@ -309,6 +309,10 @@ public class Maquina
       {
         System.out.println(((Numero)aux1).getVal());
       }
+      else if (aux1 instanceof Frase) 
+      {
+        System.out.println(((Frase)aux1).getString()); 
+      }
       else//acho que da pra encapsular todas essas coisas e fazer as porras imprimirem a si mesmo.
       {
         System.out.println("erro");

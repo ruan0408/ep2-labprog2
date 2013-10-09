@@ -150,7 +150,16 @@ sub printVetorJava
 		{
 			$a = $cmd->getCode();
 			$b = $cmd->getValor();
-			print qq|programa.add( new Comando("$a", new Numero($b) ));\n|;
+			
+			if($b =~ /^(\d+)$/) #é número
+			{
+				print qq|programa.add( new Comando("$a", new Numero($b) ));\n|;	
+			}
+			else #é string
+			{
+				print qq|programa.add( new Comando("$a", new Frase("$b") ));\n|;		
+			}
+			
 		}
 		else
 		{
