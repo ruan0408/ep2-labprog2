@@ -24,19 +24,17 @@ public class Mapa
 		altura = alt;
 		largura = larg;
 
-
 		for(int i = 0; i < alt; i++)
-		{
 			for(int j = 0; j < larg; j++)
-			{
 				matriz[i][j] = new Terreno();
-			}
-		}
 	}
 
 
-	public boolean putRobo(Robo roboTemp, int x, int y)
+	public boolean putRobo(Robo roboTemp)
 	{
+		int x = roboTemp.getX();
+		int y = roboTemp.getY();
+		
 		if(x < largura && y < altura && y > 0 && x > 0)
 		{
 			if(!matriz[x][y].temRobo())
@@ -45,16 +43,13 @@ public class Mapa
 				return true;
 			}
 		}
-
 		return false;
 	}
 
 	public void removeRobo(int x, int y)
 	{
 		if(x < largura && y < altura && y > 0 && x > 0)
-		{
 			matriz[x][y].removeRobo();
-		}
 	}
 
 
@@ -68,58 +63,34 @@ public class Mapa
 	*********************** */
 
 	/* Retorna o terreno na posição i,j */
-	public Terreno get(int i, int j)
+	public Terreno getTerreno(int i, int j)
 	{
 		return matriz[i][j];
 	}
 
 	public Terreno getUpLeft(int i, int j)
 	{
-		if(j%2 == 1) // j é impar
-		{
-			return matriz[i][j-1];
-		}
-		else
-		{
-			return matriz[i-1][j-1];
-		}
+		if(j%2 == 1) return matriz[i][j-1]; // j é impar
+		else return matriz[i-1][j-1]; // j é par	
 	}
 
 	public Terreno getUpRight(int i, int j)
 	{
-		if(j%2 == 1) // j é impar
-		{
-			return matriz[i][j+1];
-		}
-		else
-		{
-			return matriz[i-1][j+1];
-		}
+		if(j%2 == 1) return matriz[i][j+1]; // j é impar
+		else return matriz[i-1][j+1]; // j é par
 	}
 
 
 	public Terreno getDownLeft(int i, int j)
 	{
-		if(j%2 == 1) // j é impar
-		{
-			return matriz[i][j-1];
-		}
-		else
-		{
-			return matriz[i+1][j-1];
-		}
+		if(j%2 == 1) return matriz[i][j-1]; // j é impar
+		else return matriz[i+1][j-1]; // j é par
 	}
 
 	public Terreno getDownRight(int i, int j)
 	{
-		if(j%2 == 1) // j é impar
-		{
-			return matriz[i][j+1];
-		}
-		else
-		{
-			return matriz[i+1][j+1];
-		}
+		if(j%2 == 1) return matriz[i][j+1]; // j é impar
+		else return matriz[i+1][j+1]; // j é par
 	}
 
 	public Terreno getDown(int i, int j)
