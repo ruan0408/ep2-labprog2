@@ -9,6 +9,10 @@ public class Robo implements Programavel
   private Atraso atraso;
   private Cristal cristal;
 
+
+  /****** Construtor ******/
+
+
   Robo(Arena arena,int x, int y, int time)
   {
     this.vm = new Maquina(arena,this);
@@ -20,21 +24,9 @@ public class Robo implements Programavel
     cristal = null;
   }
 
-  public void carregaPrograma(List<Comando> prog)
-  {
-    this.vm.carregaPrograma(prog);
-  }
 
-  public void coletaCristal(Cristal cr)
-  {
-    this.cristal = cr;
-  }
+  /****** Getters ******/
 
-  public boolean temCristal()
-  {
-    if(this.cristal == null) return false;
-    return true;
-  }
 
   public int getX()
   {
@@ -55,7 +47,9 @@ public class Robo implements Programavel
   {
     return this.atraso;
   }
+
   
+  /****** Setters ******/
 
 
   public void setAtraso(Atraso atraso)
@@ -63,29 +57,55 @@ public class Robo implements Programavel
     this.atraso = atraso;
   }
 
+  public void setVida(int vida)
+  {
+    this.vida = vida;
+  }
+
+
+  /****** Funções ******/
+
+  
+  /* Recebe uma lista de comandos (programa) e o insere na máquina virtual do robô. */
+  public void carregaPrograma(List<Comando> prog)
+  {
+    this.vm.carregaPrograma(prog);
+  }
+
+  /* Recebe um cristal e o insere no robô. */
+  public void coletaCristal(Cristal cr)
+  {
+    this.cristal = cr;
+  }
+
+  /* Verifica se o robô está ou não carregando um robô, retornando TRUE se está e FALSE caso contrário. */
+  public boolean temCristal()
+  {
+    if(this.cristal == null) return false;
+    return true;
+  }
+
+  /* Atribui ao atraso valor "null" (sinal que não há atraso). */
   public void tiraAtraso()
   {
     this.setAtraso(null);
   }
 
-
-
+  /* Retorna 1 se atraso for diferente de null, 0 caso contrário. */
   public boolean temAtraso()
   {
     return this.atraso != null;
   }
 
+  /* Remove o cristal do robô, o qual é retornado pela função. */
   public Cristal dropCristal()
   {
     Cristal cris = this.cristal;
     this.cristal = null;
     return cris;
   }
-
-  public void setVida(int vida)
-  {
-    this.vida = vida;
-  }
+  
+  /* Se não houver atraso, então a função executa o próximo comando do programa do robô. */
   public void executaAcao()
   {
     if(!this.temAtraso()) 

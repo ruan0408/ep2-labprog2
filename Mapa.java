@@ -10,14 +10,13 @@ public class Mapa
 {
 	int altura, largura;
 	Terreno[][] matriz;
+	
+
+	/****** Construtor ******/
 
 
-	/*
-
-		Retorna uma matriz exagonal de altura "alt" e
-		largura "larg".
-
-	*/
+	/*  Retorna uma matriz hexagonal de altura "alt" e 
+	    largura "larg".                                 */
 	public Mapa(int alt, int larg)
 	{
 		matriz = new Terreno[alt][larg];
@@ -29,12 +28,75 @@ public class Mapa
 				matriz[i][j] = new Terreno();
 	}
 
+/* *************** Falta o tratamento de erros ************ */
 
+
+/* ************************************
+	Funções que retornam o terreno de uma dada posição (i,j) e
+	dos hexagonos adjacentes.
+
+	*********************** */
+
+	/* Retorna o terreno na posição i,j */
+	public Terreno getTerreno(int i, int j)
+	{
+		return matriz[i][j];
+	}
+
+	/* Região superior esquerda. */
+	public Terreno getUpLeft(int i, int j)
+	{
+		if(j%2 == 1) return matriz[i][j-1]; // j é impar
+		else return matriz[i-1][j-1]; // j é par	
+	}
+
+	/* Região superior direita. */
+	public Terreno getUpRight(int i, int j)
+	{
+		if(j%2 == 1) return matriz[i][j+1]; // j é impar
+		else return matriz[i-1][j+1]; // j é par
+	}
+	
+	/* Região inferior esquerda. */
+	public Terreno getDownLeft(int i, int j)
+	{
+		if(j%2 == 1) return matriz[i][j-1]; // j é impar
+		else return matriz[i+1][j-1]; // j é par
+	}
+
+	/* Região inferior direita. */
+	public Terreno getDownRight(int i, int j)
+	{
+		if(j%2 == 1) return matriz[i][j+1]; // j é impar
+		else return matriz[i+1][j+1]; // j é par
+	}
+	
+	/* Região imediatamente inferior. */
+	public Terreno getDown(int i, int j)
+	{
+		return matriz[i-1][j];
+	}
+
+	/* Região imediatamente superior. */
+	public Terreno getUp(int i, int j)
+	{
+		return matriz[i+1][j];
+	}
+
+
+	/****** Funções ******/
+
+
+	/* Função que recepe um robô e o insere no mapa. */
 	public boolean putRobo(Robo roboTemp)
 	{
+		/* Encontra as posições X e Y do robô. */
 		int x = roboTemp.getX();
 		int y = roboTemp.getY();
 		
+		/* Caso seja possível (a posição do robô não esteja ocupada e nem se encontre
+		   fora dos limites do mapa, inserimos o robô no mapa e retornamos TRUE. É  
+		   retornado o valor FALSE caso contrário.                                    */
 		if(x < largura && y < altura && y > 0 && x > 0)
 		{
 			if(!matriz[x][y].temRobo())
@@ -46,61 +108,10 @@ public class Mapa
 		return false;
 	}
 
+	/* Função que receberá uma posição e removerá o robô localizado nesta posição. */
 	public void removeRobo(int x, int y)
 	{
 		if(x < largura && y < altura && y > 0 && x > 0)
 			matriz[x][y].removeRobo();
 	}
-
-
-/* *************** Falta o tratamento de erros ************ */
-
-
-/* ************************************
-	Funções que retornam o terreno de uma dada posição (i,j) e
-	dos hexagonos adjacentes
-
-	*********************** */
-
-	/* Retorna o terreno na posição i,j */
-	public Terreno getTerreno(int i, int j)
-	{
-		return matriz[i][j];
-	}
-
-	public Terreno getUpLeft(int i, int j)
-	{
-		if(j%2 == 1) return matriz[i][j-1]; // j é impar
-		else return matriz[i-1][j-1]; // j é par	
-	}
-
-	public Terreno getUpRight(int i, int j)
-	{
-		if(j%2 == 1) return matriz[i][j+1]; // j é impar
-		else return matriz[i-1][j+1]; // j é par
-	}
-
-
-	public Terreno getDownLeft(int i, int j)
-	{
-		if(j%2 == 1) return matriz[i][j-1]; // j é impar
-		else return matriz[i+1][j-1]; // j é par
-	}
-
-	public Terreno getDownRight(int i, int j)
-	{
-		if(j%2 == 1) return matriz[i][j+1]; // j é impar
-		else return matriz[i+1][j+1]; // j é par
-	}
-
-	public Terreno getDown(int i, int j)
-	{
-		return matriz[i-1][j];
-	}
-
-	public Terreno getUp(int i, int j)
-	{
-		return matriz[i+1][j];
-	}
-
 }

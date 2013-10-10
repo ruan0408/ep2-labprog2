@@ -5,23 +5,32 @@ public class Pilha
 
   private Stack<Empilhavel> pilha;
 
+
+  /****** Construtor ******/
+
+
   public Pilha()
   {
       pilha = new Stack<Empilhavel>();
   }
 
 
+  /****** Funções ******/
 
+
+  /* Verifica se a pilha está vazia, retornando TRUE se estiver vazia e 0 caso contrário*/
   public boolean vazio()
   {
     return pilha.empty();
   }
   
+  /* Empilha na pilha o valor passado como argumento. */
   public void push(Empilhavel emp)
   {
     pilha.push(emp);     
   }
 
+  /* Desempilha o último elemento da pilha e o retorna. */
   public Empilhavel pop()
   {
     if(!pilha.empty())
@@ -33,6 +42,7 @@ public class Pilha
     }
   }
 
+  /* Retorna o último elemtno da pilha, sem desempilhá-lo. */
   public Empilhavel look()
   {
     if(!pilha.empty())
@@ -44,7 +54,7 @@ public class Pilha
     }
   }
 
-
+  /* Duplica o último elemento da pilha (empilha-se uma réplica do último elemento). */
   public void duplica()
   {
     if(!pilha.empty())

@@ -4,10 +4,18 @@ public enum Move
 
 	private int move;
 
+ 
+	/****** Construtor ******/
+
+
 	Move(int move)
 	{
 		this.move = move;
 	}
+
+
+	/****** Getters ******/
+
 
 	public int getVal()
 	{
