@@ -44,20 +44,6 @@ public class Maquina
     this.index = 0;
   }
 
-  /*private void pushDados(Empilhavel emp)
-  {
-    this.pilha.push(emp);
-  }
-  private Empilhavel popDados()
-  {
-   return this.pilha.pop(); 
- }*/
-  //private Empilhavel peekDados
-  //private void setMem
-  //private Empilhavel getMem
-  //
-
-
   /* Retorna TRUE se ainda não estivermos no fim do programa (se ainda houver um próximo comando) e FALSE c.c. */
   public boolean temProx()
   {
@@ -349,6 +335,22 @@ public class Maquina
         System.out.println("erro");
       }
     }
+    /*else if(cmd.codeEquals("WALK"))
+    {
+
+    }
+    else if(cmd.codeEquals("COLLECT"))
+    {
+
+    }
+    else if(cmd.codeEquals("DROP"))
+    {
+
+    }
+    else if(cmd.codeEquals("ATK"))
+    {
+
+    }*/
     return novoIndice;
   }
 

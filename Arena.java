@@ -129,14 +129,11 @@ public class Arena
         return true;
       }
     }
-    /*else if(code.equalsIgnoreCase("ATKDIST"))
+    /*else if(code.equalsIgnoreCase("ATK"))
     {
       //peitos
-    }
-    else if(code.equalsIgnoreCase("ATKMEELE"))
-    {
-      //+peitos
     }*/
+    
     return false;
   }
 
