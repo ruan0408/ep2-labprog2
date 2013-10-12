@@ -4,6 +4,13 @@ import java.lang.Enum;
 public class Arena
 {
   private static final int TAM_EX = 10;
+  private static final int UP = 1;
+  private static final int UR = 2;
+  private static final int DR = 3;
+  private static final int DW = 4;
+  private static final int DL = 5;
+  private static final int UL = 6;
+
   private Mapa mapa;
   private List<Robo> robos;
   private int tempo;
@@ -63,11 +70,10 @@ public class Arena
 
  /* AJUDEM O TIO PECÊ NESSA DAQUI AHHHHHHH *********************************************
   ********************************************************************************
- *************************************************** ROLA. */
+ *************************************************** . */
  public void sistema(Operacao op)
  {
-  //Move enumMove;
-
+  
   Comando cmd = op.getCmd();
   Robo robo = (Robo) op.getOrigem();
   /* O comando que entra é do tipo bolado, existem alguns comandos bolados.  
@@ -77,18 +83,27 @@ public class Arena
   int y = robo.getY();
   Terreno terrAtual = mapa.getTerreno(x, y);
   Terreno terrTemp = null;
-  Empilhavel resp = new Numero(0);
+  Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
 
-    //String code = cmd.getCode();
   int valor = (int)(((Numero)cmd.getValor()).getVal());
 
-  /* If's para verificar qual a direção contida no comando analisado. */
-  if(valor == 1)terrTemp = mapa.getUp(x, y);
-  else if(valor == 2)terrTemp = mapa.getUpRight(x, y);
-  else if(valor == 3)terrTemp = mapa.getDownRight(x, y);
-  else if(valor == 4)terrTemp = mapa.getDown(x, y);
-  else if(valor == 5)terrTemp = mapa.getDownLeft(x, y);
-  else if(valor == 6)terrTemp = mapa.getUpLeft(x, y);
+  try
+  {
+    switch(valor)
+    {
+      case UP : terrTemp = mapa.getUp(x, y); break;
+      case UR : terrTemp = mapa.getUpRight(x, y); break;
+      case DR : terrTemp = mapa.getDownRight(x, y); break;
+      case DW : terrTemp = mapa.getDown(x, y); break;
+      case DL : terrTemp = mapa.getDownLeft(x, y); break;
+      case UL : terrTemp = mapa.getUpLeft(x, y); break;
+      default : System.out.println("Direçao inválida!");
+    }
+  }
+  catch(ArrayIndexOutOfBoundsException e)//acho que deveriamos fazer isso nas funções do mapa, mas foda-se
+  {
+    System.out.println("Tentando acessar posição fora do mapa!");
+  }
 
   /* If's que verificarão o comando que foi passado como operação e
   o executarão de acordo com a funcionalidade de cada um.         */
