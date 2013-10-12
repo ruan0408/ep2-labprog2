@@ -48,6 +48,11 @@ public class Robo implements Programavel
     return this.atraso;
   }
 
+  public Maquina getVm()
+  {
+    return this.vm;
+  }
+
   
   /****** Setters ******/
 
@@ -64,9 +69,18 @@ public class Robo implements Programavel
 
 
   /****** Funções ******/
-
-  
   /* Recebe uma lista de comandos (programa) e o insere na máquina virtual do robô. */
+
+  public void perdeVida(int dano)
+  {
+    this.vida -= dano;
+  }
+
+  public boolean temVida()
+  {
+    return this.vida > 0;
+  }
+
   public void carregaPrograma(List<Comando> prog)
   {
     this.vm.carregaPrograma(prog);
@@ -78,7 +92,7 @@ public class Robo implements Programavel
     this.cristal = cr;
   }
 
-  /* Verifica se o robô está ou não carregando um robô, retornando TRUE se está e FALSE caso contrário. */
+  /* Verifica se o robô está ou não carregando um cristal, retornando TRUE se está e FALSE caso contrário. */
   public boolean temCristal()
   {
     if(this.cristal == null) return false;

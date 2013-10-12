@@ -35,7 +35,10 @@ public class Maquina
 
 
   /****** Funções ******/
-
+  public Pilha getDados()
+  {
+    return this.dados;
+  }
 
   /* Função que recebe um programa (lista de comandos) e o insere na máquina virtual. */
   public void carregaPrograma(List<Comando> progTemp)
@@ -335,22 +338,12 @@ public class Maquina
         System.out.println("erro");
       }
     }
-    /*else if(cmd.codeEquals("WALK"))
+    else if(cmd.codeEquals("WALK") || cmd.codeEquals("COLLECT")
+            || cmd.codeEquals("DROP") || cmd.codeEquals("ATK")) 
     {
-
+      this.sistema(cmd);
     }
-    else if(cmd.codeEquals("COLLECT"))
-    {
-
-    }
-    else if(cmd.codeEquals("DROP"))
-    {
-
-    }
-    else if(cmd.codeEquals("ATK"))
-    {
-
-    }*/
+    
     return novoIndice;
   }
 
