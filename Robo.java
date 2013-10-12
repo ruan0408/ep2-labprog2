@@ -4,7 +4,7 @@ public class Robo implements Programavel
 {
   private Maquina vm;
   private int vida;
-  private int x, y;
+  private Posicao pos;
   private int time;
   private Atraso atraso;
   private Cristal cristal;
@@ -13,12 +13,11 @@ public class Robo implements Programavel
   /****** Construtor ******/
 
 
-  Robo(Arena arena,int x, int y, int time)
+  Robo(Arena arena,Posicao pos, int time)
   {
     this.vm = new Maquina(arena,this);
     this.vida = 100; //Total de vida
-    this.x = x;
-    this.y = y;
+    this.pos = pos;
     this.atraso = null; 
     this.time = time;
     cristal = null;
@@ -30,12 +29,12 @@ public class Robo implements Programavel
 
   public int getX()
   {
-    return this.x;
+    return this.pos.getX();
   }
 
   public int getY()
   {
-    return this.y;
+    return this.pos.getY();
   }
   
   public int getVida()
@@ -81,7 +80,7 @@ public class Robo implements Programavel
     return this.vida > 0;
   }
 
-  public void carregaPrograma(List<Comando> prog)
+  public void carregaPrograma(Programa prog)
   {
     this.vm.carregaPrograma(prog);
   }

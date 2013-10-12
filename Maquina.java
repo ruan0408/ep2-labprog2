@@ -5,7 +5,7 @@ public class Maquina
 {
   private Pilha dados;
   private List<Empilhavel> mem;
-  private List<Comando> prog;
+  private Programa prog;
   private Arena arena;
   private int index;
   private Programavel obj;
@@ -18,7 +18,7 @@ public class Maquina
   {
     this.arena = arena;
     mem = new ArrayList<Empilhavel>();
-    prog = new ArrayList<Comando>();
+    prog = new Programa();
     dados = new Pilha();
 
     obj = null;
@@ -41,7 +41,7 @@ public class Maquina
   }
 
   /* Função que recebe um programa (lista de comandos) e o insere na máquina virtual. */
-  public void carregaPrograma(List<Comando> progTemp)
+  public void carregaPrograma(Programa progTemp)
   {
     prog = progTemp;
     this.index = 0;

@@ -103,6 +103,7 @@ public class Arena
   catch(ArrayIndexOutOfBoundsException e)//acho que deveriamos fazer isso nas funções do mapa, mas foda-se
   {
     System.out.println("Tentando acessar posição fora do mapa!");
+    return;
   }
 
   /* If's que verificarão o comando que foi passado como operação e
@@ -157,7 +158,7 @@ public class Arena
        -Retorna true caso tenha conseguido inserir,
        -Retorna false c.c.                            
   */
-  public boolean insereExercito(Robo rb)
+  private boolean insereRobo(Robo rb)
   {
     /* Tenta colocar o robo no mapa. Caso já 
     exista um robo, a função irá retornar 0*/
@@ -167,6 +168,25 @@ public class Arena
       return true;
     }
     return false;
+  }
+
+
+  public void insereExercito(Programa[] programas, Posicao[] posicoes, int time)
+  {
+    int tam = Math.min(programas.length, posicoes.length);
+
+
+    for(int i = 0; i < tam; i++)
+    {
+      Robo rb = new Robo(this,posicoes[i], time);
+      rb.carregaPrograma(programas[i]);
+
+      if( insereRobo(rb) )
+        System.out.println("Robo "+i+" inserido com sucesso");
+      else
+        System.out.println("Falha ao tentar inserir o robo "+i);
+    }
+
   }
 
 
