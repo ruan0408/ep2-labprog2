@@ -55,6 +55,11 @@ public class Robo implements Programavel
   
   /****** Setters ******/
 
+  public void setPos(Posicao pos)
+  {
+    this.pos = pos;
+  }
+
 
   public void setAtraso(Atraso atraso)
   {

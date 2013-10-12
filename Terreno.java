@@ -1,13 +1,15 @@
 public class Terreno
 {
 	Robo robo;
+	Posicao pos;
 
 
  /****** Construtor ******/
 
 
-	Terreno()
+	Terreno(Posicao pos)
 	{
+		this.pos = pos;
 		this.robo = null;
 	}
 	
@@ -18,6 +20,24 @@ public class Terreno
 	public Robo getRobo()
 	{
 		return this.robo;
+	}
+
+	public int getX()
+	{
+		return this.pos.getX();
+
+	}
+
+	public int getY()
+	{
+		return this.pos.getY();
+
+	}
+
+	public Posicao getPos()
+	{
+		return this.pos;
+
 	}
 
 	/****** Funções ******/

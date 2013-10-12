@@ -6,8 +6,9 @@ public class Deposito extends Terreno
 	/****** Construtor ******/
 
 
-	Deposito()
+	Deposito(Posicao pos)
 	{
+		super(pos);
 		this.cristal = null;
 	}
 

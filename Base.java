@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class Base extends Terreno
 {
 	private int time;
@@ -8,8 +9,9 @@ public class Base extends Terreno
 	/****** Construtor ******/
 
 
-	Base(int time)
+	Base(Posicao pos,int time)
 	{
+		super(pos);
 		this.time = time;
 		this.cristais = new ArrayList<Cristal>();
 	}

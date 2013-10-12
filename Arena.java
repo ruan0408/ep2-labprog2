@@ -68,9 +68,11 @@ public class Arena
  }
 
 
- /* AJUDEM O TIO PECÊ NESSA DAQUI AHHHHHHH *********************************************
-  ********************************************************************************
- *************************************************** . */
+ /******
+    Essa função recebe um objeto do tipo Operacao representando
+    uma chamada ao sistema feita por algum robo.
+    A função executa a ação necessária para executar a operação passada
+    ***** */
  public void sistema(Operacao op)
  {
   
@@ -118,6 +120,7 @@ public class Arena
     {
       terrAtual.removeRobo();
       terrTemp.putRobo(robo);
+      robo.setPos(terrTemp.getPos());
       resp = new Numero(1);
     }
   }

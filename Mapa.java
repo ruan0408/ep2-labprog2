@@ -25,7 +25,7 @@ public class Mapa
 
 		for(int i = 0; i < alt; i++)
 			for(int j = 0; j < larg; j++)
-				matriz[i][j] = new Terreno();
+				matriz[i][j] = new Terreno(new Posicao(i,j));
 	}
 
 /* *************** Falta o tratamento de erros ************ */
