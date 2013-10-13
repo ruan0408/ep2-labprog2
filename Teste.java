@@ -5,11 +5,11 @@ public class Teste
 {
   public static void main(String args[])
   {
-    Programa[] programas = new Programa[2]; 
+    Programa[] programas = new Programa[3]; 
     Mapa mapa = new Mapa(5,5);
     Arena arena = new Arena(mapa);
     Robo robo1, robo2;
-    Posicao[] posicoes = new Posicao[2];
+    Posicao[] posicoes = new Posicao[3];
 
 
    Programa programa = new Programa();
@@ -50,6 +50,13 @@ public class Teste
     programa.add( new Comando("MUL", null));
     programa.add( new Comando("PRN", null));
     programa.add( new Comando("END", null));
+
+     posicoes[2] = new Posicao(3,2);
+
+    programa = new Programa();
+    programas[2] = programa;
+    programa.add( new Comando("PUSH", new Numero(10) ));
+    programa.add( new Comando("STO", new Numero(4) ));
 
    // robo2.carregaPrograma(programa);
 

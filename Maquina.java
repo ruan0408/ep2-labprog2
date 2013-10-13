@@ -4,7 +4,7 @@ import java.lang.String;
 public class Maquina
 {
   private Pilha dados;
-  private List<Empilhavel> mem;
+  private Empilhavel[] mem;
   private Programa prog;
   private Arena arena;
   private int index;
@@ -17,7 +17,7 @@ public class Maquina
   public Maquina(Arena arena)
   {
     this.arena = arena;
-    mem = new ArrayList<Empilhavel>();
+    mem = new Empilhavel[10];
     prog = new Programa();
     dados = new Pilha();
 
@@ -306,15 +306,20 @@ public class Maquina
     /* Desempilha o ultimo elemento da pilha de dados e o insere na memória na posição passada como argumento ao comando. */
     else if(cmd.codeEquals("STO"))
     {
+      int index = ((int)((Numero)valor).getVal());
       aux1 = this.dados.pop();
-      this.mem.add(( (int)((Numero)valor).getVal()), aux1);
+      if((this.mem.length) <= index)
+        this.mem = Arrays.copyOf(this.mem, index+1);
+      
+      this.mem[index] = aux1;
     }
     /* Remove o dado armazenado na posição da memoria passada como argumento ao comando e o empilha na pilha de dados. */
     else if(cmd.codeEquals("RCL"))
-    {
-      int index = (int) ((Numero)valor).getVal();
-      this.dados.push( this.mem.get(index) );
-      this.mem.remove(index);
+    { 
+      int index1;
+      index1 = (int) ((Numero)valor).getVal();
+      this.dados.push( this.mem[index1] );
+      //this.mem.remove(index);
     }
     /* Encerra o programa modificando o índice de leitura para uma linha depois da ultima linha de código, finalizando, desse modo, a leitura do programa. */
     else if(cmd.codeEquals("END"))
