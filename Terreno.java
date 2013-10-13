@@ -43,9 +43,11 @@ public class Terreno
 	/****** Funções ******/
 
 	/* Remove o robo desse terreno */
-	public void removeRobo()
+	public Robo removeRobo()
 	{
+		Robo roboTemp = this.robo;
 		this.robo = null;
+		return roboTemp;
 	}
 
 	public boolean temRobo()
@@ -57,5 +59,30 @@ public class Terreno
 	public void putRobo(Robo roboTemp)
 	{
 		this.robo = roboTemp;
+	}
+
+	public boolean eRugoso()
+	{
+		return (this instanceof Rugoso);
+	}
+
+	public boolean eDeposito()
+	{
+		return (this instanceof Deposito);
+	}
+
+	public Deposito toDeposito()
+	{
+		return (Deposito)this;
+	}
+
+	public boolean eBase()
+	{
+		return (this instanceof Base);
+	}
+
+	public Base toBase()
+	{
+		return (Base)this;
 	}
 }

@@ -122,6 +122,11 @@ public class Robo implements Programavel
     this.cristal = null;
     return cris;
   }
+
+  public void push(Empilhavel resp)
+  {
+    this.vm.pushDados(resp);
+  }
   
   /* Se não houver atraso, então a função executa o próximo comando do programa do robô. */
   public void executaAcao()

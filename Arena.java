@@ -18,19 +18,12 @@ public class Arena
 
   /****** Construtor ******/
 
-
   Arena(Mapa mapa)
   {
     this.mapa = mapa;
     tempo = 0;
     this.robos = new ArrayList<Robo>();//cria lista de robos vazia a principio
   }
-
-  /*public Empilhavel sistema(Acao act, Robo bot)
-  {
-    
-  }
-*/
 
   /****** Funções ******/
 
@@ -67,44 +60,41 @@ public class Arena
    this.tempo++;
  }
 
-
  /******
-    Essa função recebe um objeto do tipo Operacao representando
-    uma chamada ao sistema feita por algum robo.
-    A função executa a ação necessária para executar a operação passada
-    ***** */
- public void sistema(Operacao op)
- {
-  
-  Comando cmd = op.getCmd();
-  Robo robo = (Robo) op.getOrigem();
-  /* O comando que entra é do tipo bolado, existem alguns comandos bolados.  
-  Reconheceremos eles aqui  daremos a resposta dizendo se executamos ou   
-  não(de acordo com o estado do sistema)                                  */
-  int x = robo.getX();
-  int y = robo.getY();
-  Terreno terrAtual = mapa.getTerreno(x, y);
-  Terreno terrTemp = null;
-  Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
-
-  int valor = (int)(((Numero)cmd.getValor()).getVal());
-
-  try
+  Essa função recebe um objeto do tipo Operacao representando
+  uma chamada ao sistema feita por algum robo.
+  A função executa a ação necessária para executar a operação passada
+  ***** */
+  public void sistema(Operacao op)
   {
-    switch(valor)
-    {
-      case UP : terrTemp = mapa.getUp(x, y); break;
-      case UR : terrTemp = mapa.getUpRight(x, y); break;
-      case DR : terrTemp = mapa.getDownRight(x, y); break;
-      case DW : terrTemp = mapa.getDown(x, y); break;
-      case DL : terrTemp = mapa.getDownLeft(x, y); break;
-      case UL : terrTemp = mapa.getUpLeft(x, y); break;
-      default : System.out.println("Direçao inválida!");
+
+    Comando cmd = op.getCmd();
+    Robo robo = (Robo) op.getOrigem();
+    int x = robo.getX();
+    int y = robo.getY();
+    Terreno terrAtual = mapa.getTerreno(x, y);
+    Terreno terrTemp = null;
+    Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
+
+    int valor = (int)(((Numero)cmd.getValor()).getVal());
+
+    try
+     {
+      switch(valor)
+      {
+        case UP : terrTemp = mapa.getUp(x, y); break;
+        case UR : terrTemp = mapa.getUpRight(x, y); break;
+        case DR : terrTemp = mapa.getDownRight(x, y); break;
+        case DW : terrTemp = mapa.getDown(x, y); break;
+        case DL : terrTemp = mapa.getDownLeft(x, y); break;
+        case UL : terrTemp = mapa.getUpLeft(x, y); break;
+        default : System.out.println("Direçao inválida!");
+      }
     }
-  }
   catch(ArrayIndexOutOfBoundsException e)//acho que deveriamos fazer isso nas funções do mapa, mas foda-se
   {
     System.out.println("Tentando acessar posição fora do mapa!");
+    push(robo, resp);
     return;
   }
 
@@ -112,67 +102,60 @@ public class Arena
   o executarão de acordo com a funcionalidade de cada um.         */
   if(cmd.codeEquals("WALK") && !terrTemp.temRobo())
   { 
-    if(terrAtual instanceof Rugoso) 
+    if(terrAtual.eRugoso()) 
     {
       robo.setAtraso(new Atraso(op,3));
     }
     else
     {
-      terrAtual.removeRobo();
-      terrTemp.putRobo(robo);
-      robo.setPos(terrTemp.getPos());
+      this.moveRobo(terrAtual, terrTemp);
       resp = new Numero(1);
     }
   }
-  else if(cmd.codeEquals("COLLECT") && !robo.temCristal() 
-    && terrTemp instanceof Deposito && ((Deposito)terrTemp).temCristal() ) 
+  else if(cmd.codeEquals("COLLECT") && podeColetar(robo, terrTemp)) 
   {
-    Deposito dep = (Deposito) terrTemp;
+    Deposito dep = terrTemp.toDeposito();
     robo.coletaCristal(dep.popCristal());
     resp = new Numero(1);
   } 
-    else if(cmd.codeEquals("DROP") && terrTemp instanceof Base && robo.temCristal())//COISAS A SEREM REVISTAS AQUI ***************************************************
+  else if(cmd.codeEquals("DROP") && robo.temCristal())
+  {
+    if(terrTemp.eBase()) 
     {
-      //if(terrTemp instanceof Base)
-      ((Base)terrTemp).putCristal(robo.dropCristal());
-      /*else
-      {
-        Cristal cris = robo.dropCristal();
-        Terreno depTemp = mapa.getTerreno(cris.getX(), cris.getY());
-        ((Deposito)depTemp).putCristal(cris);
-      }*/
-      resp = new Numero(1);
+      dropCristal(robo, terrTemp);
+      resp = new Numero(1);        
     }
-    else if(cmd.codeEquals("ATK") && terrTemp.temRobo())
-    {
-      Robo inim = terrTemp.getRobo();
-      inim.perdeVida(10);
-      /*if(!inim.temVida())
-      {
-
-      }*/
-      resp = new Numero(1);
-    }
-    robo.getVm().getDados().push(resp);
+    else perdeCristal(robo);
   }
+  else if(cmd.codeEquals("ATK") && terrTemp.temRobo())
+  {
+    Robo inim = terrTemp.getRobo();
+    inim.perdeVida(10);
+    /*if(!inim.temVida())
+    {
+
+    }*/
+    resp = new Numero(1);
+  }
+  this.push(robo, resp);//empilha a resposta no robo
+}
 
 
   /* Cria um robo na posição x,y : 
        -Retorna true caso tenha conseguido inserir,
        -Retorna false c.c.                            
   */
-  private boolean insereRobo(Robo rb)
+private boolean insereRobo(Robo rb)
+{
+  /* Tenta colocar o robo no mapa. Caso já 
+  exista um robo, a função irá retornar 0*/
+  if(mapa.putRobo(rb))
   {
-    /* Tenta colocar o robo no mapa. Caso já 
-    exista um robo, a função irá retornar 0*/
-    if(mapa.putRobo(rb))
-    {
-      this.robos.add(rb);
-      return true;
-    }
-    return false;
+    this.robos.add(rb);
+    return true;
   }
-
+    return false;
+}
 
   public void insereExercito(Programa[] programas, Posicao[] posicoes, int time)
   {
@@ -190,33 +173,7 @@ public class Arena
         System.out.println("Falha ao tentar inserir o robo "+i);
     }
 
-  }
-
-
-  //função que insere exercito forRealz
-  /**private boolean insereExercito(int time)
-  {
-    Random rand = new Random(tempo);
-    Robo novoRobo;
-    Terreno terr;
-    int x, y;
-    
-    for(int i = 0; i < TAM_EX; i++)
-    {
-      do
-      {
-        x = rand.nextInt(mapa.largura);
-        y = rand.nextInt(mapa.altura);
-        terr = this.mapa.getTerreno(x, y);
-      }
-      while(terr.temRobo());
-      
-      novoRobo = new Robo(this,x, y, time);
-      terr.putRobo(novoRobo);
-      this.robos.add(novoRobo);
-    }
-    return true;
-  }
+  }  
 
   /* Função que removerá um exército(robô) na posição (x,y) passada como parâmetro. */
   public void removeExercito(int x, int y)
@@ -241,6 +198,35 @@ public class Arena
         }
       }
     }
+  }
+
+  private void moveRobo(Terreno origem, Terreno destino)
+  {
+    Robo robo = origem.removeRobo();
+    destino.putRobo(robo);
+    robo.setPos(destino.getPos());
+  }
+
+  private boolean podeColetar(Robo robo, Terreno destino)
+  {
+    return (!robo.temCristal() && destino.eDeposito() && destino.toDeposito().temCristal());
+  }
+
+  private void dropCristal(Robo robo, Terreno destino)
+  {
+    destino.toBase().putCristal(robo.dropCristal());
+  }
+
+  private void perdeCristal(Robo robo)
+  {
+    Cristal cris = robo.dropCristal();
+    Terreno depTemp = mapa.getTerreno(cris.getX(), cris.getY());
+    depTemp.toDeposito().putCristal(cris);
+  }
+
+  private void push(Robo robo, Empilhavel resp)
+  {
+    robo.push(resp);
   }
 }
 
