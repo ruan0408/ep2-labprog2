@@ -6,6 +6,7 @@ public class Maquina
   private Pilha dados;
   private Empilhavel[] mem;
   private Programa prog;
+  private Variaveis vars;
   private Arena arena;
   private int index;
   private Programavel obj;
@@ -20,6 +21,7 @@ public class Maquina
     mem = new Empilhavel[10];
     prog = new Programa();
     dados = new Pilha();
+    vars = new Variaveis();
 
     obj = null;
 
@@ -181,6 +183,18 @@ private int executaCmd(Comando cmd)
   {
     this.prn();
   }
+  else if(cmd.codeEquals("ALO"))
+  {
+    this.alo();
+  }
+  else if(cmd.codeEquals("SET"))
+  {
+    this.set();
+  }
+  else if(cmd.codeEquals("GET"))
+  {
+    this.get();
+  }
   else if(cmd.codeEquals("WALK") || cmd.codeEquals("COLLECT")
     || cmd.codeEquals("DROP") || cmd.codeEquals("ATK")) 
   {
@@ -215,6 +229,35 @@ private int executaCmd(Comando cmd)
     arena.sistema(op); //Cast temporário de (Robo)
 
     //Push resp
+  }
+
+
+  /* Aloca uma variavel, e empilha seu endereco */
+  private void alo()
+  {
+    Endereco end = vars.aloc();
+    dados.push(end);
+  }
+
+  /*Desempilha um Empilhavel e um endereco, e coloca esse
+  Empilhavel no endereco dado, e o Endereco é empilhado de novo
+  na pilha*/
+  private void set()
+  {
+    Empilhavel aux1 = this.dados.pop();//pode gerar exceções
+    Empilhavel aux2 = this.dados.pop();
+    if(aux2 instanceof Endereco) vars.set((Endereco)aux2, aux1);
+    this.dados.push(aux1);   
+
+  }
+
+  /*
+    Desempilha um endereco, e substitui pelo valor
+    no endereco daquela variavel*/
+  private void get()
+  {
+    Empilhavel aux1 = this.dados.pop();//pode gerar exceções
+    if(aux1 instanceof Endereco) this.dados.push(vars.get((Endereco)aux1));
   }
 
   private void add()
