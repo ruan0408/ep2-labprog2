@@ -43,6 +43,11 @@ public class Mapa
 		return matriz[i][j];
 	}
 
+	public Terreno getTerreno(Posicao pos)
+	{
+		return matriz[pos.getX()][pos.getY()];
+	}
+
 	/* Região superior esquerda. */
 	public Terreno getUpLeft(int i, int j)
 	{

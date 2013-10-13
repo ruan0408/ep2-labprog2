@@ -131,10 +131,7 @@ public class Arena
   {
     Robo inim = terrTemp.getRobo();
     inim.perdeVida(10);
-    /*if(!inim.temVida())
-    {
-
-    }*/
+    if(!inim.temVida()) removeRobo(inim);
     resp = new Numero(1);
   }
   this.push(robo, resp);//empilha a resposta no robo
@@ -154,7 +151,7 @@ private boolean insereRobo(Robo rb)
     this.robos.add(rb);
     return true;
   }
-    return false;
+  return false;
 }
 
   public void insereExercito(Programa[] programas, Posicao[] posicoes, int time)
@@ -175,29 +172,25 @@ private boolean insereRobo(Robo rb)
 
   }  
 
-  /* Função que removerá um exército(robô) na posição (x,y) passada como parâmetro. */
-  public void removeExercito(int x, int y)
+  /* Remove todos os robos que pertencem ao time passado */
+  public void removeExercito(int time)
   {
-    Robo roboTemp;
 
-    roboTemp = mapa.getTerreno(x,y).getRobo();
-    mapa.getTerreno(x,y).removeRobo();
-    /* Verifica se existe ou não um robô na posição (x,y). */
-    if(roboTemp != null)
+    Iterator<Robo> it = robos.iterator();
+    while (it.hasNext()) 
     {
-      Iterator<Robo> it = robos.iterator();
-      /* Percorre a lista de robôs até encontrar o robô que desejamos remover.
-      Este é, então, removido da lista de robôs.                            */
-      while (it.hasNext()) 
-      {
-        Robo rb = it.next();
-        if (rb == roboTemp) 
-        {
-          it.remove();
-          break;
-        }
-      }
+      Robo rb = it.next();
+      if (rb.getTime() == time) removeRobo(rb);      
     }
+  }
+
+ /* Recebe um robo, que será retirado da lista de robos
+ ativos e que será removido do mapa */
+  private void removeRobo(Robo rb)
+  {
+    Posicao pos = rb.getPos();
+    mapa.getTerreno(pos).removeRobo();
+    robos.remove(rb);
   }
 
   private void moveRobo(Terreno origem, Terreno destino)

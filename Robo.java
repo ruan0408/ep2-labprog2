@@ -36,10 +36,20 @@ public class Robo implements Programavel
   {
     return this.pos.getY();
   }
+
+  public Posicao getPos()
+  {
+    return this.pos;
+  }
   
   public int getVida()
   {
     return this.vida;
+  }
+
+  public int getTime()
+  {
+    return this.time;
   }
 
   public Atraso getAtraso()
