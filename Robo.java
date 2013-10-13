@@ -47,12 +47,6 @@ public class Robo implements Programavel
     return this.atraso;
   }
 
-  public Maquina getVm()
-  {
-    return this.vm;
-  }
-
-  
   /****** Setters ******/
 
   public void setPos(Posicao pos)
