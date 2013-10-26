@@ -52,4 +52,9 @@ public class Comando
 	{
 		return this.code.equals(str);
 	}
+
+	/*String toString()
+	{
+		String s = 
+	}*/
 }

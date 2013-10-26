@@ -56,11 +56,11 @@ public class Maquina
  }
 
  /* Chama a função "executaCmd" no próximo comando, se o mesmo existir. */
- public void executaProx()
+ public void executaProx(int indRobo)
  {
    if(!this.temProx()) return;
 
-   this.index = executaCmd( prog.get(this.index) );
+   this.index = executaCmd( prog.get(this.index), indRobo );
 
  }
 
@@ -71,7 +71,7 @@ public class Maquina
 
 
 /* Função que recebe um comando e o executa, de acordo com seu código. */
-private int executaCmd(Comando cmd)
+private int executaCmd(Comando cmd, int indRobo)
 {
   Empilhavel valor = cmd.getValor();
   Empilhavel aux1, aux2;
@@ -81,6 +81,7 @@ private int executaCmd(Comando cmd)
   if(cmd.codeEquals("PUSH"))
   {
     this.dados.push(valor);
+    //System.out.println("Robo "+indRobo+": PUSH");
   }
   /* Remove ultimo membro da pilha. */
   else if(cmd.codeEquals("POP"))

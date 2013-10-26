@@ -33,16 +33,16 @@ public class Arena
      public void atualiza()
      {
       Robo roboTemp;
-      Iterator<Robo> it;
+      RndIterator<Robo> it;
       /* Aleatoriza o vetor de robôs. */
-      Collections.shuffle(robos);
+      //Collections.shuffle(robos);
 
       /* Percorre a lista de robôs, executando os comandos de cada um (de acordo com o estado de seu atraso). */
-      for(it = robos.iterator(); it.hasNext();)
+      for(it = new RndIterator<Robo>(robos); it.hasNext();)
       {
         roboTemp = it.next();
         if(!roboTemp.temAtraso())
-          roboTemp.executaAcao();
+          roboTemp.executaAcao(robos.indexOf(roboTemp));//Passo o indice do vetor que vai ter a ação executada para poder printar
         else
         {
           Atraso at = roboTemp.getAtraso();
@@ -52,7 +52,6 @@ public class Arena
            roboTemp.tiraAtraso();
          }
          else at.somaTempo(-1);
-
        }
      }
    /* Incrementa a unidade que trata do tempo transcorrido desde o início do programa.                
@@ -79,7 +78,7 @@ public class Arena
     int valor = (int)(((Numero)cmd.getValor()).getVal());
 
     try
-     {
+    {
       switch(valor)
       {
         case UP : terrTemp = mapa.getUp(x, y); break;
@@ -142,8 +141,8 @@ public class Arena
        -Retorna true caso tenha conseguido inserir,
        -Retorna false c.c.                            
   */
-private boolean insereRobo(Robo rb)
-{
+       private boolean insereRobo(Robo rb)
+       {
   /* Tenta colocar o robo no mapa. Caso já 
   exista um robo, a função irá retornar 0*/
   if(mapa.putRobo(rb))
@@ -154,73 +153,73 @@ private boolean insereRobo(Robo rb)
   return false;
 }
 
-  public void insereExercito(Programa[] programas, Posicao[] posicoes, int time)
+public void insereExercito(Programa[] programas, Posicao[] posicoes, int time)
+{
+  int tam = Math.min(programas.length, posicoes.length);
+
+
+  for(int i = 0; i < tam; i++)
   {
-    int tam = Math.min(programas.length, posicoes.length);
+    Robo rb = new Robo(this,posicoes[i], time);
+    rb.carregaPrograma(programas[i]);
 
-
-    for(int i = 0; i < tam; i++)
-    {
-      Robo rb = new Robo(this,posicoes[i], time);
-      rb.carregaPrograma(programas[i]);
-
-      if( insereRobo(rb) )
-        System.out.println("Robo "+i+" inserido com sucesso");
-      else
-        System.out.println("Falha ao tentar inserir o robo "+i);
-    }
-
-  }  
-
-  /* Remove todos os robos que pertencem ao time passado */
-  public void removeExercito(int time)
-  {
-
-    Iterator<Robo> it = robos.iterator();
-    while (it.hasNext()) 
-    {
-      Robo rb = it.next();
-      if (rb.getTime() == time) removeRobo(rb);      
-    }
+    if( insereRobo(rb) )
+      System.out.println("Robo "+i+" inserido com sucesso");
+    else
+      System.out.println("Falha ao tentar inserir o robo "+i);
   }
+
+}  
+
+/* Remove todos os robos que pertencem ao time passado */
+public void removeExercito(int time)
+{
+
+  Iterator<Robo> it = robos.iterator();
+  while (it.hasNext()) 
+  {
+    Robo rb = it.next();
+    if (rb.getTime() == time) removeRobo(rb);      
+  }
+}
 
  /* Recebe um robo, que será retirado da lista de robos
  ativos e que será removido do mapa */
-  private void removeRobo(Robo rb)
-  {
-    Posicao pos = rb.getPos();
-    mapa.getTerreno(pos).removeRobo();
-    robos.remove(rb);
-  }
+ private void removeRobo(Robo rb)
+ {
+  Posicao pos = rb.getPos();
+  mapa.getTerreno(pos).removeRobo();
+  robos.remove(rb);
+}
 
-  private void moveRobo(Terreno origem, Terreno destino)
-  {
-    Robo robo = origem.removeRobo();
-    destino.putRobo(robo);
-    robo.setPos(destino.getPos());
-  }
+private void moveRobo(Terreno origem, Terreno destino)
+{
+  Robo robo = origem.removeRobo();
+  destino.putRobo(robo);
+  robo.setPos(destino.getPos());
+}
 
-  private boolean podeColetar(Robo robo, Terreno destino)
-  {
-    return (!robo.temCristal() && destino.eDeposito() && destino.toDeposito().temCristal());
-  }
+private boolean podeColetar(Robo robo, Terreno destino)
+{
+  return (!robo.temCristal() && destino.eDeposito() && destino.toDeposito().temCristal());
+}
 
-  private void dropCristal(Robo robo, Terreno destino)
-  {
-    destino.toBase().putCristal(robo.dropCristal());
-  }
+private void dropCristal(Robo robo, Terreno destino)
+{
+  destino.toBase().putCristal(robo.dropCristal());
+}
 
-  private void perdeCristal(Robo robo)
-  {
-    Cristal cris = robo.dropCristal();
-    Terreno depTemp = mapa.getTerreno(cris.getX(), cris.getY());
-    depTemp.toDeposito().putCristal(cris);
-  }
+private void perdeCristal(Robo robo)
+{
+  Cristal cris = robo.dropCristal();
+  Terreno depTemp = mapa.getTerreno(cris.getX(), cris.getY());
+  depTemp.toDeposito().putCristal(cris);
+}
 
-  private void push(Robo robo, Empilhavel resp)
-  {
-    robo.push(resp);
-  }
+private void push(Robo robo, Empilhavel resp)
+{
+  robo.push(resp);
+}
 }
 
 

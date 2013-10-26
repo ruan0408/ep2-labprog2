@@ -133,11 +133,11 @@ public class Robo implements Programavel
   }
   
   /* Se não houver atraso, então a função executa o próximo comando do programa do robô. */
-  public void executaAcao()
+  public void executaAcao(int indRobo)
   {
     if(!this.temAtraso()) 
     {
-      this.vm.executaProx();
+      this.vm.executaProx(indRobo);
     }
       
   }
