@@ -201,7 +201,7 @@ private int executaCmd(Comando cmd, int indRobo)
   {
     this.sistema(cmd);
   }
-  
+  System.out.println("Robô "+indRobo+": "+cmd.toString());
   return novoIndice;
 }
 

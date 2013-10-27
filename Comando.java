@@ -53,8 +53,28 @@ public class Comando
 		return this.code.equals(str);
 	}
 
-	/*String toString()
+	public String toString()
 	{
-		String s = 
-	}*/
+		String s = code+" ";
+		if(valor != null)
+		{
+			if(valor instanceof Numero)
+			{
+				s+=((Numero)valor).getVal();
+			}
+			else if(valor instanceof Endereco)
+			{
+				s+=((Endereco)valor).get();
+			}
+			else if(valor instanceof Frase)
+			{
+				s+=((Frase)valor).getString();
+			}
+			else if(valor instanceof Terreno)
+			{
+				//ainda não implementado
+			}
+		}
+		return s;
+	}
 }
