@@ -159,6 +159,28 @@ Aqui daremos uma breve explicação sobre as interfaces presentes no projeto:
 
 \end{itemize}
 
+\section{Novas instruções}
+
+Nessa fase, criamos novas instruções. Breve explicação sobre elas:
+
+\begin{itemize}
+
+	\item \textbf{ALO}: Aloca uma variável local, e empilha um objeto do tipo \textbf{\color{red}Endereço}.
+	\item \textbf{GET}: Desempilha um \textbf{\color{red}Endereço}, e empilha o valor contido nesse Endereço.
+	\item \textbf{SET}: Desempilha dois elementos da pilha. Se o segundo for do tipo \textbf{\color{red}Endereço},
+	é colocado o valor do primeiro argumento desempilhado na variavel localizada no endereço desempilhado.
+	\item \textbf{Chamadas ao sistema}: Atualmente, todas as chamadas ao sistema devem ser acompanhadas de um argumento indicando a direção. As direções podem ser: 1 - Cima, 2 - Direita superior, 3 - Direita inferior, 4 - Baixo, 5 - Esquerda inferior, 6 - Esquerda superior. As instruções implementadas são:
+		\begin{itemize}
+
+		\item[+] \textbf{WALK}: O robô tenta andar para a posição indicada
+		\item[+] \textbf{COLLECT}: O robô tenta coletar cristais da posição indicada
+		\item[+] \textbf{DROP}: O robô tenta deixar o cristal na posição desejada. Se a posição não for uma base, o cristal é retornado para seu ponto inicial.
+		\item[+] \textbf{ATK}: O robô tenta atacar outro robo localizado na posição indicada.
+
+		\end{itemize}
+
+\end{itemize}
+
 
 \section{Tradutor em Perl}
 

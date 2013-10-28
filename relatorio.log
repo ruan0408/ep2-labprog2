@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.5.5)  28 OCT 2013 16:53
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.5.5)  28 OCT 2013 19:23
 entering extended mode
  %&-line parsing enabled.
 **relatorio.tex
@@ -399,12 +399,12 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
 <hex_array.jpg, id=21, 377.15906pt x 254.45062pt>
 File: hex_array.jpg Graphic file (type jpg)
- <use hex_array.jpg> [4 <./hex_array.jpg>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 168.
+ <use hex_array.jpg> [4 <./hex_array.jpg>] [5]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 190.
 
  (/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [5]
+) [6]
 (./relatorio.aux) ) 
 Here is how much of TeX's memory you used:
  2363 strings out of 495061
@@ -425,9 +425,9 @@ ec/ecrm1095.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx144
 0.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> <
 /home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/
 texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on relatorio.pdf (5 pages, 139257 bytes).
+Output written on relatorio.pdf (6 pages, 145940 bytes).
 PDF statistics:
- 318 PDF objects out of 1000 (max. 8388607)
+ 334 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
