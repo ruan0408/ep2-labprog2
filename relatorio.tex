@@ -109,8 +109,9 @@ Principais métodos:
 
 	\item \textbf{Construtor}: Recebe o sistema (arena) com o qual a máquina vai se comunicar e o Programável que a possuirá.
 				Mais uma vez, nesse ep, Programáveis são sempre robôs. Inicializa mem com tamanho 10 e index setado em 0(zero).
-	Funções mais importantes:
-		void executaProx(): executa o comando cmd da posição index do programa. Para isso chama a função executaCmd(cmd), caso o programa não tenha chegado ao fim.
+		
+
+	\item \textbf{{\color{red}int} executaProx()}: executa o comando cmd da posição index do programa. Para isso chama a função executaCmd(cmd), caso o programa não tenha chegado ao fim.
 		
 	\item \textbf{{\color{red}int} executaCmd({\color{red}Comando})}: Executa o comando passado como argumento. Verifica  qual o código do comando e realiza a devida ação.
 									 Retorna o índice do pŕoximo comando a ser lido. O sistema é chamado por meio da função sistema(), caso o comando passado precise de permissão da arena(i.e, se for ATK, COLLECT, DROP ou WALK).
