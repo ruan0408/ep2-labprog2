@@ -55,14 +55,33 @@ public class Comando
 
 	public String toString()
 	{
-		String s = code+" ";
-		if(valor != null)
+		String s = null;
+
+		if(codeEquals("WALK")) s += "Andou para ";
+		else if (codeEquals("COLLECT")) s += "Coletou cristal à ";	
+		else if (codeEquals("DROP")) s += "Dropou cristal à ";		
+		else if (codeEquals("ATK")) s += "Atacou à ";
+		else System.out.println("Não é syscall!!");
+
+		//if(valor != null)
+		//{
+		if(valor instanceof Numero)
 		{
-			if(valor instanceof Numero)
+			double aux = ((Numero)valor).getVal();
+			switch((int)aux)
 			{
-				s+=((Numero)valor).getVal();
+				case 1: s+="cima";break;
+				case 2: s+="direita superior";break;
+				case 3: s+="direita inferior";break;
+				case 4: s+="baixo";break;
+				case 5: s+="esquerda inferior";break;
+				case 6: s+="esquerda superior";break;
+				default : System.out.println("Direção inválida!");
 			}
-			else if(valor instanceof Endereco)
+			
+		}
+		else System.out.println("Isso não deveria acontecer!");
+			/*else if(valor instanceof Endereco)
 			{
 				s+=((Endereco)valor).get();
 			}
@@ -74,7 +93,7 @@ public class Comando
 			{
 				//ainda não implementado
 			}
-		}
+		}*/
 		return s;
 	}
 }
