@@ -37,11 +37,7 @@ public class Maquina
 
 
   /****** Funções ******/
-  public Pilha getDados()
-  {
-    return this.dados;
-  }
-
+  
   /* Função que recebe um programa (lista de comandos) e o insere na máquina virtual. */
   public void carregaPrograma(Programa progTemp)
   {
@@ -50,17 +46,18 @@ public class Maquina
   }
 
   /* Retorna TRUE se ainda não estivermos no fim do programa (se ainda houver um próximo comando) e FALSE c.c. */
-  public boolean temProx()
+  private boolean temProx()
   {
    return !(index >= prog.size());
- }
+  }
 
  /* Chama a função "executaCmd" no próximo comando, se o mesmo existir. */
- public void executaProx(int indRobo)
+ public boolean executaProx(int indRobo)
  {
-   if(!this.temProx()) return;
+   if(!this.temProx()) return false;
 
    this.index = executaCmd( prog.get(this.index), indRobo );
+   return true;
 
  }
 
@@ -200,8 +197,14 @@ private int executaCmd(Comando cmd, int indRobo)
     || cmd.codeEquals("DROP") || cmd.codeEquals("ATK")) 
   {
     this.sistema(cmd);
+    if(this.dados.look() instanceof Numero)
+    {
+      double resp = ((Numero)(this.dados.look())).getVal();
+      if((int)resp == 1) System.out.println("Robô "+indRobo+": "+cmd.toString());
+    }
+      
   }
-  System.out.println("Robô "+indRobo+": "+cmd.toString());
+  
   return novoIndice;
 }
 
