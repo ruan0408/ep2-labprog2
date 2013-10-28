@@ -85,33 +85,40 @@ Principais métodos dessa classe:
 Um objeto da classe Máquina possui os seguintes atributos:
 \begin{itemize}
 
-\item dados
+\item \textbf{dados}
 	Objeto do tipo Pilha. É a pilha de dados da maquina.
-\item mem
+\item \textbf{mem}
 	Vetor de Empilhaveis usado para o robo armazenar constantes.
-\item prog
+\item \textbf{prog}
 	Objeto do tipo Programa. É o vetor de comandos que aquela máquina executará.
-\item vars
+\item \textbf{vars}
 	Objeto do tipo variáveis. Guarda o estado atual das váriaveis de determinada máquina.
-\item arena
+\item \textbf{arena}
 	Referência para a Arena para a realização de chamadas ao sistema.
-\item index
+\item \textbf{index}
 	Inteiro que guarda o índice do próximo comando do programa a ser executado.
-\item obj
+\item \textbf{obj}
 	Objeto do tipo Programável. À princípio é apenas uma referência para o robô que contém aquela máquina.
 \end{itemize}
 
-Construtor: Recebe o sistema (arena) com o qual a máquina vai se comunicar e o Programável que a possuíra.
-			Mais uma vez, nesse ep, Programaveis são sempre robos. Inicializa mem com tamanho 10 e index setado em 0(zero).
-Funções mais importantes:
-	void executaProx(): executa o comando cmd da posição index do programa. Para isso chama a função executaCmd(cmd), caso o programa já não tenha chegado ao fim.
-	
-	int executaCmd(Comando cmd): Executa o comando passado como argumento. Verifica  qual o código do comando e realiza a devida ação.
-								 Retorna o índice do pŕoximo comando a ser lido. O sistema é chamado por meio da função sistema(), caso o comando passado precise de permissão da arena(i.e, se for ATK, COLLECT, DROP ou WALK).
 
-	void sistema(Comando cmd):	 Pede para o sistema executar o Comando cmd.
+Principais métodos:
 
-	As outras funções são, em geral, auxíliares e estão bem explicadas nos comentários.
+\begin{itemize}
+
+	\item \textbf{Construtor}: Recebe o sistema (arena) com o qual a máquina vai se comunicar e o Programável que a possuíra.
+				Mais uma vez, nesse ep, Programaveis são sempre robos. Inicializa mem com tamanho 10 e index setado em 0(zero).
+	Funções mais importantes:
+		void executaProx(): executa o comando cmd da posição index do programa. Para isso chama a função executaCmd(cmd), caso o programa já não tenha chegado ao fim.
+		
+	\item \textbf{{\color{red}int} executaCmd({\color{red}Comando})}: Executa o comando passado como argumento. Verifica  qual o código do comando e realiza a devida ação.
+									 Retorna o índice do pŕoximo comando a ser lido. O sistema é chamado por meio da função sistema(), caso o comando passado precise de permissão da arena(i.e, se for ATK, COLLECT, DROP ou WALK).
+
+	\item \textbf{{\color{red}void} sistema({\color{red}Comando})}:	 Pede para o sistema executar o Comando cmd.
+
+		As outras funções são, em geral, auxíliares e estão bem explicadas nos comentários.
+
+\end{itemize}
 
 \subsection{Classe Programa}
 
