@@ -57,7 +57,9 @@ public class Robo implements Programavel
     return this.atraso;
   }
 
+
   /****** Setters ******/
+
 
   public void setPos(Posicao pos)
   {
@@ -77,6 +79,8 @@ public class Robo implements Programavel
 
 
   /****** Funções ******/
+
+
   /* Recebe uma lista de comandos (programa) e o insere na máquina virtual do robô. */
 
   public void perdeVida(int dano)

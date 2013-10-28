@@ -7,6 +7,10 @@ public class Variaveis
 	private int freeIndex;
 	private int tam;
 
+
+        /****** Construtor ******/
+
+
 	public Variaveis()
 	{
 		mem = new Empilhavel[10];
@@ -24,6 +28,28 @@ public class Variaveis
 		}
 		else throw new IllegalArgumentException("Tamanho ilegal passado para alocar memória de variáveis.");
 	}
+
+
+        /****** Getters ******/
+
+
+	public Empilhavel get(Endereco end)
+	{
+		return mem[end.get()];
+	}
+
+
+        /****** Setters ******/
+
+
+	public void set(Endereco end, Empilhavel val)
+	{
+		mem[end.get()] = val;
+	}
+
+
+        /****** Funções ******/
+
 
 	/*Retorna um novo endereco de um local livre na memória (preenchido com um número) */
 	public Endereco aloc()
@@ -47,7 +73,6 @@ public class Variaveis
 	/*
 	Retorna a próxima posição livre do vetor.
 	Aumenta o vetor caso não exista tal posição.
-
 	*/
 
 	private void proxFreeIndex()
@@ -64,17 +89,6 @@ public class Variaveis
 	{
 		tam *=2;
 		mem = Arrays.copyOf(mem, tam);
-	}
-
-
-	public void set(Endereco end, Empilhavel val)
-	{
-		mem[end.get()] = val;
-	}
-
-	public Empilhavel get(Endereco end)
-	{
-		return mem[end.get()];
 	}
 
 }

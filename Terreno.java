@@ -4,18 +4,18 @@ public class Terreno
 	Posicao pos;
 
 
- /****** Construtor ******/
+ 	/****** Construtor ******/
 
 
 	Terreno(Posicao pos)
 	{
 		this.pos = pos;
 		this.robo = null;
-	}
-	
+	}	
 
 
 	/****** Getters ******/
+
 
 	public Robo getRobo()
 	{
@@ -40,8 +40,10 @@ public class Terreno
 
 	}
 
+
 	/****** Funções ******/
 
+	
 	/* Remove o robo desse terreno */
 	public Robo removeRobo()
 	{

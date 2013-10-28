@@ -5,10 +5,27 @@ public class Programa
 
 	ArrayList<Comando> prog;
 
+
+        /****** Construtor ******/
+
+
 	public Programa()
 	{
 		prog = new ArrayList<Comando>();
 	}
+
+
+        /****** Getters ******/
+
+
+	public Comando get(int i)
+	{
+		return prog.get(i);
+	}
+
+
+        /****** Funções ******/
+
 
 	public void add(Comando cmd)
 	{
@@ -18,10 +35,5 @@ public class Programa
 	public int size()
 	{
 		return prog.size();
-	}
-
-	public Comando get(int i)
-	{
-		return prog.get(i);
 	}
 }

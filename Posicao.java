@@ -2,11 +2,19 @@ public class Posicao
 {
 	private int x,y;
 
+
+        /****** Construtor ******/
+
+
 	public Posicao(int x, int y)
 	{
 		this.x = x;
 		this.y = y;
 	}
+
+
+        /****** Getters ******/
+
 
 	public int getX()
 	{
@@ -18,6 +26,9 @@ public class Posicao
 	{
 		return this.y;
 	}
+
+
+        /****** Setters ******/
 
 
 	public void setX(int v)

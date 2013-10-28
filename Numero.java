@@ -22,10 +22,4 @@ public class Numero implements Empilhavel
   }
 
 
-  /*public boolean ne(Numero n)
-  {
-  	return this.getVal() != n.getVal();
-  }*/
-
-
 }
