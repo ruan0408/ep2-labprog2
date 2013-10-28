@@ -56,11 +56,12 @@ public class Maquina
  }
 
  /* Chama a função "executaCmd" no próximo comando, se o mesmo existir. */
- public void executaProx(int indRobo)
+ public boolean executaProx(int indRobo)
  {
-   if(!this.temProx()) return;
+   if(!this.temProx()) return false;
 
    this.index = executaCmd( prog.get(this.index), indRobo );
+   return true;
 
  }
 

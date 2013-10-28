@@ -30,10 +30,11 @@ public class Arena
   /* Função que percorrerá a lista de robôs presentes na arena (em ordem aleatória). 
      Para cada robô encontrado, chamará uma função que executará o próximo comando   
      presente no programa do robô, dado o devido respeito às condições de atraso.    */
-     public void atualiza()
+     public boolean atualiza()
      {
       Robo roboTemp;
       RndIterator<Robo> it;
+      boolean alguemTemAcao = false;
       /* Aleatoriza o vetor de robôs. */
       //Collections.shuffle(robos);
 
@@ -42,7 +43,12 @@ public class Arena
       {
         roboTemp = it.next();
         if(!roboTemp.temAtraso())
-          roboTemp.executaAcao(robos.indexOf(roboTemp));//Passo o indice do vetor que vai ter a ação executada para poder printar
+        {
+          if(roboTemp.executaAcao(robos.indexOf(roboTemp)))//Passo o indice do vetor que vai ter a ação executada para poder printar
+          {
+            alguemTemAcao = true;
+          }
+        }
         else
         {
           Atraso at = roboTemp.getAtraso();
@@ -50,13 +56,15 @@ public class Arena
           {
            this.sistema( at.getOperacao());
            roboTemp.tiraAtraso();
-         }
-         else at.somaTempo(-1);
+          }
+          else at.somaTempo(-1);
+          alguemTemAcao = true;
        }
      }
    /* Incrementa a unidade que trata do tempo transcorrido desde o início do programa.                
    Ou seja, cada ciclo da função Atualiza representa uma unidade de tempo transcorrida no programa.*/
    this.tempo++;
+   return alguemTemAcao;
  }
 
  /******

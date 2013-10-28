@@ -66,7 +66,8 @@ public class Teste
 
 
 
-   for(int i = 0; i < 100; i++) arena.atualiza();
+   //for(int i = 0; i < 100; i++) arena.atualiza();
+  while(arena.atualiza());
 
 
 
