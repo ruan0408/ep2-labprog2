@@ -44,7 +44,7 @@ public class Arena
         roboTemp = it.next();
         if(!roboTemp.temAtraso())
         {
-          if(roboTemp.executaAcao(robos.indexOf(roboTemp)))//Passo o indice do vetor que vai ter a ação executada para poder printar
+          if(roboTemp.executaAcao())
           {
             alguemTemAcao = true;
           }
@@ -79,6 +79,7 @@ public class Arena
     Robo robo = (Robo) op.getOrigem();
     int x = robo.getX();
     int y = robo.getY();
+    int indRobo = robo.getInd();
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
     Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
@@ -111,16 +112,24 @@ public class Arena
   { 
     if(terrAtual.eRugoso()) 
     {
+      System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
       robo.setAtraso(new Atraso(op,3));
+      resp = new Numero(1); // Conseguiu se mover, mas vai demorar
     }
     else
     {
-      this.moveRobo(terrAtual, terrTemp);
-      resp = new Numero(1);
+      try{      
+        this.moveRobo(terrAtual, terrTemp);
+        System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrAtual.getX()+","+terrAtual.getY()+")");
+        resp = new Numero(1);
+      }catch(Exception e){
+        System.out.println("Robo "+indRobo+" não conseguiu se mover");
+      }
     }
   }
   else if(cmd.codeEquals("COLLECT") && podeColetar(robo, terrTemp)) 
   {
+    System.out.println("Robo "+indRobo+" coletou 1 cristal");
     Deposito dep = terrTemp.toDeposito();
     robo.coletaCristal(dep.popCristal());
     resp = new Numero(1);
@@ -130,15 +139,23 @@ public class Arena
     if(terrTemp.eBase()) 
     {
       dropCristal(robo, terrTemp);
+      System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
       resp = new Numero(1);        
     }
-    else perdeCristal(robo);
+    else{
+    System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
+     perdeCristal(robo);
+   }
   }
   else if(cmd.codeEquals("ATK") && terrTemp.temRobo())
   {
     Robo inim = terrTemp.getRobo();
     inim.perdeVida(10);
-    if(!inim.temVida()) removeRobo(inim);
+    System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
+    if(!inim.temVida()){
+      System.out.println("Robo "+inim.getInd()+" morreu");
+      removeRobo(inim);
+    } 
     resp = new Numero(1);
   }
   this.push(robo, resp);//empilha a resposta no robo
@@ -149,8 +166,8 @@ public class Arena
        -Retorna true caso tenha conseguido inserir,
        -Retorna false c.c.                            
   */
-       private boolean insereRobo(Robo rb)
-       {
+ private boolean insereRobo(Robo rb)
+  {
   /* Tenta colocar o robo no mapa. Caso já 
   exista um robo, a função irá retornar 0*/
   if(mapa.putRobo(rb))

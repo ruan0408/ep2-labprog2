@@ -52,11 +52,11 @@ public class Maquina
   }
 
  /* Chama a função "executaCmd" no próximo comando, se o mesmo existir. */
- public boolean executaProx(int indRobo)
+ public boolean executaProx()
  {
    if(!this.temProx()) return false;
 
-   this.index = executaCmd( prog.get(this.index), indRobo );
+   this.index = executaCmd( prog.get(this.index));
    return true;
 
  }
@@ -68,7 +68,7 @@ public class Maquina
 
 
 /* Função que recebe um comando e o executa, de acordo com seu código. */
-private int executaCmd(Comando cmd, int indRobo)
+private int executaCmd(Comando cmd)
 {
   Empilhavel valor = cmd.getValor();
   Empilhavel aux1, aux2;
@@ -197,11 +197,11 @@ private int executaCmd(Comando cmd, int indRobo)
     || cmd.codeEquals("DROP") || cmd.codeEquals("ATK")) 
   {
     this.sistema(cmd);
-    if(this.dados.look() instanceof Numero)
+   /* if(this.dados.look() instanceof Numero)
     {
       double resp = ((Numero)(this.dados.look())).getVal();
       if((int)resp == 1) System.out.println("Robô "+indRobo+": "+cmd.toString());
-    }
+    }*/
       
   }
   
@@ -438,14 +438,15 @@ private int executaCmd(Comando cmd, int indRobo)
 
   private void prn()
   {
+    int indR = ( (Robo)this.obj).getInd(); //Sabemos, por enquanto, que é um robô.
     Empilhavel aux1 = this.dados.pop();
     if(aux1 instanceof Numero)
     {
-      System.out.println(((Numero)aux1).getVal());
+      System.out.println("Robo "+indR+" diz: "+((Numero)aux1).getVal());
     }
     if (aux1 instanceof Frase) 
     {
-      System.out.println(((Frase)aux1).getString()); 
+     System.out.println("Robo "+indR+" diz: "+((Frase)aux1).getString()); 
     }
   }
 }

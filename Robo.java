@@ -2,6 +2,9 @@ import java.util.*;
 
 public class Robo implements Programavel
 {
+  private static int cont = 0;
+
+  private int ind;
   private Maquina vm;
   private int vida;
   private Posicao pos;
@@ -20,12 +23,17 @@ public class Robo implements Programavel
     this.pos = pos;
     this.atraso = null; 
     this.time = time;
+    this.ind = cont++;
     cristal = null;
   }
 
 
   /****** Getters ******/
 
+  public int getInd()
+  {
+    return this.ind;
+  }
 
   public int getX()
   {
@@ -137,11 +145,11 @@ public class Robo implements Programavel
   }
   
   /* Se não houver atraso, então a função executa o próximo comando do programa do robô. */
-  public boolean executaAcao(int indRobo)
+  public boolean executaAcao()
   {
     if(!this.temAtraso()) 
     {
-      return this.vm.executaProx(indRobo);
+      return this.vm.executaProx();
     }
     return true;
   }

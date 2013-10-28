@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.5.5)  28 OCT 2013 13:01
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.5.5)  28 OCT 2013 16:53
 entering extended mode
  %&-line parsing enabled.
 **relatorio.tex
@@ -335,68 +335,99 @@ Package color Info: Driver file: pdftex.def on input line 130.
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
 \Gread@gobject=\count100
-)) (./relatorio.aux)
+))
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+)
+\Gin@req@height=\dimen113
+\Gin@req@width=\dimen114
+) (./relatorio.aux)
 \openout1 = `relatorio.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count101
-\scratchdimen=\dimen113
+\scratchdimen=\dimen115
 \scratchbox=\box28
 \nofMPsegments=\count102
 \nofMParguments=\count103
-\everyMPshowfont=\toks21
+\everyMPshowfont=\toks22
 \MPscratchCnt=\count104
-\MPscratchDim=\dimen114
+\MPscratchDim=\dimen116
 \MPnumerator=\count105
-\everyMPtoPDFconversion=\toks22
+\everyMPtoPDFconversion=\toks23
 )
 
 LaTeX Warning: No \author given.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 21.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 22.
 (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 21.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 22.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] (./relatorio.aux) 
-) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+<hex_array.jpg, id=21, 377.15906pt x 254.45062pt>
+File: hex_array.jpg Graphic file (type jpg)
+ <use hex_array.jpg> [4 <./hex_array.jpg>]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 168.
+
+ (/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [5]
+(./relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 2144 strings out of 495061
- 23862 string characters out of 1182622
- 80250 words of memory out of 3000000
- 5316 multiletter control sequences out of 15000+50000
- 17252 words of font info for 45 fonts, out of 3000000 for 9000
+ 2363 strings out of 495061
+ 27146 string characters out of 1182622
+ 84153 words of memory out of 3000000
+ 5514 multiletter control sequences out of 15000+50000
+ 18255 words of font info for 47 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 27i,8n,24p,561b,255s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/t
-ibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/tibuga/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </home/tibuga/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecrm0800.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecrm1095.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1
-440.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk>
- </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on relatorio.pdf (3 pages, 85660 bytes).
+ 27i,8n,24p,563b,255s stack positions out of 5000i,500n,10000p,200000b,50000s
+ </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt10
+95.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> 
+</home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/tib
+uga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/tibuga/.texmf
+-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </home/tibuga/.texmf-var/fonts
+/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour
+/jknappen/ec/ecrm0800.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/
+ec/ecrm1095.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx144
+0.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> <
+/home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on relatorio.pdf (5 pages, 139257 bytes).
 PDF statistics:
- 252 PDF objects out of 1000 (max. 8388607)
+ 318 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
