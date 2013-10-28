@@ -43,6 +43,41 @@ Cada robô imprime as instruções que execultou para que seja possível que nó
 
 \subsection{Classe Arena}
 
+Essa classe representa a Arena em si. Nela, temos os seguintes atributos:
+
+\begin{itemize}
+
+	\item \textbf{Mapa}: Objeto do tipo \textbf{\color{red}Mapa} que representa o mapa em si. Nesse objeto existe uma matriz de Terrenos, cada um contendo informações como robôs naquele terreno, assim como cristais, bases, etc. Melhores explicações sobre esse objeto serão dadas mais a frente.
+	
+	\item \textbf{List<{\color{red}Robos}>}: Objeto do tipo \textbf{\color{red}List} usado como uma lista de objetos do tipo \textbf{\color{red}Robo}. Essa lista contêm todos os robos em jogo.
+	
+	\item \textbf{Tempo}: Uma variável inteira representando o número de rodadas já passadas. O valor inicial dessa variável é 0 e, a cada rodada, é incrementada em 1.
+
+\end{itemize}
+
+Principais métodos dessa classe:
+
+\begin{itemize}
+
+\item \textbf{Arena({\color{red}Mapa})}: Construtor da classe. Recebe uma mapa, e retorna uma arena vazia, ou seja, com nenhum robo, o tempo é iniciado com 0, e o mapa passado é definido como o mapa da arena.
+
+\item \textbf{{\color{red}void} atualiza()}: Função que faz a Arena executar uma rodada. Atualmente, essa função percorre a lista de robôs de forma aleatória, executando em cada robô uma instrução de máquina. Em caso de conflito de instruções, tem preferência o robô que for executado primeiro naquela iteração.
+
+\item \textbf{{\color{red}void} sistema({\color{red}Operacao})}: Função chamada pelos robôs para fazerem chamadas ao sistema. Toda vez que os robôs tentam executar uma ação que influencia seu exterior, ele só pode fazê-lo chamando esse método. O objeto do tipo \textbf{\color{red}Operacao} recebido descreve qual operacao está sendo executada, e qual objeto Programável está tentando executar aquela ação. Dependendo da operação, esse método mexe na pilha do robo, e executa as ações pedidas, caso possível.
+
+\item \textbf{{\color{red}void} insereExercito({\color{red}Programa[ ]},{\color{red}Posicao[ ]},{\color{red}int})}: Função para inserir um exército de robôs na Arena. Para isso, recebe três argumentos:
+		\begin{itemize}
+			
+			\item[+] \textbf{Programa[ ]}: Um vetor de objetos do 				tipo {\color{red}Programa}. Para cada programa, será criado um robô a ser inserido na Arena.
+			
+			\item[+] \textbf{Posicao[ ]}: Um vetor com posições x,y 				indicando onde cada robô criado deve ser posicionado, 				seguindo a odem do vetor de programas.
+			
+			\item[+] \textbf{{\color{red}int} time}: Um inteiro que 				indica a qual time esse exército pertencerá.  			
+			
+		\end{itemize}				
+
+\end{itemize}
+
 
 \subsection{Classe Programa}
 
