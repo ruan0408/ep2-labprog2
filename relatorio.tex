@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{color}
+\usepackage{graphicx}
 
 
 \title{Relatório - EP Fase 2 \\ Laboratório de Programação 2}
@@ -119,6 +120,26 @@ Principais métodos:
 		As outras funções são, em geral, auxíliares e estão bem explicadas nos comentários.
 
 \end{itemize}
+
+\subsection{Classe Mapa}
+
+Essa classe é usada para representar o mapa que, em linhas gerais, é uma matriz hexagonal de objetos do tipo \textbf{\color{red}Terreno}. Nessa classe, temos 3 atributos: \textbf{\color{red}altura},\textbf{\color{red}largura} e uma matriz de objetos do tipo \textbf{\color{red}Terreno}.
+
+Os métodos dessa classe estão bem explicados ja no código.
+
+Para transformar a matriz normal em uma matriz hexagonal, tratamos ela assim como mostrado na imagem a seguir. Assim, apesar da matriz ser a usual, com a altura e largura definidas no atributo, usamos ela como uma matriz hexagonal através dos métodos da classe.
+
+\begin{figure}[h]
+
+    \center
+
+    \includegraphics[width=10cm]{hex_array.jpg}
+
+    \label{hexmatrix}
+
+    \caption{Imagem mostrando o modo de enumeração dos terrenos}
+
+\end{figure}
 
 \subsection{Classe Programa}
 
