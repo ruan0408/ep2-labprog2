@@ -252,7 +252,6 @@ private int executaCmd(Comando cmd, int indRobo)
     Empilhavel aux2 = this.dados.pop();
     if(aux2 instanceof Endereco) vars.set((Endereco)aux2, aux1);
     this.dados.push(aux1);   
-
   }
 
   /*

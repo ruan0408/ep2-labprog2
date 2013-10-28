@@ -42,7 +42,6 @@ public class Variaveis
 		int index = end.get();
 		mem[index] = null;
 		proxFreeIndex();
-
 	}
 
 	/*

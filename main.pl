@@ -55,8 +55,8 @@ print SAIDA <<FIM;
 
 		arena.insereExercito(programas, posicoes, 1);
 
-		for(int i = 0; i < 100; i++) arena.atualiza();
-
+		while(arena.atualiza());
+		
 	}
 }
 

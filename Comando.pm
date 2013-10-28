@@ -28,7 +28,14 @@ my %hashComandos = (
 	STO => 1,
 	RCL => 1,
 	END => 0,
-	PRN => 0
+	PRN => 0,
+	WALK => 1,
+	COLLECT => 1,
+	DROP => 1,
+	ATK => 1,
+	ALO => 0,
+	SET => 0,
+	GET => 0
 );
 
 #Construtor do objeto comando.
