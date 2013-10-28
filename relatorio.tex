@@ -145,6 +145,48 @@ Para transformar a matriz normal em uma matriz hexagonal, tratamos ela assim com
 
 \section{Interfaces}
 
+Aqui daremos uma breve explicação sobre as interfaces presentes no projeto:
+
+\begin{itemize}
+
+	\item \textbf{Programável}: Toda classe que implementa essa interface pode ser colocada dentro
+	de um obejto do tipo \textbf{\color{red}Maquina}. Ou seja, quem implementa essa interface é
+	todo aquele objeto que conterá uma máquina virtual. Por enquanto, só os robôs são programaveis,
+	mas no futuro alguns terrenos poderão ser programáveis.
+
+	\item \textbf{Empilhável}: Toda classe que implementa essa interface é tratada como um \emph{Empilhável},
+	ou seja, objetos que a máquina virtual manipula em sua pilha de execução e em sua memória.
+
+\end{itemize}
+
+
 \section{Tradutor em Perl}
+
+Para efeito de teste, adaptamos o montador em perl para gerar um arquivo Java que, ao ser executado, irá transformar os programas em linguagem de máquinas para robôs e irá executar iterações da Arena até que não existe mais nenhum outro robô para ser executado.
+
+Assim, para gerar esse arquivo em Java, chamado \textbf{\color{red}Main.java}, execute a seguinte linha de comando:
+\begin{verbatim}
+
+$>./montador.pl arquivo1 arquivo2 ... arquivoN
+
+\end{verbatim}
+
+\section{Modo de compilação}
+
+Para compilar, execute o seguinte comando:
+
+\begin{verbatim}
+
+$> javac *.java
+
+\end{verbatim}
+
+Caso você tenha gerado o arquivo Main.java com o script em perl, para executar o programa, execute:
+
+\begin{verbatim}
+
+$> java Main
+
+\end{verbatim}
 
 \end{document}
