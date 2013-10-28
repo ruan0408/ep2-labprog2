@@ -37,7 +37,7 @@ public class Mapa
 
 	public boolean existeTerreno(int i, int j)
 	{
-		return (i > 0 && i < altura && j > 0 && j < largura);
+		return (i >= 0 && i < altura && j >= 0 && j < largura);
 	}
 
 	/* Retorna o terreno na posição i,j */

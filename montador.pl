@@ -18,7 +18,7 @@ print SAIDA <<INTRO;
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[$n];
-		Mapa mapa = new Mapa($n,$n);
+		Mapa mapa = new Mapa(100,100);
 	    Arena arena = new Arena(mapa);
 	    Posicao[] posicoes = new Posicao[$n];
 	    Programa programa;

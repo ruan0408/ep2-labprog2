@@ -138,6 +138,7 @@ sub printVetorJava
 	my $prog = shift;
 	my $ARQ  = shift;
 	my $cmd;
+	my $b = 0;
 	print $ARQ qq|programa = new Programa();\n|;
 	for(my $i = 0; $i < $prog->getTam(); $i++)
 	{
@@ -146,10 +147,10 @@ sub printVetorJava
 		if($cmd->getCode() eq 'JMP' || $cmd->getCode() eq'JIF' || $cmd->getCode() eq'JIT')
 		{
 			$a = $cmd->getCode();
-			print $ARQ qq|programa.add( new Comando("$a", new Numero( $prog->{label}->{$cmd->getValor()} ));\n|;
+			print $ARQ qq|programa.add( new Comando("$a", new Numero( $prog->{label}->{$cmd->getValor()} )));\n|;
 			#print $cmd->getCode();
 		}
-		elsif($cmd->getCode() eq'PUSH' || $cmd->getCode() eq'POP' || $cmd->getCode() eq'STO' || $cmd->getCode() eq'RCL' ||
+		elsif($cmd->getCode() eq'PUSH' || $cmd->getCode() eq'STO' || $cmd->getCode() eq'RCL' ||
 			$cmd->getCode() eq'WALK' ||$cmd->getCode() eq'ATK'||$cmd->getCode() eq'DROP'||$cmd->getCode() eq'COLLECT')
 		{
 			$a = $cmd->getCode();
@@ -159,10 +160,14 @@ sub printVetorJava
 			{
 				print $ARQ qq|programa.add( new Comando("$a", new Numero($b) ));\n|;	
 			}
-			else #é string
+			elsif ($b =~ /[^(\s+)]/) 
 			{
 				print $ARQ qq|programa.add( new Comando("$a", new Frase("$b") ));\n|;		
 			}
+			#else #é string
+			#{
+			#	print $ARQ qq|programa.add( new Comando("$a", new Frase("$b") ));\n|;		
+			#}
 			
 		}
 		else
