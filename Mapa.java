@@ -118,15 +118,15 @@ public class Mapa
 	/* Região imediatamente inferior. */
 	public Terreno getDown(int i, int j)
 	{
-		if(!existeTerreno(i-1,j))throw new ArrayIndexOutOfBoundsException();
-		return matriz[i-1][j];
+		if(!existeTerreno(i+1,j))throw new ArrayIndexOutOfBoundsException();
+		return matriz[i+1][j];
 	}
 
 	/* Região imediatamente superior. */
 	public Terreno getUp(int i, int j)
 	{
-		if(!existeTerreno(i+1,j))throw new ArrayIndexOutOfBoundsException();
-		return matriz[i+1][j];
+		if(!existeTerreno(i-1,j))throw new ArrayIndexOutOfBoundsException();
+		return matriz[i-1][j];
 
 	}
 

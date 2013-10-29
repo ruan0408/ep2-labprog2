@@ -56,9 +56,9 @@ public class Arena
           {
            this.sistema( at.getOperacao());
            roboTemp.tiraAtraso();
-          }
-          else at.somaTempo(-1);
-          alguemTemAcao = true;
+         }
+         else at.somaTempo(-1);
+         alguemTemAcao = true;
        }
      }
    /* Incrementa a unidade que trata do tempo transcorrido desde o início do programa.                
@@ -91,20 +91,19 @@ public class Arena
       switch(valor)
       {
         case UP : terrTemp = mapa.getUp(x, y); break;
-        case UR : terrTemp = mapa.getUpRight(x, y); break;
-        case DR : terrTemp = mapa.getDownRight(x, y); break;
-        case DW : terrTemp = mapa.getDown(x, y); break;
-        case DL : terrTemp = mapa.getDownLeft(x, y); break;
-        case UL : terrTemp = mapa.getUpLeft(x, y); break;
+        case UR : terrTemp = mapa.getUpRight(x, y); break;      
+        case DR : terrTemp = mapa.getDownRight(x, y); break;        
+        case DW : terrTemp = mapa.getDown(x, y); break;        
+        case DL : terrTemp = mapa.getDownLeft(x, y); break;        
+        case UL : terrTemp = mapa.getUpLeft(x, y); break;        
         default : System.out.println("Direçao inválida!");
       }
     }
-  catch(ArrayIndexOutOfBoundsException e)//acho que deveriamos fazer isso nas funções do mapa, mas foda-se
-  {
-    System.out.println("Tentando acessar posição fora do mapa!");
-    push(robo, resp);
-    return;
-  }
+    catch(ArrayIndexOutOfBoundsException e)//acho que deveriamos fazer isso nas funções do mapa, mas foda-se
+    {
+      push(robo, resp);
+      return;
+    }
 
   /* If's que verificarão o comando que foi passado como operação e
   o executarão de acordo com a funcionalidade de cada um.         */
@@ -117,14 +116,10 @@ public class Arena
       resp = new Numero(1); // Conseguiu se mover, mas vai demorar
     }
     else
-    {
-      try{      
-        this.moveRobo(terrAtual, terrTemp);
-        System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrAtual.getX()+","+terrAtual.getY()+")");
-        resp = new Numero(1);
-      }catch(Exception e){
-        System.out.println("Robo "+indRobo+" não conseguiu se mover");
-      }
+    {     
+      this.moveRobo(terrAtual, terrTemp);
+      System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
+      resp = new Numero(1);
     }
   }
   else if(cmd.codeEquals("COLLECT") && podeColetar(robo, terrTemp)) 
@@ -143,9 +138,9 @@ public class Arena
       resp = new Numero(1);        
     }
     else{
-    System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
-     perdeCristal(robo);
-   }
+      System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
+      perdeCristal(robo);
+    }
   }
   else if(cmd.codeEquals("ATK") && terrTemp.temRobo())
   {
@@ -166,8 +161,8 @@ public class Arena
        -Retorna true caso tenha conseguido inserir,
        -Retorna false c.c.                            
   */
- private boolean insereRobo(Robo rb)
-  {
+       private boolean insereRobo(Robo rb)
+       {
   /* Tenta colocar o robo no mapa. Caso já 
   exista um robo, a função irá retornar 0*/
   if(mapa.putRobo(rb))
