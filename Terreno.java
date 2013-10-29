@@ -25,19 +25,16 @@ public class Terreno
 	public int getX()
 	{
 		return this.pos.getX();
-
 	}
 
 	public int getY()
 	{
 		return this.pos.getY();
-
 	}
 
 	public Posicao getPos()
 	{
 		return this.pos;
-
 	}
 
 

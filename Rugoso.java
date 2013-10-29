@@ -1,9 +1,9 @@
+
+/*Terreno do tipo rugoso, que atrasa o robo*/
 public class Rugoso extends Terreno
 {
 
-
-        /****** Construtor ******/
-
+    /****** Construtor ******/
 
 	public Rugoso(Posicao pos)
 	{

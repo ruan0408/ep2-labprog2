@@ -1,3 +1,5 @@
+/*Classe disponibilizada pelo Gubi no paca*/
+
 import java.util.*;
 
 // Esta classe implementa um iterador aleatório sobre um Vector de Strings

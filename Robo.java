@@ -88,9 +88,6 @@ public class Robo implements Programavel
 
   /****** Funções ******/
 
-
-  /* Recebe uma lista de comandos (programa) e o insere na máquina virtual do robô. */
-
   public void perdeVida(int dano)
   {
     this.vida -= dano;
@@ -101,6 +98,7 @@ public class Robo implements Programavel
     return this.vida > 0;
   }
 
+  /* Recebe uma lista de comandos (programa) e o insere na máquina virtual do robô. */
   public void carregaPrograma(Programa prog)
   {
     this.vm.carregaPrograma(prog);
