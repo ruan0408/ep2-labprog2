@@ -37,7 +37,7 @@ public class Mapa
 
 	public boolean existeTerreno(int i, int j)
 	{
-		return (i > 0 && i < altura && j > 0 && j < largura);
+		return (i >= 0 && i < altura && j >= 0 && j < largura);
 	}
 
 	/* Retorna o terreno na posição i,j */
@@ -118,15 +118,15 @@ public class Mapa
 	/* Região imediatamente inferior. */
 	public Terreno getDown(int i, int j)
 	{
-		if(!existeTerreno(i-1,j))throw new ArrayIndexOutOfBoundsException();
-		return matriz[i-1][j];
+		if(!existeTerreno(i+1,j))throw new ArrayIndexOutOfBoundsException();
+		return matriz[i+1][j];
 	}
 
 	/* Região imediatamente superior. */
 	public Terreno getUp(int i, int j)
 	{
-		if(!existeTerreno(i+1,j))throw new ArrayIndexOutOfBoundsException();
-		return matriz[i+1][j];
+		if(!existeTerreno(i-1,j))throw new ArrayIndexOutOfBoundsException();
+		return matriz[i-1][j];
 
 	}
 

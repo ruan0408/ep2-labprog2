@@ -225,7 +225,7 @@ private int executaCmd(Comando cmd)
 
       //Para testes, automaticamente adiciona um empilhavel na operação
 
-    op.pushArg(this.dados.pop());
+    //op.pushArg(this.dados.pop());
 
 
 

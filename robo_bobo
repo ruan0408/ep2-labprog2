@@ -1,0 +1,7 @@
+bla:    WALK 1
+		WALK 2
+		WALK 3
+		WALK 4
+		WALK 5
+		WALK 6
+		JMP bla
