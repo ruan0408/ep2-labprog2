@@ -1,3 +1,5 @@
+/* Classe que representa as instruções de máquina */
+
 public class Comando
 {
 	private String code;

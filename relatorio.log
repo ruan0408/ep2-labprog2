@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.5.5)  28 OCT 2013 19:23
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.5.5)  29 OCT 2013 13:35
 entering extended mode
  %&-line parsing enabled.
 **relatorio.tex
@@ -413,7 +413,7 @@ Here is how much of TeX's memory you used:
  5514 multiletter control sequences out of 15000+50000
  18255 words of font info for 47 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 27i,8n,24p,563b,255s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,24p,600b,255s stack positions out of 5000i,500n,10000p,200000b,50000s
  </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt10
 95.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> 
 </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/tib
@@ -425,9 +425,9 @@ ec/ecrm1095.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx144
 0.600pk> </home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> <
 /home/tibuga/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/
 texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on relatorio.pdf (6 pages, 145940 bytes).
+Output written on relatorio.pdf (6 pages, 152962 bytes).
 PDF statistics:
- 334 PDF objects out of 1000 (max. 8388607)
+ 355 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

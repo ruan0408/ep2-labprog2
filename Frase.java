@@ -1,3 +1,5 @@
+/* Classe que representa uma String como um empilhável */
+
 import java.lang.String;
 
 public class Frase implements Empilhavel

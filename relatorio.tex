@@ -169,7 +169,7 @@ Nessa fase, criamos novas instruções. Breve explicação sobre elas:
 	\item \textbf{GET}: Desempilha um \textbf{\color{red}Endereço}, e empilha o valor contido nesse Endereço.
 	\item \textbf{SET}: Desempilha dois elementos da pilha. Se o segundo for do tipo \textbf{\color{red}Endereço},
 	é colocado o valor do primeiro argumento desempilhado na variavel localizada no endereço desempilhado.
-	\item \textbf{Chamadas ao sistema}: Atualmente, todas as chamadas ao sistema devem ser acompanhadas de um argumento indicando a direção. As direções podem ser: 1 - Cima, 2 - Direita superior, 3 - Direita inferior, 4 - Baixo, 5 - Esquerda inferior, 6 - Esquerda superior. As instruções implementadas são:
+	\item \textbf{Chamadas ao sistema}\footnote{Atualmente, só o WALK chegou a ser testado e de fato implementado. Os outros comandos, apesar de implementados, não são possíveis de serem testados, já que o mapa é todod de terreno liso sem cristais e todos os robôs são do mesmo time.}: Atualmente, todas as chamadas ao sistema devem ser acompanhadas de um argumento indicando a direção. As direções podem ser: 1 - Cima, 2 - Direita superior, 3 - Direita inferior, 4 - Baixo, 5 - Esquerda inferior, 6 - Esquerda superior. As instruções implementadas são:
 		\begin{itemize}
 
 		\item[+] \textbf{WALK}: O robô tenta andar para a posição indicada

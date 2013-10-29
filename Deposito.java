@@ -1,3 +1,7 @@
+/*
+Classe que representa um terreno que pode conter um cristal
+*/
+
 public class Deposito extends Terreno
 {
 	private Cristal cristal;

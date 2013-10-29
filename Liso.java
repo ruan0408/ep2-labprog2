@@ -1,3 +1,5 @@
+/* Classe que representa um terreno normal, liso */
+
 public class Liso extends Terreno
 {
 

@@ -1,3 +1,9 @@
+/***
+Classe que representa uma instrução atrasada em um Robô.
+
+Exemplo: Robo tenta andar em um terreno rugoso. Ele demorará mais para completar essa ação do que o usual.
+***/
+
 public class Atraso
 {
 	private int temp;
