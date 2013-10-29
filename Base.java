@@ -1,3 +1,5 @@
+/* Classe que representa a base de algum time de robos */
+
 import java.util.*;
 
 public class Base extends Terreno

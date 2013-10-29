@@ -1,3 +1,5 @@
+/* Classe que representa um cristal */
+
 public class Cristal
 {
 	private int x, y;
