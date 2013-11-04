@@ -28,6 +28,32 @@ public class Mapa
 				matriz[i][j] = new Terreno(new Posicao(i,j));
 	}
 
+	//Construtor de mapa predefinido
+	public Mapa()
+	{
+		/*{ 0, 0, 0, 1, 2, 2, 2, 2, 1, 1},
+		 { 0, 0, 1, 1, 2, 2, 2, 2, 1, 1},
+		{ 0, 0, 1, 2, 2, 2, 0, 2, 1, 1},
+		 { 0, 0, 1, 1, 1, 2, 2, 2, 2, 2},
+		{ 0, 0, 0, 0, 1, 2, 2, 2, 2, 2},
+		 { 0, 0, 0, 1, 0, 2, 2, 2, 2, 2},
+		{ 0, 0, 1, 1, 0, 0, 0, 2, 2, 1},
+		 { 0, 0, 1, 1, 0, 0, 2, 2, 2, 1},
+		{ 1, 1, 1, 1, 0, 0, 0, 1, 1, 1},
+		 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}*/
+
+		matriz = new Terreno[100][100];
+		altura = 100;
+		largura = 100;
+
+		for(int i = 0; i < alt; i++)
+			for(int j = 0; j < larg; j++)
+				matriz[i][j] = new Terreno(new Posicao(i,j));
+
+		matriz[0][0] = new Base(new Posicao(0, 0), 1);
+		matriz[99[99] = new Base(new Posicao(99, 99), 2);
+	}
+
 
 /* ************************************
 	Funções que retornam o terreno de uma dada posição (i,j) e
