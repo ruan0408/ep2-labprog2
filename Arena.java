@@ -173,14 +173,20 @@ public class Arena
   return false;
 }
 
-public void insereExercito(Programa[] programas, Posicao[] posicoes, int time)
+public void insereExercito(Programa[] programas, int time)
 {
-  int tam = Math.min(programas.length, posicoes.length);
+  int tam = programas.length;
+  Posicao pos = new Posicao(0,0);
+  int maxX = this.mapa.largura() -1;
+  int maxY = this.mapa.altura() -1;
 
 
   for(int i = 0; i < tam; i++)
   {
-    Robo rb = new Robo(this,posicoes[i], time);
+   /* Robo rb = new Robo(this,posicoes[i], time);*/
+    pos.randXY(maxX,maxY);
+    Robo rb = new Robo(this, pos, time);
+
     rb.carregaPrograma(programas[i]);
 
     if( insereRobo(rb) )

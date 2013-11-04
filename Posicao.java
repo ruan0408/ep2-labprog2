@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Posicao
 {
 	private int x,y;
@@ -25,6 +27,22 @@ public class Posicao
 	public int getY()
 	{
 		return this.y;
+	}
+
+
+
+	/***
+	Aleatoria as cordenadas da posição, sendo que os atributos irão receber:
+
+	x = inteiro aleaório entre 0 e maxX
+	y = inteiro aleaório entre 0 e maxY
+
+	****/
+
+	public void randXY(int maxX, int maxY)
+	{
+		this.x = (int) (maxX*Math.random());
+		this.y = (int) (maxY*Math.random());
 	}
 
 

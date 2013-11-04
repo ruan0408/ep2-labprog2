@@ -46,12 +46,22 @@ public class Mapa
 		altura = 100;
 		largura = 100;
 
-		for(int i = 0; i < alt; i++)
-			for(int j = 0; j < larg; j++)
+		for(int i = 0; i < altura; i++)
+			for(int j = 0; j < largura; j++)
 				matriz[i][j] = new Terreno(new Posicao(i,j));
 
 		matriz[0][0] = new Base(new Posicao(0, 0), 1);
-		matriz[99[99] = new Base(new Posicao(99, 99), 2);
+		matriz[99][99] = new Base(new Posicao(99, 99), 2);
+	}
+
+	public int altura()
+	{
+		return this.altura;
+	}
+
+	public int largura()
+	{
+		return this.largura;
 	}
 
 
