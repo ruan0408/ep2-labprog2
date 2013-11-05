@@ -39,19 +39,19 @@ public class Mapa
 		 { 0, 0, 0, 1, 0, 2, 2, 2, 2, 2},
 		{ 0, 0, 1, 1, 0, 0, 0, 2, 2, 1},
 		 { 0, 0, 1, 1, 0, 0, 2, 2, 2, 1},
-		{ 1, 1, 1, 1, 0, 0, 0, 1, 1, 1},
+		{ 1, 1, 1, 1, 0, 0, 0, 1, 1, 1 },
 		 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}*/
 
-		matriz = new Terreno[100][100];
-		altura = 100;
-		largura = 100;
+		matriz = new Terreno[10][10];
+		altura = 10;
+		largura = 10;
 
 		for(int i = 0; i < altura; i++)
 			for(int j = 0; j < largura; j++)
 				matriz[i][j] = new Terreno(new Posicao(i,j));
 
 		matriz[0][0] = new Base(new Posicao(0, 0), 1);
-		matriz[99][99] = new Base(new Posicao(99, 99), 2);
+		matriz[9][9] = new Base(new Posicao(9, 9), 2);
 	}
 
 	public int altura()

@@ -11,9 +11,11 @@ class Celula
 		Polygon p = new Polygon();
 		BufferedImage ime;
 		Graphics2D Gime;
+		int r;
 
-		Celula(int x, int y, int r /*, BufferedImage t*/) {
-			//ime = t;
+		Celula(int x, int y, int r , BufferedImage t) {
+			ime = t;
+			this.r = r;
 
 			for (int i = 0; i < 6; i++)
 				p.addPoint(x + (int) (r * Math.cos(i * 2 * Math.PI / 6)),
@@ -24,9 +26,9 @@ class Celula
 
 		void draw(Graphics g) { 
 			Graphics2D g2d = (Graphics2D) g;
-			Rectangle r = new Rectangle(0,0,100,100);
-			//g2d.setPaint(new TexturePaint(ime, r));
-			g2d.setColor(Color.blue);
+			Rectangle rec = new Rectangle(0,0,100,100);
+			g2d.setPaint(new TexturePaint(ime, rec));
+			//g2d.setColor(Color.blue);
 			g2d.fill(p);
 	//		try{			Thread.sleep(50);}catch(Exception e){System.out.println("HUE");} 
 		}	
@@ -48,18 +50,18 @@ class Campo extends JPanel
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		for (int i = 0; i < 10; i++) 
-			for (int j = 0; j < 10; j++)
-				cel[i][j].draw(g); // pinta as células no contexto gráfico
+		for (int i = 0; i < cel.length; i++) 
+			for (int j = 0; j < cel[0].length; j++)
+				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
 	}
 }
 
 
 class Tela extends Frame
 {
-	public Tela(Campo campo) {
+	public Tela(Campo campo, int H, int W) {
 		setTitle("Polygon");
-		setSize(600, 600);
+		setSize(H, W);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -74,9 +76,13 @@ public class MapaVisual
 {
 	Mapa mapa;
 	Celula[][] cel;
+	int W,H, L;
 
 	public MapaVisual(Mapa mapa, int W, int H, int L) {
 		this.mapa = mapa;
+		this.W = W;
+		this.H = H;
+		this.L = L;
 		/*
 		setTitle("Polygon");
 		setSize(W, H);
@@ -90,13 +96,22 @@ public class MapaVisual
 	}
 
 
-	public void criaVisual(int L)
+	public void criaVisual()
 	{
 		Celula celTemp;
 	
 		double DELTA = 0.0;
 		double Dx = 3.0*L/2.0;
-		double Dy = (L*Math.sqrt(3) +0.11);
+		double Dy = (L*Math.sqrt(3));
+		BufferedImage mud = null;
+
+		try {
+			mud = ImageIO.read(this.getClass().getResource("mud.png"));
+		}
+		catch (Exception e) {
+			System.exit(1);
+		}
+
 
 		cel = new Celula[mapa.largura()][mapa.altura()];
 
@@ -106,8 +121,7 @@ public class MapaVisual
 			for(int j = 0; j < mapa.altura(); j++)
 			{
 				DELTA = i%2 == 1? Dy/2.0 : 0;
-				cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L);
-
+				cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, mud);
 				
 
 			}
@@ -119,7 +133,7 @@ public class MapaVisual
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Tela tela = new Tela(new Campo(cel));
+                Tela tela = new Tela(new Campo(cel), H, W);
                 tela.setVisible(true);
             }
         });

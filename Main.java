@@ -20,7 +20,7 @@ programas[0] = programa;
 
 
 	MapaVisual mv = new MapaVisual(mapa, 800, 800,30);
-	mv.criaVisual(30);
+	mv.criaVisual();
 	mv.abreJanela();
 
 
