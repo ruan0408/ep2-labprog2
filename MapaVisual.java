@@ -103,26 +103,33 @@ public class MapaVisual
 		double DELTA = 0.0;
 		double Dx = 3.0*L/2.0;
 		double Dy = (L*Math.sqrt(3));
-		BufferedImage mud = null;
+		BufferedImage lama = null;
+		BufferedImage grama = null;
 
-		try {
-			mud = ImageIO.read(this.getClass().getResource("mud.png"));
+		try 
+		{
+			lama = ImageIO.read(this.getClass().getResource("lama.png"));
 		}
-		catch (Exception e) {
-			System.exit(1);
+		catch (Exception e) {System.exit(1);}
+
+		try 
+		{
+			grama = ImageIO.read(this.getClass().getResource("grama.jpg"));
 		}
+		catch (Exception e) {System.exit(1);}
 
 
 		cel = new Celula[mapa.largura()][mapa.altura()];
-
 
 		for(int i = 0; i < mapa.largura(); i++)
 		{
 			for(int j = 0; j < mapa.altura(); j++)
 			{
 				DELTA = i%2 == 1? Dy/2.0 : 0;
-				cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, mud);
-				
+				if(mapa.getTerreno(j, i) instanceof Rugoso)
+					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, lama);
+				else if(mapa.getTerreno(j, i) instanceof Liso)
+					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, grama);
 
 			}
 		}

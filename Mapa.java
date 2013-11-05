@@ -48,10 +48,13 @@ public class Mapa
 
 		for(int i = 0; i < altura; i++)
 			for(int j = 0; j < largura; j++)
-				matriz[i][j] = new Terreno(new Posicao(i,j));
+				if(i >= j)
+					matriz[i][j] = new Rugoso(new Posicao(i,j));
+				else
+					matriz[i][j] = new Liso(new Posicao(i,j));
 
-		matriz[0][0] = new Base(new Posicao(0, 0), 1);
-		matriz[9][9] = new Base(new Posicao(9, 9), 2);
+		//matriz[0][0] = new Base(new Posicao(0, 0), 1);
+		//matriz[9][9] = new Base(new Posicao(9, 9), 2);
 	}
 
 	public int altura()
