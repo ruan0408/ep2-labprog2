@@ -157,12 +157,12 @@ public class Arena
 }
 
 
-  /* Cria um robo na posição x,y : 
-       -Retorna true caso tenha conseguido inserir,
-       -Retorna false c.c.                            
-  */
-       private boolean insereRobo(Robo rb)
-       {
+/* Cria um robo na posição x,y : 
+    -Retorna true caso tenha conseguido inserir,
+    -Retorna false c.c.                            
+*/
+private boolean insereRobo(Robo rb)
+{
   /* Tenta colocar o robo no mapa. Caso já 
   exista um robo, a função irá retornar 0*/
   if(mapa.putRobo(rb))

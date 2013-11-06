@@ -105,16 +105,23 @@ public class MapaVisual
 		double Dy = (L*Math.sqrt(3));
 		BufferedImage lama = null;
 		BufferedImage grama = null;
+		BufferedImage agua = null;
 
 		try 
 		{
-			lama = ImageIO.read(this.getClass().getResource("lama.png"));
+			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
 		}
 		catch (Exception e) {System.exit(1);}
 
 		try 
 		{
 			grama = ImageIO.read(this.getClass().getResource("grama.jpg"));
+		}
+		catch (Exception e) {System.exit(1);}
+
+		try 
+		{
+			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
 		}
 		catch (Exception e) {System.exit(1);}
 
@@ -130,6 +137,8 @@ public class MapaVisual
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, lama);
 				else if(mapa.getTerreno(j, i) instanceof Liso)
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, grama);
+				else if(mapa.getTerreno(j, i) instanceof Agua)
+					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, agua);
 
 			}
 		}
