@@ -65,6 +65,16 @@ public class Terreno
 		return (this instanceof Rugoso);
 	}
 
+	public boolean eLiso()
+	{
+		return (this instanceof Liso);
+	}
+
+	public boolean eAgua()
+	{
+		return (this instanceof Agua);
+	}
+
 	public boolean eDeposito()
 	{
 		return (this instanceof Deposito);

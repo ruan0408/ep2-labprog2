@@ -133,11 +133,11 @@ public class MapaVisual
 			for(int j = 0; j < mapa.altura(); j++)
 			{
 				DELTA = i%2 == 1? Dy/2.0 : 0;
-				if(mapa.getTerreno(j, i) instanceof Rugoso)
+				if(mapa.getTerreno(j, i).eRugoso())
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, lama);
-				else if(mapa.getTerreno(j, i) instanceof Liso)
+				else if(mapa.getTerreno(j, i).eLiso())
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, grama);
-				else if(mapa.getTerreno(j, i) instanceof Agua)
+				else if(mapa.getTerreno(j, i).eAgua())
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, agua);
 
 			}
