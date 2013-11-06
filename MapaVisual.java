@@ -57,7 +57,7 @@ class Campo extends JPanel
 }
 
 
-class Tela extends Frame
+class Tela extends JFrame
 {
 	public Tela(Campo campo, int H, int W) {
 		setTitle("Polygon");
@@ -110,21 +110,10 @@ public class MapaVisual
 		try 
 		{
 			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
-		}
-		catch (Exception e) {System.exit(1);}
-
-		try 
-		{
 			grama = ImageIO.read(this.getClass().getResource("grama.jpg"));
-		}
-		catch (Exception e) {System.exit(1);}
-
-		try 
-		{
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
 		}
 		catch (Exception e) {System.exit(1);}
-
 
 		cel = new Celula[mapa.largura()][mapa.altura()];
 
