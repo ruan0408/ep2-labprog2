@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 /* Referencia usada para visualização da numeração
 do mapa: 
 
@@ -26,6 +29,91 @@ public class Mapa
 		for(int i = 0; i < alt; i++)
 			for(int j = 0; j < larg; j++)
 				matriz[i][j] = new Terreno(new Posicao(i,j));
+	}
+
+	public Mapa(String arquivo)
+	{
+		String linTemp;
+		int[][] mapaInt = null;
+
+		 try
+		 {
+
+		 	 /* Abertura de arquivo. Fonte: http://www.roseindia.net/java/beginners/java-read-file-line-by-line.shtml */
+			 // Open the file that is the first 
+			 // command line parameter
+			 FileInputStream fstream = new FileInputStream(arquivo);
+			 // Get the object of DataInputStream
+			 DataInputStream in = new DataInputStream(fstream);
+			 BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+			 /* ************* */
+
+
+			 linTemp = br.readLine(); // Primeira linha tem as dimensões do mapa
+		     String[] dimS = linTemp.split(" "); 
+		     if(dimS.length < 2)  throw new IllegalArgumentException("Arquivo do mapa no formato errado"); // Arquivo no formato errado.
+
+		     // Construção da matriz que vai definir o mapa
+
+		     this.altura = Integer.parseInt(dimS[0]);
+		     this.largura = Integer.parseInt(dimS[1]);
+
+		     mapaInt = new int[altura][];
+
+		     for(int i = 0; i < altura; i++)
+		     	mapaInt[i] = traduzLinha(br.readLine(), largura);
+
+
+		 		//Close the input stream
+				in.close();
+			}
+			catch (Exception e)
+			{//Catch exception if any
+				System.err.println("Error: " + e.getMessage());
+				System.exit(-1);
+			}
+
+
+		     // Construção do mapa em si
+
+		     this.matriz = new Terreno[altura][largura];
+
+		     for(int i = 0; i < altura; i++)
+		     	for(int j = 0; j < largura; j++)
+		     	{
+		     		Posicao pos = new Posicao(i,j);
+		     		switch(mapaInt[i][j])
+		     		{
+		     			case 0: this.matriz[i][j] = new Liso(pos); break;
+		     			case 1: this.matriz[i][j] = new Rugoso(pos); break;
+		     			case 2: this.matriz[i][j] = new Agua(pos); break;
+
+
+		     			default: this.matriz[i][j] = new Liso(pos);
+
+		     		}
+		     	}
+
+
+
+
+
+
+		
+
+
+
+	}
+
+	private int[] traduzLinha(String linha, int tam)
+	{
+		String[] nums = linha.split(" ");
+		int[] resp = new int[tam];
+		for(int i = 0; i < tam; i++)
+				resp[i] = Integer.parseInt(nums[i]);
+
+		return resp;
 	}
 
 	//Construtor de mapa predefinido
