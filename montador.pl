@@ -18,9 +18,8 @@ print SAIDA <<INTRO;
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[$n];
-		Mapa mapa = new Mapa(100,100);
+		Mapa mapa = new Mapa("mapa.txt");
 	    Arena arena = new Arena(mapa);
-	    Posicao[] posicoes = new Posicao[$n];
 	    Programa programa;
 
 
@@ -44,7 +43,7 @@ while(@ARGV)
 		#$maq->executa();
 	}
 	
-	print SAIDA "posicoes[$i] = new Posicao($i,$i);\n";
+#	print SAIDA "posicoes[$i] = new Posicao($i,$i);\n";
 	print SAIDA "programas[$i] = programa;\n";
 	$i++;
 	close IN
@@ -52,10 +51,21 @@ while(@ARGV)
 
 print SAIDA <<FIM;
 
+		MapaVisual mv = new MapaVisual(mapa, 800, 800,30);
 
-		arena.insereExercito(programas, posicoes, 1);
+		mv.abreJanela();
 
-		while(arena.atualiza());
+
+		arena.insereExercito(programas, 1);
+
+		while(arena.atualiza())
+		{
+			try {
+   				 Thread.sleep(1000);
+			} catch(InterruptedException ex) {
+   				 Thread.currentThread().interrupt();
+			}
+		}
 		
 	}
 }
