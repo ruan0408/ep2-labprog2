@@ -8,14 +8,15 @@ import javax.swing.SwingUtilities;
 import java.awt.geom.Ellipse2D; // Circulo do robo
 
 class Celula
-    { 
+{ 
 		Polygon p = new Polygon();
 		BufferedImage ime;
 		Graphics2D Gime;
 		int x,y;
 		int r;
 
-		Celula(int x, int y, int r , BufferedImage t) {
+		Celula(int x, int y, int r , BufferedImage t) 
+		{
 			ime = t;
 			this.r = r;
 			this.x = x;
@@ -28,13 +29,14 @@ class Celula
 			//Gime = ime.createGraphics();
 		}
 
-		void draw(Graphics g) { 
+		void draw(Graphics g) 
+		{ 
 			Graphics2D g2d = (Graphics2D) g;
 			Rectangle rec = new Rectangle(0,0,100,100);
 			g2d.setPaint(new TexturePaint(ime, rec));
 			//g2d.setColor(Color.blue);
 			g2d.fill(p);
-	//		try{			Thread.sleep(50);}catch(Exception e){System.out.println("HUE");} 
+		//		try{			Thread.sleep(50);}catch(Exception e){System.out.println("HUE");} 
 		}
 
 		public int x()
@@ -52,9 +54,10 @@ class Celula
 			return this.r;
 		}	
 
-		void trans(int dx, int dy) {
+		void trans(int dx, int dy) 
+		{
 			p.translate(dx, dy);
-	}
+		}
 }	
 
 class Campo extends JPanel
@@ -80,13 +83,17 @@ class Campo extends JPanel
 		BufferedImage lama = null;
 		BufferedImage grama = null;
 		BufferedImage agua = null;
+		BufferedImage depSemCristal = null;
+		BufferedImage depComCristal = null;
 
 		try 
 		{
 			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
-			grama = ImageIO.read(this.getClass().getResource("grama.jpg"));
+			grama = ImageIO.read(this.getClass().getResource("grama.png"));
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
 			robo = ImageIO.read(this.getClass().getResource("robo.png"));
+			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
+			depComCristal = ImageIO.read(this.getClass().getResource("depositoocupado.png"));
 		}
 		catch (Exception e) {System.exit(1);}
 
@@ -103,12 +110,17 @@ class Campo extends JPanel
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, grama);
 				else if(mapa.getTerreno(j, i).eAgua())
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, agua);
+				else if(mapa.getTerreno(j, i).eDeposito() && mapa.getTerreno(j, i).toDeposito().temCristal())
+					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depComCristal);
+				else if(mapa.getTerreno(j, i).eDeposito() && !mapa.getTerreno(j, i).toDeposito().temCristal())
+					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depSemCristal);
 
 			}
 		}
 	}
 
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) 
+	{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		for (int i = 0; i < cel.length; i++) 
@@ -127,7 +139,7 @@ class Campo extends JPanel
 		int y = cel.y();
 		int raio = cel.raio();
 
-		Rectangle rec = new Rectangle(x-20/2,y-51/2,60/2,103/2);
+		Rectangle rec = new Rectangle(x-15,y-20,30,40);
 		g2d.setPaint(new TexturePaint(robo, rec));
 		g2d.fill(rec);
 
@@ -150,11 +162,14 @@ class Campo extends JPanel
 
 class Tela extends JFrame
 {
-	public Tela(Campo campo, int H, int W) {
+	public Tela(Campo campo, int H, int W) 
+	{
 		setTitle("Polygon");
 		setSize(H, W);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		addWindowListener(new WindowAdapter() 
+		{
+			public void windowClosing(WindowEvent e) 
+			{
 				System.exit(0);
 			}
 		});
@@ -185,12 +200,15 @@ public class MapaVisual
 
 
 	
-	public void abreJanela() {
+	public void abreJanela() 
+	{
 		Campo campo = new Campo(mapa,L);
 		this.tela = new Tela(campo, H, W);
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
             @Override
-            public void run() {
+            public void run() 
+            {
                 Tela telah = tela;
                 telah.setVisible(true);
             }

@@ -88,8 +88,9 @@ public class Mapa
 		     			case 0: this.matriz[i][j] = new Liso(pos); break;
 		     			case 1: this.matriz[i][j] = new Rugoso(pos); break;
 		     			case 2: this.matriz[i][j] = new Agua(pos); break;
-
-
+		     			case 3: this.matriz[i][j] = new Deposito(pos); 
+		     					this.matriz[i][j].toDeposito().putCristal(new Cristal(i,j));
+		     					break;
 		     			default: this.matriz[i][j] = new Liso(pos);
 
 		     		}
