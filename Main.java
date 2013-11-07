@@ -1,7 +1,7 @@
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[1];
-		Mapa mapa = new Mapa();
+		Mapa mapa = new Mapa("mapa.txt");
 	    Arena arena = new Arena(mapa);
 	    Posicao[] posicoes = new Posicao[1];
 	    Programa programa;
