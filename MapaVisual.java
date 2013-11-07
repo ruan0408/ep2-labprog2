@@ -61,6 +61,7 @@ class Campo extends JPanel
 {
 	Celula[][] cel;
 	Mapa mapa;
+	BufferedImage robo = null;
 
 	public Campo(Mapa mapa, int L)
 	{
@@ -85,6 +86,7 @@ class Campo extends JPanel
 			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
 			grama = ImageIO.read(this.getClass().getResource("grama.jpg"));
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
+			robo = ImageIO.read(this.getClass().getResource("robo.png"));
 		}
 		catch (Exception e) {System.exit(1);}
 
@@ -124,11 +126,21 @@ class Campo extends JPanel
 		int x = cel.x();
 		int y = cel.y();
 		int raio = cel.raio();
+
+		Rectangle rec = new Rectangle(x-20/2,y-51/2,60/2,103/2);
+		g2d.setPaint(new TexturePaint(robo, rec));
+		g2d.fill(rec);
+
+		//g2d.drawRect(x-20, y-51, 800, 500);
+		
+
+
+
 		//Graphics2D g2d = (Graphics2D)g;
 		// Assume x, y, and diameter are instance variables.
-		Ellipse2D.Double circle = new Ellipse2D.Double(x-raio/2, y-raio/2, raio, raio);
+	/*	Ellipse2D.Double circle = new Ellipse2D.Double(x-raio/2, y-raio/2, raio, raio);
 		g2d.setPaint(Color.blue);
-		g2d.fill(circle);
+		g2d.fill(circle);*/
 /*
 		g2d.setColor(Color.BLACK);
         g2d.fillOval(x, y, 10, 10);*/
