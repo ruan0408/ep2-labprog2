@@ -5,17 +5,21 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import javax.swing.SwingUtilities;
+import java.awt.geom.Ellipse2D; // Circulo do robo
 
 class Celula
     { 
 		Polygon p = new Polygon();
 		BufferedImage ime;
 		Graphics2D Gime;
+		int x,y;
 		int r;
 
 		Celula(int x, int y, int r , BufferedImage t) {
 			ime = t;
 			this.r = r;
+			this.x = x;
+			this.y = y;
 
 			for (int i = 0; i < 6; i++)
 				p.addPoint(x + (int) (r * Math.cos(i * 2 * Math.PI / 6)),
@@ -31,6 +35,21 @@ class Celula
 			//g2d.setColor(Color.blue);
 			g2d.fill(p);
 	//		try{			Thread.sleep(50);}catch(Exception e){System.out.println("HUE");} 
+		}
+
+		public int x()
+		{
+			return this.x;
+		}
+
+		public int y()
+		{
+			return this.y;
+		}
+
+		public int raio()
+		{
+			return this.r;
 		}	
 
 		void trans(int dx, int dy) {
@@ -41,62 +60,16 @@ class Celula
 class Campo extends JPanel
 {
 	Celula[][] cel;
-
-	public Campo(Celula[][] cel)
-	{
-		this.cel = cel;
-	}
-
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		for (int i = 0; i < cel.length; i++) 
-			for (int j = 0; j < cel[0].length; j++)
-				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
-	}
-}
-
-
-class Tela extends JFrame
-{
-	public Tela(Campo campo, int H, int W) {
-		setTitle("Polygon");
-		setSize(H, W);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		add(campo);
-		setVisible(true);
-	}
-}
-
-public class MapaVisual
-{
 	Mapa mapa;
-	Celula[][] cel;
-	int W,H, L;
 
-	public MapaVisual(Mapa mapa, int W, int H, int L) {
+	public Campo(Mapa mapa, int L)
+	{
 		this.mapa = mapa;
-		this.W = W;
-		this.H = H;
-		this.L = L;
-		/*
-		setTitle("Polygon");
-		setSize(W, H);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		add(new Campo(cel));
-		setVisible(true);*/
+		this.criaCampo(L);
+
 	}
 
-
-	public void criaVisual()
+	private void criaCampo(int L)
 	{
 		Celula celTemp;
 	
@@ -131,17 +104,86 @@ public class MapaVisual
 
 			}
 		}
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		for (int i = 0; i < cel.length; i++) 
+			for (int j = 0; j < cel[0].length; j++)
+			{
+
+				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
+				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j , g2d);
+			}
+	}
+
+	private void desenhaRobo(int i, int j, Graphics2D g2d)
+	{
+		Celula cel = this.cel[i][j];
+		int x = cel.x();
+		int y = cel.y();
+		int raio = cel.raio();
+		//Graphics2D g2d = (Graphics2D)g;
+		// Assume x, y, and diameter are instance variables.
+		Ellipse2D.Double circle = new Ellipse2D.Double(x-raio/2, y-raio/2, raio, raio);
+		g2d.setPaint(Color.blue);
+		g2d.fill(circle);
+/*
+		g2d.setColor(Color.BLACK);
+        g2d.fillOval(x, y, 10, 10);*/
+	}
+}
+
+
+class Tela extends JFrame
+{
+	public Tela(Campo campo, int H, int W) {
+		setTitle("Polygon");
+		setSize(H, W);
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		add(campo);
+		setVisible(true);
+	}
+}
+
+public class MapaVisual
+{
+	Mapa mapa;
+	Celula[][] cel;
+	int W,H, L;
+	Tela tela;
+
+	public MapaVisual(Mapa mapa, int W, int H, int L) {
+		this.mapa = mapa;
+		this.W = W;
+		this.H = H;
+		this.L = L;
 
 	}
 
+	public void atualiza()
+	{
+		tela.repaint();
+	}
+
+
+	
 	public void abreJanela() {
+		Campo campo = new Campo(mapa,L);
+		this.tela = new Tela(campo, H, W);
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Tela tela = new Tela(new Campo(cel), H, W);
-                tela.setVisible(true);
+                Tela telah = tela;
+                telah.setVisible(true);
             }
         });
+
     }
 
 

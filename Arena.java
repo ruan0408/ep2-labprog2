@@ -109,7 +109,7 @@ public class Arena
   o executarão de acordo com a funcionalidade de cada um.         */
   if(cmd.codeEquals("WALK") && !terrTemp.temRobo())
   { 
-    if(terrAtual.eRugoso()) 
+    if(terrAtual.eRugoso() && !robo.temAtraso()) 
     {
       System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
       robo.setAtraso(new Atraso(op,3));
