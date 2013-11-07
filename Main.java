@@ -26,9 +26,11 @@ programas[0] = programa;
 		while(arena.atualiza())
 		{
 			mv.atualiza();
-			try {
+			try 
+			{
    				 Thread.sleep(1000);
-			} catch(InterruptedException ex) {
+			} catch(InterruptedException ex)
+			 {
    				 Thread.currentThread().interrupt();
 			}
 		}
