@@ -31,8 +31,15 @@ class Celula
 
 		void draw(Graphics g) 
 		{ 
+			int height = ime.getHeight();
+			int width = ime.getWidth();
+			Double scale = height > width? 2.0*r/height : 2.0*r/width;
 			Graphics2D g2d = (Graphics2D) g;
-			Rectangle rec = new Rectangle(0,0,100,100);
+
+
+
+
+			Rectangle rec = new Rectangle(0,0,(int)(height*scale),(int)(width*scale));
 			g2d.setPaint(new TexturePaint(ime, rec));
 			//g2d.setColor(Color.blue);
 			g2d.fill(p);
