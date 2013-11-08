@@ -3,14 +3,6 @@ import java.lang.Enum;
 
 public class Arena
 {
-  private static final int TAM_EX = 10;
-  private static final int UP = 1;
-  private static final int UR = 2;
-  private static final int DR = 3;
-  private static final int DW = 4;
-  private static final int DL = 5;
-  private static final int UL = 6;
-
   private Mapa mapa;
   private List<Robo> robos;
   private int tempo;
@@ -74,8 +66,8 @@ public class Arena
   ***** */
   public void sistema(Operacao op)
   {
-
     Comando cmd = op.getCmd();
+    String code = cmd.getCode();
     Robo robo = (Robo) op.getOrigem();
     int x = robo.getX();
     int y = robo.getY();
@@ -83,87 +75,99 @@ public class Arena
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
     Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
-    int valor = 0;
-    Empilhavel arg = robo.pop();
-    if(arg instanceof Numero) 
-      valor = (int)((Numero)arg).getVal();//(int)(((Numero)cmd.getValor()).getVal());
-    else 
-    {
-      System.out.println("Argumento não-número!!!");//Temporário
-      System.exit(1);
-    }
+        
+    /* If's que verificarão o comando que foi passado como operação e
+    o executarão de acordo com a funcionalidade de cada um.         */
 
-    try
+    switch(Chamada.valueOf(code))
     {
-      switch(valor)
-      {
-        case UP : terrTemp = mapa.getUp(x, y); break;
-        case UR : terrTemp = mapa.getUpRight(x, y); break;      
-        case DR : terrTemp = mapa.getDownRight(x, y); break;        
-        case DW : terrTemp = mapa.getDown(x, y); break;        
-        case DL : terrTemp = mapa.getDownLeft(x, y); break;        
-        case UL : terrTemp = mapa.getUpLeft(x, y); break;        
-        default : System.out.println("Direçao inválida!");
-      }
-    }
-    catch(ArrayIndexOutOfBoundsException e)//acho que deveriamos fazer isso nas funções do mapa, mas foda-se
-    {
-      push(robo, resp);
-      return;
-    }
+      case WALK : 
+      case ATK : 
+      case COLLECT : 
+      case DROP :
+              try
+              {
+                Empilhavel arg = robo.pop();
+                int dir = 0;
+                if(arg instanceof Numero)dir = (int)((Numero)arg).getVal();
+                else
+                {
+                  System.out.println("Direção não numérica!");
+                  System.exit(1);
+                }
+                Direcao direcao = Direcao.toDirecao(dir);
+                switch(direcao)
+                {
+                  case UP : terrTemp = mapa.getUp(x, y); break;
+                  case UR : terrTemp = mapa.getUpRight(x, y); break;      
+                  case DR : terrTemp = mapa.getDownRight(x, y); break;        
+                  case DW : terrTemp = mapa.getDown(x, y); break;        
+                  case DL : terrTemp = mapa.getDownLeft(x, y); break;        
+                  case UL : terrTemp = mapa.getUpLeft(x, y); break;        
+                  default : System.out.println("Direçao inválida!");
+                }
+              }
+              catch(ArrayIndexOutOfBoundsException e)
+              {
+                push(robo, resp);
+                return;
+              }
+            
+            switch(Chamada.valueOf(code))
+            {
+              case WALK :
+                    if(terrAtual.eRugoso() && !robo.temAtraso()) 
+                    {
+                      System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
+                      robo.setAtraso(new Atraso(op,3));
+                      resp = new Numero(1); // Conseguiu se mover, mas vai demorar
+                    }
+                    else
+                    {     
+                      this.moveRobo(terrAtual, terrTemp);
+                      System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
+                      resp = new Numero(1);
+                    }
+                    break; 
 
-  /* If's que verificarão o comando que foi passado como operação e
-  o executarão de acordo com a funcionalidade de cada um.         */
-  if(cmd.codeEquals("WALK") && !terrTemp.temRobo())
-  { 
-    if(terrAtual.eRugoso() && !robo.temAtraso()) 
-    {
-      System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
-      robo.setAtraso(new Atraso(op,3));
-      resp = new Numero(1); // Conseguiu se mover, mas vai demorar
+              case ATK : 
+                    Robo inim = terrTemp.getRobo();
+                    inim.perdeVida(10);
+                    System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
+                    if(!inim.temVida())
+                    {
+                      System.out.println("Robo "+inim.getInd()+" morreu");
+                      removeRobo(inim);
+                    } 
+                    resp = new Numero(1);
+                    break;
+
+              case COLLECT : 
+                    System.out.println("Robo "+indRobo+" coletou 1 cristal");
+                    Deposito dep = terrTemp.toDeposito();
+                    robo.coletaCristal(dep.popCristal());
+                    resp = new Numero(1);
+                    break;
+
+              case DROP :
+                    if(terrTemp.eBase()) 
+                    {
+                      dropCristal(robo, terrTemp);
+                      System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
+                      resp = new Numero(1);        
+                    }
+                    else
+                    {
+                      System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
+                      perdeCristal(robo);
+                    }
+                    break;
+            }
+            default://Talvez outras chamadas venham aqui
     }
-    else
-    {     
-      this.moveRobo(terrAtual, terrTemp);
-      System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
-      resp = new Numero(1);
-    }
-  }
-  else if(cmd.codeEquals("COLLECT") && podeColetar(robo, terrTemp)) 
-  {
-    System.out.println("Robo "+indRobo+" coletou 1 cristal");
-    Deposito dep = terrTemp.toDeposito();
-    robo.coletaCristal(dep.popCristal());
-    resp = new Numero(1);
-  } 
-  else if(cmd.codeEquals("DROP") && robo.temCristal())
-  {
-    if(terrTemp.eBase()) 
-    {
-      dropCristal(robo, terrTemp);
-      System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
-      resp = new Numero(1);        
-    }
-    else{
-      System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
-      perdeCristal(robo);
-    }
-  }
-  else if(cmd.codeEquals("ATK") && terrTemp.temRobo())
-  {
-    Robo inim = terrTemp.getRobo();
-    inim.perdeVida(10);
-    System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
-    if(!inim.temVida()){
-      System.out.println("Robo "+inim.getInd()+" morreu");
-      removeRobo(inim);
-    } 
-    resp = new Numero(1);
-  }
-  this.push(robo, resp);//empilha a resposta no robo
+    this.push(robo, resp);//empilha a resposta no robo 
 }
-
-
+  
 /* Cria um robo na posição x,y : 
     -Retorna true caso tenha conseguido inserir,
     -Retorna false c.c.                            
