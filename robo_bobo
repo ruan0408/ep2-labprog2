@@ -1,7 +1,13 @@
-bla:    WALK 1
-		WALK 2
-		WALK 3
-		WALK 4
-		WALK 5
-		WALK 6
+bla:    PUSH 1
+		WALK
+		PUSH 2
+		WALK
+		PUSH 3
+		WALK
+		PUSH 4
+		WALK
+		PUSH 5
+		WALK
+		PUSH 6
+		WALK
 		JMP bla

@@ -150,8 +150,8 @@ sub printVetorJava
 			print $ARQ qq|programa.add( new Comando("$a", new Numero( $prog->{label}->{$cmd->getValor()} )));\n|;
 			#print $cmd->getCode();
 		}
-		elsif($cmd->getCode() eq'PUSH' || $cmd->getCode() eq'STO' || $cmd->getCode() eq'RCL' ||
-			$cmd->getCode() eq'WALK' ||$cmd->getCode() eq'ATK'||$cmd->getCode() eq'DROP'||$cmd->getCode() eq'COLLECT')
+		elsif($cmd->getCode() eq'PUSH' || $cmd->getCode() eq'STO' || $cmd->getCode() eq'RCL')
+			#$cmd->getCode() eq'WALK' ||$cmd->getCode() eq'ATK'||$cmd->getCode() eq'DROP'||$cmd->getCode() eq'COLLECT')
 		{
 			$a = $cmd->getCode();
 			$b = $cmd->getValor();

@@ -60,6 +60,8 @@ print SAIDA <<FIM;
 
 		while(arena.atualiza())
 		{
+			mv.atualiza();
+
 			try {
    				 Thread.sleep(1000);
 			} catch(InterruptedException ex) {

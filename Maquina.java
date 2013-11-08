@@ -64,7 +64,12 @@ public class Maquina
  public void pushDados(Empilhavel resp)
  {
   dados.push(resp);
-}
+ }
+
+ public Empilhavel popDados()
+ {
+    return dados.pop();
+ }
 
 
 /* Função que recebe um comando e o executa, de acordo com seu código. */

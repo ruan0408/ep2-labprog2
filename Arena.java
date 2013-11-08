@@ -83,8 +83,15 @@ public class Arena
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
     Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
-
-    int valor = (int)(((Numero)cmd.getValor()).getVal());
+    int valor = 0;
+    Empilhavel arg = robo.pop();
+    if(arg instanceof Numero) 
+      valor = (int)((Numero)arg).getVal();//(int)(((Numero)cmd.getValor()).getVal());
+    else 
+    {
+      System.out.println("Argumento não-número!!!");//Temporário
+      System.exit(1);
+    }
 
     try
     {
@@ -245,6 +252,11 @@ private void perdeCristal(Robo robo)
 private void push(Robo robo, Empilhavel resp)
 {
   robo.push(resp);
+}
+
+private Empilhavel pop(Robo robo)
+{
+  return robo.pop();
 }
 }
 

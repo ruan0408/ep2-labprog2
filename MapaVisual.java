@@ -36,9 +36,6 @@ class Celula
 			Double scale = height > width? 2.0*r/height : 2.0*r/width;
 			Graphics2D g2d = (Graphics2D) g;
 
-
-
-
 			Rectangle rec = new Rectangle(0,0,(int)(height*scale),(int)(width*scale));
 			g2d.setPaint(new TexturePaint(ime, rec));
 			//g2d.setColor(Color.blue);
@@ -61,7 +58,12 @@ class Celula
 			return this.r;
 		}	
 
-		void trans(int dx, int dy) 
+		public void setIme(BufferedImage img)
+		{
+			this.ime = img;
+		}
+
+		public void trans(int dx, int dy) 
 		{
 			p.translate(dx, dy);
 		}
@@ -72,6 +74,7 @@ class Campo extends JPanel
 	Celula[][] cel;
 	Mapa mapa;
 	BufferedImage robo = null;
+	BufferedImage depSemCristal = null;
 
 	public Campo(Mapa mapa, int L)
 	{
@@ -90,7 +93,6 @@ class Campo extends JPanel
 		BufferedImage lama = null;
 		BufferedImage grama = null;
 		BufferedImage agua = null;
-		BufferedImage depSemCristal = null;
 		BufferedImage depComCristal = null;
 
 		try 
@@ -102,7 +104,11 @@ class Campo extends JPanel
 			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("depositoocupado.png"));
 		}
-		catch (Exception e) {System.exit(1);}
+		catch (Exception e) 
+		{	
+			System.out.println("Faltam arqivos de imagem!");
+			System.exit(1);
+		}
 
 		cel = new Celula[mapa.largura()][mapa.altura()];
 
@@ -119,8 +125,8 @@ class Campo extends JPanel
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, agua);
 				else if(mapa.getTerreno(j, i).eDeposito() && mapa.getTerreno(j, i).toDeposito().temCristal())
 					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depComCristal);
-				else if(mapa.getTerreno(j, i).eDeposito() && !mapa.getTerreno(j, i).toDeposito().temCristal())
-					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depSemCristal);
+				//else if(mapa.getTerreno(j, i).eDeposito() && !mapa.getTerreno(j, i).toDeposito().temCristal())
+				//	cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depSemCristal);
 
 			}
 		}
@@ -134,10 +140,27 @@ class Campo extends JPanel
 			for (int j = 0; j < cel[0].length; j++)
 			{
 
-				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
+				//cel[i][j].draw(g2d); // pinta as células no contexto gráfico
+				if(mapa.getTerreno(i,j).eDeposito() && !mapa.getTerreno(i,j).toDeposito().temCristal())
+				{
+					cel[i][j].setIme(depSemCristal);
+				}
+				cel[i][j].draw(g2d); // pinta as células no contexto gráfico 
 				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j , g2d);
 			}
 	}
+
+	/*private void desenhaDepositoVazio(int i, int j,Graphics2D g2d)
+	{
+		Celula cel = this.cel[i][j];
+		int x = cel.x();
+		int y = cel.y();
+		int raio = cel.raio();
+
+		Rectangle rec = new Rectangle(0,0,100,100);
+		g2d.setPaint(new TexturePaint(depSemCristal, rec));
+		g2d.fill(rec);
+	}*/
 
 	private void desenhaRobo(int i, int j, Graphics2D g2d)
 	{
@@ -152,9 +175,6 @@ class Campo extends JPanel
 
 		//g2d.drawRect(x-20, y-51, 800, 500);
 		
-
-
-
 		//Graphics2D g2d = (Graphics2D)g;
 		// Assume x, y, and diameter are instance variables.
 	/*	Ellipse2D.Double circle = new Ellipse2D.Double(x-raio/2, y-raio/2, raio, raio);

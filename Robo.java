@@ -141,6 +141,11 @@ public class Robo implements Programavel
   {
     this.vm.pushDados(resp);
   }
+
+  public Empilhavel pop()
+  {
+    return this.vm.popDados();
+  }
   
   /* Se não houver atraso, então a função executa o próximo comando do programa do robô. */
   public boolean executaAcao()

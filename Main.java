@@ -7,12 +7,18 @@ public class Main{
 
 
 programa = new Programa();
-programa.add( new Comando("WALK", new Numero(1) ));
-programa.add( new Comando("WALK", new Numero(2) ));
-programa.add( new Comando("WALK", new Numero(3) ));
-programa.add( new Comando("WALK", new Numero(4) ));
-programa.add( new Comando("WALK", new Numero(5) ));
-programa.add( new Comando("WALK", new Numero(6) ));
+programa.add( new Comando("PUSH", new Numero(1) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(2) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(3) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(4) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(5) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(6) ));
+programa.add( new Comando("WALK", null));
 programa.add( new Comando("JMP", new Numero( 0 )));
 programas[0] = programa;
 
@@ -26,11 +32,10 @@ programas[0] = programa;
 		while(arena.atualiza())
 		{
 			mv.atualiza();
-			try 
-			{
+
+			try {
    				 Thread.sleep(1000);
-			} catch(InterruptedException ex)
-			 {
+			} catch(InterruptedException ex) {
    				 Thread.currentThread().interrupt();
 			}
 		}
