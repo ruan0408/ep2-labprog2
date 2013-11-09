@@ -74,7 +74,7 @@ public class Arena
     int indRobo = robo.getInd();
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
-    Empilhavel resp = new Numero(0);// a principio empilharemos falso, pode mudar nos if's abaixo
+    Empilhavel resp = new Numero(0);// por default a resposta é falso;
         
     /* If's que verificarão o comando que foi passado como operação e
     o executarão de acordo com a funcionalidade de cada um.         */
@@ -117,17 +117,21 @@ public class Arena
             switch(Instrucoes.valueOf(code))
             {
               case WALK :
-                    if(terrAtual.eRugoso() && !robo.temAtraso()) 
+                    if(!terrTemp.temRobo() && !terrTemp.eAgua())
                     {
-                      System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
-                      robo.setAtraso(new Atraso(op,3));
-                      resp = new Numero(1); // Conseguiu se mover, mas vai demorar
-                    }
-                    else
-                    {     
-                      this.moveRobo(terrAtual, terrTemp);
-                      System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
-                      resp = new Numero(1);
+                      if(terrAtual.eRugoso() && !robo.temAtraso()) 
+                      {
+                        System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
+                        robo.setAtraso(new Atraso(op,3));
+                        return; // Se nao tiver robo atrapalhando, empilharemos 1 daqui a tres rodadas, quando ele de fato conseguir se mover, enquanto isso ele fica de boa
+                        //resp = new Numero(1); // Conseguiu se mover, mas vai demorar
+                      }
+                      else
+                      {     
+                        this.moveRobo(terrAtual, terrTemp);
+                        System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
+                        resp = new Numero(1);
+                      }
                     }
                     break; 
 

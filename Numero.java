@@ -21,5 +21,4 @@ public class Numero implements Empilhavel
     return numero;
   }
 
-
 }

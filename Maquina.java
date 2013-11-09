@@ -383,7 +383,7 @@ private int executaCmd(Comando cmd)
       return;
     }
 
-    int tipo = (int) ((Numero)emp1).getVal();
+    int tipo = (int)((Numero)emp1).getVal();
     Empilhavel resp = new Numero(0); // Resposta default: FALSE
 
     switch(tipo)
@@ -397,7 +397,6 @@ private int executaCmd(Comando cmd)
       case 2: //Liso
         if(emp2 instanceof Liso) resp = new Numero(1);
         break;
-
 
       default: break;
     }

@@ -191,7 +191,7 @@ class Tela extends JFrame
 {
 	public Tela(Campo campo, int H, int W) 
 	{
-		setTitle("Polygon");
+		setTitle("Caça aos cristais!");
 		setSize(H, W);
 		addWindowListener(new WindowAdapter() 
 		{
@@ -209,23 +209,21 @@ public class MapaVisual
 {
 	Mapa mapa;
 	Celula[][] cel;
-	int W,H, L;
+	int W, H, L;
 	Tela tela;
 
-	public MapaVisual(Mapa mapa, int W, int H, int L) {
+	public MapaVisual(Mapa mapa, int W, int H, int L) 
+	{
 		this.mapa = mapa;
 		this.W = W;
 		this.H = H;
 		this.L = L;
-
 	}
 
 	public void atualiza()
 	{
 		tela.repaint();
 	}
-
-
 	
 	public void abreJanela() 
 	{
