@@ -77,139 +77,54 @@ private int executaCmd(Comando cmd)
 {
   Empilhavel valor = cmd.getValor();
   Empilhavel aux1, aux2;
+  String code = cmd.getCode();
   int novoIndice = this.index + 1;
+  int arg;
 
-  /* Insere na pilha. */
-  if(cmd.codeEquals("PUSH"))
+  switch(Instrucoes.valueOf(code))
   {
-    this.dados.push(valor);
-    //System.out.println("Robo "+indRobo+": PUSH");
+    case PUSH: this.dados.push(valor); break;
+    case POP : this.dados.pop(); break;
+    case DUP : this.dados.push(this.dados.look()); break;
+    case ADD : this.add(); break;
+    case SUB : this.sub(); break;
+    case DIV : this.div(); break;
+    case MUL : this.mul(); break;
+    case EQ  : this.eq(); break;
+    case GT  : this.gt(); break;
+    case GE  : this.ge(); break;
+    case LT  : this.lt(); break;
+    case LE  : this.le(); break;
+    case NE  : this.ne(); break;
+    
+    case JMP : novoIndice = (int) ((Numero)valor).getVal(); break;
+    
+    case JIT : arg = (int) ((Numero)valor).getVal();
+               novoIndice = this.jit(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
+    
+    case JIF : arg = (int) ((Numero)valor).getVal();
+               novoIndice = this.jif(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
+    
+    case STO : int index = ((int)((Numero)valor).getVal());
+               this.sto(index); break;
+    
+    case RCL : int index1;
+               index1 = (int) ((Numero)valor).getVal();
+               this.dados.push( this.mem[index1] ); break;//não remove o valor da memoria
+    
+    case END : novoIndice = this.prog.size(); break;
+    
+    case PRN : this.prn(); break;
+    case ALO : this.alo(); break;
+    case SET : this.set(); break;
+    case GET : this.get(); break;
+    case WALK:
+    case COLLECT:
+    case DROP:
+    case ATK : this.sistema(cmd); break;
+    default  : System.out.println("Não é instrução válida!");
+               System.exit(1);
   }
-  /* Remove ultimo membro da pilha. */
-  else if(cmd.codeEquals("POP"))
-  {
-    this.dados.pop();
-  }
-  /* Duplica o último elemento da pilha. */
-  else if(cmd.codeEquals("DUP"))
-  {
-    this.dados.push(this.dados.look());
-  }
-  /* Desempilha os dois últimos elementos da pilha, os soma e empilha o resultado. */
-  else if(cmd.codeEquals("ADD"))
-  {
-    this.add();
-  }
-  /* Desempilha os dois últimos elementos da pilha, subtrai o penultimo pelo ultimo e empilha o resultado. */
-  else if(cmd.codeEquals("SUB"))
-  {
-    this.sub();
-  }
-  /* Desempilha os dois últimos elementos da pilha, os multiplica e empilha o resultado. */
-  else if(cmd.codeEquals("MUL"))
-  {
-    this.mul();
-  }
-  /* Desempilha os dois últimos elementos da pilha, divide o penúltimo pelo ultimo e empilha o resultado. */
-  else if(cmd.codeEquals("DIV"))
-  {
-    this.div();
-  }
-  /* Desempilha os dois últimos elementos da pilha, empilha 1 caso sejam iguals e 0 caso contrário. */
-  else if(cmd.codeEquals("EQ"))
-  {
-    this.eq();
-  }
-  /* Desempilha os dois últimos elementos da pilha, empilha 1 se o penúltimo elemento for maior que o último, empilha 0 caso contrário. */
-  else if(cmd.codeEquals("GT"))
-  {
-    this.gt();
-  }
-  /* Desempilha os dois últimos elementos da pilha, empilha 1 se o penúltimo elemento for maior ou igual ao último, empilha 0 caso contrário. */
-  else if(cmd.codeEquals("GE"))
-  {
-    this.ge();
-  }
-  /* Desempilha os dois últimos elementos da pilha, empilha 1 se o penúltimo elemento for menor que o último, empilha 0 caso contrário. */
-  else if(cmd.codeEquals("LT"))
-  {
-    this.lt();
-  }
-  /* Desempilha os dois últimos elementos da pilha, empilha 1 se o penúltimo elemento for menor ou igual ao último, empilha 0 caso contrário. */
-  else if(cmd.codeEquals("LE"))
-  {
-    this.le();
-  }
-  /* Desempilha os dois últimos elementos da pilha, empilha 1 se eles forem diferentes e 0 caso contrário. */
-  else if(cmd.codeEquals("NE"))
-  {
-    this.ne();
-  }
-  /* Modifica o índice do programa para o valor passado como argumento ao comando. */
-  else if(cmd.codeEquals("JMP"))//assumo que os labels ja foram substituidos por numeros
-  {
-    novoIndice = (int) ((Numero)valor).getVal();
-  }
-  /* Se o último valor da pilha for 1, modifica o índice do programa para o valor passado como argumento ao comando. */
-  else if(cmd.codeEquals("JIT"))
-  {
-    int arg = (int) ((Numero)valor).getVal();
-    novoIndice = this.jit(arg, novoIndice);//vai pular para o indice arg, ou continuar em novoIndice
-  }
-  /* Se o último valor da pilha for 0, modifica o índice do programa para o valor passado como argumento ao comando. */
-  else if(cmd.codeEquals("JIF"))
-  {
-    int arg = (int) ((Numero)valor).getVal();
-    novoIndice = this.jif(arg, novoIndice);//vai pular para o indice arg, ou continuar em novoIndice
-  }
-  /* Desempilha o ultimo elemento da pilha de dados e o insere na memória na posição passada como argumento ao comando. */
-  else if(cmd.codeEquals("STO"))
-  {
-    int index = ((int)((Numero)valor).getVal());
-    this.sto(index);
-  }
-  /* Remove o dado armazenado na posição da memoria passada como argumento ao comando e o empilha na pilha de dados. */
-  else if(cmd.codeEquals("RCL"))
-  { 
-    int index1;
-    index1 = (int) ((Numero)valor).getVal();
-    this.dados.push( this.mem[index1] );//não remove o valor da memoria
-    //this.mem.remove(index);
-  }
-  /* Encerra o programa modificando o índice de leitura para uma linha depois da ultima linha de código, finalizando, desse modo, a leitura do programa. */
-  else if(cmd.codeEquals("END"))
-  {
-    novoIndice = this.prog.size();
-  }
-  /* Desempilha o ultimo elemento da pilha de dados e o imprime na saída padrão. */
-  else if(cmd.codeEquals("PRN"))
-  {
-    this.prn();
-  }
-  else if(cmd.codeEquals("ALO"))
-  {
-    this.alo();
-  }
-  else if(cmd.codeEquals("SET"))
-  {
-    this.set();
-  }
-  else if(cmd.codeEquals("GET"))
-  {
-    this.get();
-  }
-  else if(cmd.codeEquals("WALK") || cmd.codeEquals("COLLECT")
-    || cmd.codeEquals("DROP") || cmd.codeEquals("ATK")) 
-  {
-    this.sistema(cmd);
-   /* if(this.dados.look() instanceof Numero)
-    {
-      double resp = ((Numero)(this.dados.look())).getVal();
-      if((int)resp == 1) System.out.println("Robô "+indRobo+": "+cmd.toString());
-    }*/
-      
-  }
-  
   return novoIndice;
 }
 

@@ -79,7 +79,7 @@ public class Arena
     /* If's que verificarão o comando que foi passado como operação e
     o executarão de acordo com a funcionalidade de cada um.         */
 
-    switch(Chamada.valueOf(code))
+    switch(Instrucoes.valueOf(code))
     {
       case WALK : 
       case ATK : 
@@ -113,7 +113,7 @@ public class Arena
                 return;
               }
             
-            switch(Chamada.valueOf(code))
+            switch(Instrucoes.valueOf(code))
             {
               case WALK :
                     if(terrAtual.eRugoso() && !robo.temAtraso()) 
@@ -163,6 +163,7 @@ public class Arena
                     }
                     break;
             }
+            break;
             default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 

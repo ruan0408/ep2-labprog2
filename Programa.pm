@@ -146,14 +146,14 @@ sub printVetorJava
 		$cmd = $prog->getCmd($i);
 		if($cmd->getCode() eq 'JMP' || $cmd->getCode() eq'JIF' || $cmd->getCode() eq'JIT')
 		{
-			$a = $cmd->getCode();
+			$a = uc($cmd->getCode());
 			print $ARQ qq|programa.add( new Comando("$a", new Numero( $prog->{label}->{$cmd->getValor()} )));\n|;
 			#print $cmd->getCode();
 		}
 		elsif($cmd->getCode() eq'PUSH' || $cmd->getCode() eq'STO' || $cmd->getCode() eq'RCL')
 			#$cmd->getCode() eq'WALK' ||$cmd->getCode() eq'ATK'||$cmd->getCode() eq'DROP'||$cmd->getCode() eq'COLLECT')
 		{
-			$a = $cmd->getCode();
+			$a = uc($cmd->getCode());
 			$b = $cmd->getValor();
 			
 			if($b =~ /^(\d+)$/) #é número
@@ -172,7 +172,7 @@ sub printVetorJava
 		}
 		else
 		{
-			$a = $cmd->getCode();
+			$a = uc($cmd->getCode());
 			print $ARQ qq|programa.add( new Comando("$a", null));\n|;	
 		}
 	}
