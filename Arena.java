@@ -85,11 +85,12 @@ public class Arena
       case ATK : 
       case COLLECT : 
       case DROP :
+      case LOOK:
               try
               {
                 Empilhavel arg = robo.pop();
                 int dir = 0;
-                if(arg instanceof Numero)dir = (int)((Numero)arg).getVal();
+                if(arg instanceof Numero) dir = (int)((Numero)arg).getVal();
                 else
                 {
                   System.out.println("Direção não numérica!");
@@ -148,7 +149,9 @@ public class Arena
                     robo.coletaCristal(dep.popCristal());
                     resp = new Numero(1);
                     break;
-
+              case LOOK :
+                    if(terrTemp != null) resp = terrTemp;
+                    break;
               case DROP :
                     if(terrTemp.eBase()) 
                     {

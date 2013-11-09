@@ -1,4 +1,4 @@
-public class Terreno
+public class Terreno implements Empilhavel
 {
 	Robo robo;
 	Posicao pos;

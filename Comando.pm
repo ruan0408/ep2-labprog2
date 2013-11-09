@@ -35,7 +35,9 @@ my %hashComandos = (
 	ATK => 0,
 	ALO => 0,
 	SET => 0,
-	GET => 0
+	GET => 0,
+	LOOK => 0,
+	ISA => 0
 );
 
 #Construtor do objeto comando.

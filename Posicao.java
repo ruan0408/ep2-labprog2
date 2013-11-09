@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Posicao
+public class Posicao implements Empilhavel
 {
 	private int x,y;
 

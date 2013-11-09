@@ -1,6 +1,6 @@
 public enum Instrucoes
 {
-	PUSH, POP, DUP, ADD, SUB, MUL, DIV, JMP, JIT, JIF, EQ, GE, GT, LT, LE, NE, STO, RCL, END, PRN, WALK, COLLECT, DROP, ATK, ALO, SET, GET;
+	PUSH, POP, DUP, ADD, SUB, MUL, DIV, JMP, JIT, JIF, EQ, GE, GT, LT, LE, NE, STO, RCL, END, PRN, WALK, COLLECT, DROP, ATK, ALO, SET, GET, LOOK, ISA;
 
 	/*private String code;
 

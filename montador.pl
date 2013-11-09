@@ -63,7 +63,7 @@ print SAIDA <<FIM;
 			mv.atualiza();
 
 			try {
-   				 Thread.sleep(1000);
+   				 Thread.sleep(100);
 			} catch(InterruptedException ex) {
    				 Thread.currentThread().interrupt();
 			}

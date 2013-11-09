@@ -118,6 +118,8 @@ private int executaCmd(Comando cmd)
     case ALO : this.alo(); break;
     case SET : this.set(); break;
     case GET : this.get(); break;
+    case ISA : this.isa(); break;
+    case LOOK:
     case WALK:
     case COLLECT:
     case DROP:
@@ -369,4 +371,39 @@ private int executaCmd(Comando cmd)
      System.out.println("Robo "+indR+" diz: "+((Frase)aux1).getString()); 
     }
   }
+
+  private void isa()
+  {
+    Empilhavel emp1 = this.dados.pop();
+    Empilhavel emp2 = this.dados.pop();
+    if(!(emp1 instanceof Numero)) 
+    {
+      this.dados.push(new Numero(0));
+      System.out.println("Comparação inválida usando ISA.");
+      return;
+    }
+
+    int tipo = (int) ((Numero)emp1).getVal();
+    Empilhavel resp = new Numero(0); // Resposta default: FALSE
+
+    switch(tipo)
+    {
+      case 0: //Numero
+        if(emp2 instanceof Numero) resp = new Numero(1);
+        break;
+      case 1: //Terreno
+        if(emp2 instanceof Terreno) resp = new Numero(1);
+        break;
+      case 2: //Liso
+        if(emp2 instanceof Liso) resp = new Numero(1);
+        break;
+
+
+      default: break;
+    }
+
+    this.dados.push(resp);
+
+  }
+
 }
