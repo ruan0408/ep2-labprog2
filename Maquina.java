@@ -81,6 +81,7 @@ private int executaCmd(Comando cmd)
   int novoIndice = this.index + 1;
   int arg;
 
+
   switch(Instrucoes.valueOf(code))
   {
     case PUSH: this.dados.push(valor); break;

@@ -71,6 +71,7 @@ public class Arena
     Robo robo = (Robo) op.getOrigem();
     int x = robo.getX();
     int y = robo.getY();
+    int dir = 0;
     int indRobo = robo.getInd();
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
@@ -86,10 +87,9 @@ public class Arena
       case COLLECT : 
       case DROP :
       case LOOK:
-              try
+               try
               {
                 Empilhavel arg = robo.pop();
-                int dir = 0;
                 if(arg instanceof Numero) dir = (int)((Numero)arg).getVal();
                 else
                 {
@@ -112,7 +112,7 @@ public class Arena
               {
                 push(robo, resp);
                 return;
-              }
+              } 
             
             switch(Instrucoes.valueOf(code))
             {
@@ -123,11 +123,13 @@ public class Arena
                       {
                         System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
                         robo.setAtraso(new Atraso(op,3));
+                        robo.push(new Numero(dir)); //Reempilha a direção para uso futuro
                         return; // Se nao tiver robo atrapalhando, empilharemos 1 daqui a tres rodadas, quando ele de fato conseguir se mover, enquanto isso ele fica de boa
                         //resp = new Numero(1); // Conseguiu se mover, mas vai demorar
                       }
                       else
-                      {     
+                      {                        
+
                         this.moveRobo(terrAtual, terrTemp);
                         System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
                         resp = new Numero(1);
@@ -135,7 +137,7 @@ public class Arena
                     }
                     break; 
 
-              case ATK : 
+              case ATK :
                     Robo inim = terrTemp.getRobo();
                     inim.perdeVida(10);
                     System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
@@ -175,7 +177,39 @@ public class Arena
     }
     this.push(robo, resp);//empilha a resposta no robo 
 }
+
+
+/*private Terreno getTerrenoArg(Robo robo)
+{
+  Terreno terrTemp = null;
+  Empilhavel arg = robo.pop();
+  int dir = 0;
+  int x = robo.getX();
+  int y = robo.getY();
+
+
+  if(arg instanceof Numero) dir = (int)((Numero)arg).getVal();
+  else
+  {
+    System.out.println("Direção não numérica!");
+    return null;
+  }
+    Direcao direcao = Direcao.toDirecao(dir);
+    switch(direcao)
+    {
+      case UP : terrTemp = mapa.getUp(x, y); break;
+      case UR : terrTemp = mapa.getUpRight(x, y); break;      
+      case DR : terrTemp = mapa.getDownRight(x, y); break;        
+      case DW : terrTemp = mapa.getDown(x, y); break;        
+      case DL : terrTemp = mapa.getDownLeft(x, y); break;        
+      case UL : terrTemp = mapa.getUpLeft(x, y); break;        
+      default : System.out.println("Direçao inválida!");
+    }
   
+
+  return terrTemp;
+}
+  */
 /* Cria um robo na posição x,y : 
     -Retorna true caso tenha conseguido inserir,
     -Retorna false c.c.                            
