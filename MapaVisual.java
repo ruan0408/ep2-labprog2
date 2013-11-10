@@ -13,9 +13,9 @@ class Celula
 		BufferedImage ime;
 		Graphics2D Gime;
 		int x,y;
-		int r;
+		double r;
 
-		Celula(int x, int y, int r , BufferedImage t) 
+		Celula(int x, int y, double r , BufferedImage t) 
 		{
 			ime = t;
 			this.r = r;
@@ -53,7 +53,7 @@ class Celula
 			return this.y;
 		}
 
-		public int raio()
+		public double raio()
 		{
 			return this.r;
 		}	
@@ -85,16 +85,13 @@ class Campo extends JPanel
 
 	private void criaCampo(int L)
 	{
-		Celula celTemp;
-	
 		double DELTA = 0.0;
-		double Dx = 3.0*L/2.0;
-		double Dy = (L*Math.sqrt(3));
-		BufferedImage lama = null;
-		BufferedImage grama = null;
-		BufferedImage agua = null;
-		BufferedImage depComCristal = null;
-
+		double Dx = 2*L*Math.sqrt(3)/2;
+		double Dy = 2*L;
+		double raio = (L/2.0 + L*Math.sqrt(3)/2.0-7);// o 7 é optimal
+		BufferedImage lama, grama, agua, depComCristal, fundo; 
+		lama = grama = agua = depComCristal = fundo = null;
+		
 		try 
 		{
 			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
@@ -110,24 +107,19 @@ class Campo extends JPanel
 			System.exit(1);
 		}
 
-		cel = new Celula[mapa.largura()][mapa.altura()];
+		cel = new Celula[mapa.altura()][mapa.largura()];
 
-		for(int i = 0; i < mapa.largura(); i++)
-		{
-			for(int j = 0; j < mapa.altura(); j++)
+		for(int j = 0; j < mapa.largura(); j++)
+		{	
+			DELTA = j%2 == 1? L : 0;
+			for(int i = 0; i < mapa.altura(); i++)
 			{
-				DELTA = i%2 == 1? Dy/2.0 : 0;
-				if(mapa.getTerreno(j, i).eRugoso())
-					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, lama);
-				else if(mapa.getTerreno(j, i).eLiso())
-					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, grama);
-				else if(mapa.getTerreno(j, i).eAgua())
-					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, agua);
-				else if(mapa.getTerreno(j, i).eDeposito() && mapa.getTerreno(j, i).toDeposito().temCristal())
-					cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depComCristal);
-				//else if(mapa.getTerreno(j, i).eDeposito() && !mapa.getTerreno(j, i).toDeposito().temCristal())
-				//	cel[j][i] = new Celula((int)(L + i*Dx),(int) (DELTA + L + j*Dy), L, depSemCristal);
-
+				if(mapa.getTerreno(i, j).eRugoso())    fundo = lama;
+				else if(mapa.getTerreno(i, j).eLiso()) fundo = grama;
+				else if(mapa.getTerreno(i, j).eAgua()) fundo = agua;
+				else if(mapa.getTerreno(i, j).eDeposito() && mapa.getTerreno(i, j).toDeposito().temCristal())
+					fundo = depComCristal;
+				cel[i][j] = new Celula((int)(L/2.0 + j*Dx),(int)(L/2.0 + i*Dy + DELTA ), raio, fundo);
 			}
 		}
 	}
@@ -146,7 +138,7 @@ class Campo extends JPanel
 					cel[i][j].setIme(depSemCristal);
 				}
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico 
-				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j , g2d);
+				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j, g2d);
 			}
 	}
 
@@ -167,7 +159,7 @@ class Campo extends JPanel
 		Celula cel = this.cel[i][j];
 		int x = cel.x();
 		int y = cel.y();
-		int raio = cel.raio();
+		double raio = cel.raio();
 
 		Rectangle rec = new Rectangle(x-15,y-20,30,40);
 		g2d.setPaint(new TexturePaint(robo, rec));
