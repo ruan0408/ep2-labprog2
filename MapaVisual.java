@@ -128,6 +128,14 @@ class Campo extends JPanel
 	{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
+		try {
+        	  BufferedImage background = ImageIO.read(this.getClass().getResource("background.jpg"));
+ 		  g2d.drawImage(background, null, 0, 0);		
+ 
+       		} catch (Exception e) {
+       		} 
+
 		for (int i = 0; i < cel.length; i++) 
 			for (int j = 0; j < cel[0].length; j++)
 			{
