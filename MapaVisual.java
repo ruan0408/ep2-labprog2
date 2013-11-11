@@ -73,6 +73,7 @@ class Campo extends JPanel
 {
 	Celula[][] cel;
 	Mapa mapa;
+	BufferedImage base = null;
 	BufferedImage robo = null;
 	BufferedImage depSemCristal = null;
 
@@ -98,6 +99,7 @@ class Campo extends JPanel
 			grama = ImageIO.read(this.getClass().getResource("grama.png"));
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
 			robo = ImageIO.read(this.getClass().getResource("robo.png"));
+			base = ImageIO.read(this.getClass().getResource("base.png"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("depositoocupado.png"));
 		}
@@ -147,6 +149,7 @@ class Campo extends JPanel
 				}
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico 
 				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j, g2d);
+				if(mapa.getTerreno(i,j).eBase()) desenhaBase(i, j, g2d);
 			}
 	}
 
@@ -183,6 +186,18 @@ class Campo extends JPanel
 /*
 		g2d.setColor(Color.BLACK);
         g2d.fillOval(x, y, 10, 10);*/
+	}
+
+	private void desenhaBase(int i, int j, Graphics2D g2d)
+	/* Cópia do desenhaRobo. */
+	{
+		Celula cel = this.cel[i][j];
+		int x = cel.x();
+		int y = cel.y();
+
+		Rectangle rec = new Rectangle(x-15,y-20,30,40);
+		g2d.setPaint(new TexturePaint(base, rec));
+		g2d.fill(rec);
 	}
 }
 
