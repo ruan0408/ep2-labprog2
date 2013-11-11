@@ -8,7 +8,8 @@ package main;
 #Programa principal.
 #Cada linha é interpretada e vira um comando, ao termino do while, temos um programa ($prog),
 #que será executado pela maquina ($maq);
-$prog = novo Programa;
+
+
 
 my $erro = 0;
 
@@ -25,10 +26,68 @@ public class Main{
 
 INTRO
 
-my $i = 0;
-while(@ARGV)
+my @arquivos;
+my $proxTime;
+
+my @args = @ARGV;
+push @args,0;
+
+my $time = shift(@args);
+die "Erro de sintaxe na linha de comando" if($time !~ /\d+/);
+while($time > 0 && @args)
 {
-	my $arq = shift @ARGV;
+	$i = 0;
+	$n = 0;
+	my $arq = 0 ;
+	while(@args)
+	{
+		$arq =  shift @args;
+		last if($arq =~ /\d+/);
+		push @arquivos, $arq;
+
+	}
+	$proxTime = $arq;
+	$n = @arquivos;
+	print SAIDA "programas = new Programa[$n];\n";
+	while(@arquivos)
+	{
+		my $arq =  shift @arquivos;
+		interpretaArquivo($arq);
+	}
+
+	print SAIDA "arena.insereExercito(programas, $time);\n";
+	$time = $proxTime;
+}
+
+print SAIDA <<FIM;
+
+		MapaVisual mv = new MapaVisual(mapa, 800, 800,30);
+
+		mv.abreJanela();
+
+
+		while(arena.atualiza())
+		{
+			mv.atualiza();
+
+			try {
+   				 Thread.sleep(100);
+			} catch(InterruptedException ex) {
+   				 Thread.currentThread().interrupt();
+			}
+		}
+		
+	}
+}
+
+FIM
+
+
+sub interpretaArquivo
+{
+ 
+	my $arq = shift @_;
+	my $prog = novo Programa;
 	open (IN, $arq) or die "Erro ao tentar abrir o arquivo $arq\n";
 	while(<IN>)
 	{
@@ -48,30 +107,5 @@ while(@ARGV)
 	$i++;
 	close IN
 }
-
-print SAIDA <<FIM;
-
-		MapaVisual mv = new MapaVisual(mapa, 800, 800,30);
-
-		mv.abreJanela();
-
-
-		arena.insereExercito(programas, 1);
-
-		while(arena.atualiza())
-		{
-			mv.atualiza();
-
-			try {
-   				 Thread.sleep(100);
-			} catch(InterruptedException ex) {
-   				 Thread.currentThread().interrupt();
-			}
-		}
-		
-	}
-}
-
-FIM
 
 

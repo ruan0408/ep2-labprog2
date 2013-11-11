@@ -120,6 +120,9 @@ private int executaCmd(Comando cmd)
     case SET : this.set(); break;
     case GET : this.get(); break;
     case ISA : this.isa(); break;
+    case GETROBO://empilha o robo que esta na direção dada ou zero se nao tiver robo
+    case GETTIME://retorna o time do robo passado
+    case MYTIME://retona meu time
     case LOOK:
     case WALK:
     case COLLECT:
