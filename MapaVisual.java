@@ -87,9 +87,11 @@ class Campo extends JPanel
 	private void criaCampo(int L)
 	{
 		double DELTA = 0.0;
-		double Dx = 2*L*Math.sqrt(3)/2;
-		double Dy = 2*L;
-		double raio = (L/2.0 + L*Math.sqrt(3)/2.0-7);// o 7 é optimal
+		double Dx = 3*L/2.0;
+		double Dy = (L*Math.sqrt(3)-1);// o -1 é optimal
+		double metadeAlt = L*Math.sqrt(3)/2;
+		double metadeLarg = L;
+		double raio = L;//(L/2.0 + L*Math.sqrt(3)/2.0-7);// o 7 é optimal
 		BufferedImage lama, grama, agua, depComCristal, fundo; 
 		lama = grama = agua = depComCristal = fundo = null;
 		
@@ -113,7 +115,7 @@ class Campo extends JPanel
 
 		for(int j = 0; j < mapa.largura(); j++)
 		{	
-			DELTA = j%2 == 1? L : 0;
+			DELTA = j%2 == 1? metadeAlt : 0;
 			for(int i = 0; i < mapa.altura(); i++)
 			{
 				if(mapa.getTerreno(i, j).eRugoso())    fundo = lama;
@@ -121,7 +123,7 @@ class Campo extends JPanel
 				else if(mapa.getTerreno(i, j).eAgua()) fundo = agua;
 				else if(mapa.getTerreno(i, j).eDeposito() && mapa.getTerreno(i, j).toDeposito().temCristal())
 					fundo = depComCristal;
-				cel[i][j] = new Celula((int)(L/2.0 + j*Dx),(int)(L/2.0 + i*Dy + DELTA ), raio, fundo);
+				cel[i][j] = new Celula((int)(metadeLarg + j*Dx),(int)(metadeAlt + i*Dy + DELTA ), raio, fundo);
 			}
 		}
 	}
