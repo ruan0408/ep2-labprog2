@@ -1,6 +1,8 @@
 public class Main{
 	public static void main(String args[]){
+
 		Programa[] programas = new Programa[4];
+ 
 		Mapa mapa = new Mapa("mapa.txt");
 	    Arena arena = new Arena(mapa);
 	    Programa programa;
@@ -25,27 +27,9 @@ programas[0] = programa;
 arena.insereExercito(programas, 1);
 programas = new Programa[1];
 programa = new Programa();
-programa.add( new Comando("PUSH", new Numero(1) ));
-programa.add( new Comando("STO", new Numero(0) ));
-programa.add( new Comando("RCL", new Numero(0) ));
-programa.add( new Comando("LOOK", null));
-programa.add( new Comando("PUSH", new Numero(2) ));
-programa.add( new Comando("ISA", null));
-programa.add( new Comando("JIT", new Numero( 18 )));
-programa.add( new Comando("RCL", new Numero(0) ));
-programa.add( new Comando("PUSH", new Numero(1) ));
-programa.add( new Comando("ADD", null));
-programa.add( new Comando("DUP", null));
-programa.add( new Comando("PUSH", new Numero(7) ));
-programa.add( new Comando("EQ", null));
-programa.add( new Comando("JIF", new Numero( 16 )));
-programa.add( new Comando("POP", null));
-programa.add( new Comando("PUSH", new Numero(1) ));
-programa.add( new Comando("STO", new Numero(0) ));
-programa.add( new Comando("JMP", new Numero( 2 )));
-programa.add( new Comando("RCL", new Numero(0) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("JMP", new Numero( 2 )));
+programa.add( new Comando("MYTIME", null));
+programa.add( new Comando("PRN", null));
+programa.add( new Comando("END", null));
 programas[0] = programa;
 arena.insereExercito(programas, 2);
 
