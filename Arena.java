@@ -128,13 +128,14 @@ public class Arena
                         //resp = new Numero(1); // Conseguiu se mover, mas vai demorar
                       }
                       else
-                      {                        
+                      {              
 
                         this.moveRobo(terrAtual, terrTemp);
                         System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
                         resp = new Numero(1);
                       }
                     }
+                    
                     break; 
 
               case ATK :
@@ -179,6 +180,7 @@ public class Arena
                     if(terrTemp.temRobo()) resp = terrTemp.getRobo();
                     break;
             }
+    break;
     case GETTIME:
           Empilhavel roboAlvo = robo.pop();
           if(roboAlvo instanceof Robo)
@@ -243,13 +245,14 @@ private boolean insereRobo(Robo rb)
 public void insereExercito(Programa[] programas, int time)
 {
   int tam = programas.length;
-  Posicao pos = new Posicao(0,0);
+  
   int maxX = this.mapa.largura() -1;
   int maxY = this.mapa.altura() -1;
 
 
   for(int i = 0; i < tam; i++)
   {
+    Posicao pos = new Posicao(0,0);
    /* Robo rb = new Robo(this,posicoes[i], time);*/
     pos.randXY(maxX,maxY);
     Robo rb = new Robo(this, pos, time);
@@ -257,7 +260,7 @@ public void insereExercito(Programa[] programas, int time)
     rb.carregaPrograma(programas[i]);
 
     if( insereRobo(rb) )
-      System.out.println("Robo "+i+" inserido com sucesso");
+      System.out.println("Robo "+rb.getInd()+" inserido com sucesso em "+rb.getX()+","+rb.getY()+" ");
     else
       System.out.println("Falha ao tentar inserir o robo "+i);
   }

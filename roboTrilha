@@ -6,6 +6,7 @@ loop1:
 	PUSH 2
 	ISA
 
+
 	JIT andar
 
 	RCL 0
@@ -24,6 +25,10 @@ fimdoloop:
 	JMP loop1
 
 andar:
+	PUSH HUE1
+	PRN
 	RCL 0
 	WALK
+		PUSH HUE2
+	PRN
 	JMP loop1
