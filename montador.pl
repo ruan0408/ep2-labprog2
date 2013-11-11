@@ -10,6 +10,7 @@ package main;
 #que será executado pela maquina ($maq);
 
 
+
 my $erro = 0;
 
 $n = @ARGV;
@@ -35,6 +36,7 @@ my $time = shift(@args);
 die "Erro de sintaxe na linha de comando" if($time !~ /\d+/);
 while($time > 0 && @args)
 {
+	$i = 0;
 	$n = 0;
 	my $arq = 0 ;
 	while(@args)
@@ -83,7 +85,7 @@ FIM
 
 sub interpretaArquivo
 {
-	my $i = 0;
+ 
 	my $arq = shift @_;
 	my $prog = novo Programa;
 	open (IN, $arq) or die "Erro ao tentar abrir o arquivo $arq\n";
