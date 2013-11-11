@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Robo implements Programavel
+public class Robo implements Programavel, Empilhavel
 {
   private static int cont = 0;
 

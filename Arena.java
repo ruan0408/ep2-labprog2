@@ -171,9 +171,19 @@ public class Arena
                       perdeCristal(robo);
                     }
                     break;
+              case GETROBO :
+                    if(terrTemp.temRobo()) resp = terrTemp.getRobo();
+                    break;
             }
-            break;
-            default://Talvez outras chamadas venham aqui
+    case GETTIME:
+          Empilhavel roboAlvo = robo.pop();
+          if(roboAlvo instanceof Robo)
+            resp = new Numero(((Robo)roboAlvo).getTime());
+          else
+            System.out.println("GETTIME em argumento não robo!!");
+          break;
+    case MYTIME: resp = new Numero(robo.getTime()); break;
+    default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 
 }
