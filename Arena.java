@@ -150,6 +150,10 @@ public class Arena
                     break;
 
               case COLLECT : 
+                    if(terrTemp.eDeposito())
+                    {
+                      
+                    }
                     System.out.println("Robo "+indRobo+" coletou 1 cristal");
                     Deposito dep = terrTemp.toDeposito();
                     robo.coletaCristal(dep.popCristal());
