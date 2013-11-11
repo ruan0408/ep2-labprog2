@@ -76,6 +76,9 @@ class Campo extends JPanel
 	BufferedImage base = null;
 	BufferedImage robo = null;
 	BufferedImage depSemCristal = null;
+	BufferedImage depComCristal = null;
+	BufferedImage background = null;
+
 
 	public Campo(Mapa mapa, int L)
 	{
@@ -92,8 +95,8 @@ class Campo extends JPanel
 		double metadeAlt = L*Math.sqrt(3)/2;
 		double metadeLarg = L;
 		double raio = L;//(L/2.0 + L*Math.sqrt(3)/2.0-7);// o 7 é optimal
-		BufferedImage lama, grama, agua, depComCristal, fundo; 
-		lama = grama = agua = depComCristal = fundo = null;
+		BufferedImage lama, grama, agua, fundo; 
+		lama = grama = agua = fundo = null;
 		
 		try 
 		{
@@ -102,6 +105,7 @@ class Campo extends JPanel
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
 			robo = ImageIO.read(this.getClass().getResource("robo.png"));
 			base = ImageIO.read(this.getClass().getResource("base.png"));
+			background = ImageIO.read(this.getClass().getResource("background.jpg"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("depositoocupado.png"));
 		}
@@ -134,10 +138,15 @@ class Campo extends JPanel
 		Graphics2D g2d = (Graphics2D) g;
 		
 		try {
-        	  BufferedImage background = ImageIO.read(this.getClass().getResource("background.jpg"));
- 		  g2d.drawImage(background, null, 0, 0);		
+			Rectangle rec = new Rectangle(0,0,background.getWidth(),background.getHeight());
+			g2d.setPaint(new TexturePaint(background, rec));
+			Rectangle rec2 = new Rectangle(0,0,10000,10000);
+			g2d.fill(rec2);
+        	  
+ 		  //g2d.drawImage(background, null, 0, 0);		
  
        		} catch (Exception e) {
+       			System.out.println("");
        		} 
 
 		for (int i = 0; i < cel.length; i++) 
@@ -145,13 +154,15 @@ class Campo extends JPanel
 			{
 
 				//cel[i][j].draw(g2d); // pinta as células no contexto gráfico
-				if(mapa.getTerreno(i,j).eDeposito() && !mapa.getTerreno(i,j).toDeposito().temCristal())
+				if(mapa.getTerreno(i,j).eDeposito())
 				{
-					cel[i][j].setIme(depSemCristal);
+					if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depSemCristal);
+					else cel[i][j].setIme(depComCristal);
 				}
-				cel[i][j].draw(g2d); // pinta as células no contexto gráfico 
+				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
+				if(mapa.getTerreno(i,j).eBase()) desenhaBase(i, j, g2d); 
 				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j, g2d);
-				if(mapa.getTerreno(i,j).eBase()) desenhaBase(i, j, g2d);
+				
 			}
 	}
 
