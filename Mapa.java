@@ -91,7 +91,13 @@ public class Mapa
 		     			case 3: this.matriz[i][j] = new Deposito(pos); 
 		     					this.matriz[i][j].toDeposito().putCristal(new Cristal(i,j));
 		     					break;
-		     			default: this.matriz[i][j] = new Liso(pos);
+		     			default: 
+		     				if(mapaInt[i][j] < 0){
+		     					this.matriz[i][j] = new Base(pos, Math.abs(mapaInt[i][j]));
+						 	}
+						 	else { 
+								this.matriz[i][j] = new Liso(pos);
+							}
 
 		     		}
 		     	}
