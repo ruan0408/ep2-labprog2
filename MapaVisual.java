@@ -156,7 +156,7 @@ class Campo extends JPanel
 				//cel[i][j].draw(g2d); // pinta as células no contexto gráfico
 				if(mapa.getTerreno(i,j).eDeposito())
 				{
-					if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depSemCristal);
+					if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depComCristal);
 					else cel[i][j].setIme(depComCristal);
 				}
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico

@@ -139,26 +139,38 @@ public class Arena
                     break; 
 
               case ATK :
-                    Robo inim = terrTemp.getRobo();
-                    inim.perdeVida(10);
-                    System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
-                    if(!inim.temVida())
+                    if(terrTemp.temRobo())
                     {
-                      System.out.println("Robo "+inim.getInd()+" morreu");
-                      removeRobo(inim);
-                    } 
-                    resp = new Numero(1);
+                      Robo inim = terrTemp.getRobo();
+                      if(inim.getTime() != robo.getTime())
+                      {
+                        inim.perdeVida(10);
+                        System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
+                        if(!inim.temVida())
+                        {
+                          System.out.println("Robo "+inim.getInd()+" morreu");
+                          removeRobo(inim);
+                        } 
+                        resp = new Numero(1);
+                      }
+                      else System.out.println("Sem bater nos amiguinhos robô "+indRobo"!");
+                    }
+                    else System.out.println("Robo "+indRobo+" do time"+robo.getTime()+" atacou o nada");
                     break;
 
               case COLLECT : 
                     if(terrTemp.eDeposito())
                     {
-                      
+                      System.out.println("Robo "+indRobo+" coletou 1 cristal");
+                      Deposito dep = terrTemp.toDeposito();
+                      if(dep.temCristal())
+                      {
+                        robo.coletaCristal(dep.popCristal());
+                        resp = new Numero(1);
+                      }
+                      else System.out.println("O depósito esta vazio!");
                     }
-                    System.out.println("Robo "+indRobo+" coletou 1 cristal");
-                    Deposito dep = terrTemp.toDeposito();
-                    robo.coletaCristal(dep.popCristal());
-                    resp = new Numero(1);
+                    else System.out.println("O terreno não é deposito!");
                     break;
               case LOOK :
                     if(terrTemp != null) resp = terrTemp;
@@ -180,16 +192,16 @@ public class Arena
                     if(terrTemp.temRobo()) resp = terrTemp.getRobo();
                     break;
             }
-    break;
-    case GETTIME:
-          Empilhavel roboAlvo = robo.pop();
-          if(roboAlvo instanceof Robo)
-            resp = new Numero(((Robo)roboAlvo).getTime());
-          else
-            System.out.println("GETTIME em argumento não robo!!");
-          break;
-    case MYTIME: resp = new Numero(robo.getTime()); break;
-    default://Talvez outras chamadas venham aqui
+      break;
+      case GETTIME:
+            Empilhavel roboAlvo = robo.pop();
+            if(roboAlvo instanceof Robo)
+              resp = new Numero(((Robo)roboAlvo).getTime());
+            else
+              System.out.println("GETTIME em argumento não robo!!");
+      break;
+      case MYTIME: resp = new Numero(robo.getTime()); break;
+      default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 
 }
