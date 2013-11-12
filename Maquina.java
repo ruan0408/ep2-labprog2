@@ -401,6 +401,12 @@ private int executaCmd(Comando cmd)
       case 2: //Liso
         if(emp2 instanceof Liso) resp = new Numero(1);
         break;
+      case 3: //robo
+         if(emp2 instanceof Robo) resp = new Numero(1);
+        break;
+        case 4: //Deposito
+         if(emp2 instanceof Deposito) resp = new Numero(1);
+        break;
 
       default: break;
     }

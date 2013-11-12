@@ -6,7 +6,7 @@ public class Arena
   private Mapa mapa;
   private List<Robo> robos;
   private int tempo;
-  private int velocidade = 1;
+  private int velocidade = 5;
 
 
   /****** Construtor ******/
@@ -25,6 +25,7 @@ public class Arena
      presente no programa do robô, dado o devido respeito às condições de atraso.    */
      public boolean atualiza()
      {
+      ArrayList<Robo> robosMortos = new ArrayList<Robo>();
       Robo roboTemp;
       RndIterator<Robo> it;
       boolean alguemTemAcao = false;
@@ -35,6 +36,11 @@ public class Arena
       for(it = new RndIterator<Robo>(robos); it.hasNext();)
       {
         roboTemp = it.next();
+        if(!roboTemp.temVida())
+          {
+            robosMortos.add(roboTemp);
+            continue;
+          }
         if(!roboTemp.temAtraso())
         {
           for(int i = 0; i<velocidade && !roboTemp.temAtraso();i++)
@@ -59,6 +65,15 @@ public class Arena
    /* Incrementa a unidade que trata do tempo transcorrido desde o início do programa.                
    Ou seja, cada ciclo da função Atualiza representa uma unidade de tempo transcorrida no programa.*/
    this.tempo++;
+
+
+   /*Remove da lista principal os robos mortos */
+
+  for(ListIterator<Robo> it2 = robosMortos.listIterator(); it2.hasNext(); robos.remove(it2.next()));
+
+
+
+
    return alguemTemAcao;
  }
 
@@ -90,6 +105,7 @@ public class Arena
       case COLLECT : 
       case DROP :
       case LOOK:
+      case GETROBO:
                try
               {
                 Empilhavel arg = robo.pop();
@@ -142,12 +158,13 @@ public class Arena
                     break; 
 
               case ATK :
+                     System.out.println("Robo "+indRobo+" está tentando atacar");
                     if(terrTemp.temRobo())
                     {
                       Robo inim = terrTemp.getRobo();
                       if(inim.getTime() != robo.getTime())
                       {
-                        inim.perdeVida(10);
+                        inim.perdeVida(100);
                         System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
                         if(!inim.temVida())
                         {
@@ -162,7 +179,7 @@ public class Arena
                     break;
 
               case COLLECT : 
-                    if(terrTemp.eDeposito())
+                    if(terrTemp.eDeposito() && !robo.temCristal())
                     {
                       System.out.println("Robo "+indRobo+" coletou 1 cristal");
                       Deposito dep = terrTemp.toDeposito();
@@ -300,7 +317,6 @@ public void removeExercito(int time)
  {
   Posicao pos = rb.getPos();
   mapa.getTerreno(pos).removeRobo();
-  robos.remove(rb);
 }
 
 private void moveRobo(Terreno origem, Terreno destino)

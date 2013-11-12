@@ -28,6 +28,8 @@ public class Robo implements Programavel, Empilhavel
   }
 
 
+
+
   /****** Getters ******/
 
   public int getInd()
