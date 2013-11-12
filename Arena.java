@@ -6,6 +6,7 @@ public class Arena
   private Mapa mapa;
   private List<Robo> robos;
   private int tempo;
+  private int velocidade = 1;
 
 
   /****** Construtor ******/
@@ -36,10 +37,11 @@ public class Arena
         roboTemp = it.next();
         if(!roboTemp.temAtraso())
         {
-          if(roboTemp.executaAcao())
-          {
-            alguemTemAcao = true;
-          }
+          for(int i = 0; i<velocidade && !roboTemp.temAtraso();i++)
+            if(roboTemp.executaAcao())
+            {
+              alguemTemAcao = true;
+            }
         }
         else
         {
@@ -48,6 +50,7 @@ public class Arena
           {
            this.sistema( at.getOperacao());
            roboTemp.tiraAtraso();
+           for(int i = 0; i<velocidade && !roboTemp.temAtraso();i++) roboTemp.executaAcao();
          }
          else at.somaTempo(-1);
          alguemTemAcao = true;
