@@ -156,7 +156,7 @@ public class Arena
                         } 
                         resp = new Numero(1);
                       }
-                      else System.out.println("Sem bater nos amiguinhos robô "+indRobo"!");
+                      else System.out.println("Sem bater nos amiguinhos robô "+indRobo+"!");
                     }
                     else System.out.println("Robo "+indRobo+" do time"+robo.getTime()+" atacou o nada");
                     break;
