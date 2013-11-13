@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Base extends Terreno
 {
-	private int time;
+	private Time time;
 	private List<Cristal> cristais;
 
 
@@ -14,7 +14,7 @@ public class Base extends Terreno
 	Base(Posicao pos,int time)
 	{
 		super(pos);
-		this.time = time;
+		this.time = new Time(time,this);
 		this.cristais = new ArrayList<Cristal>();
 	}
 
@@ -34,7 +34,7 @@ public class Base extends Terreno
 		return cristais.size();
 	}
 
-	public int getTime()
+	public Time getTime()
 	{
 		return this.time;
 	}

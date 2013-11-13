@@ -7,8 +7,6 @@ public class Arena
   private List<Robo> robos;
   private int tempo;
   private int velocidade = 5;
-
-
   /****** Construtor ******/
 
   Arena(Mapa mapa)
@@ -164,7 +162,7 @@ public class Arena
                       Robo inim = terrTemp.getRobo();
                       if(inim.getTime() != robo.getTime())
                       {
-                        inim.perdeVida(100);
+                        inim.perdeVida(10);
                         System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
                         if(!inim.temVida())
                         {
@@ -196,7 +194,7 @@ public class Arena
                     if(terrTemp != null) resp = terrTemp;
                     break;
               case DROP :
-                    if(terrTemp.eBase() && terrTemp.toBase().getTime() != robo.getTime())
+                    if(terrTemp.eBase() && terrTemp.toBase().getTime().getId() != robo.getTime())
                     {
                       dropCristal(robo, terrTemp);
                       System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
@@ -205,7 +203,7 @@ public class Arena
                     else
                     {
                       System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
-                      perdeCristal(robo);System.out.println("PERDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEU PLAYBOY!");
+                      perdeCristal(robo);
                     }
                     break;
               case GETROBO :
@@ -224,6 +222,32 @@ public class Arena
       default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 
+}
+/*
+public boolean addTime(Base base)
+{
+  
+  int timeId = base.getTime().getId();
+  for(ListIterator<Time> it = times.listIterator(); it.hasNext();)
+  {
+    Time timeTemp = it.next();
+    if(timeTemp.getId() == timeId) return false;
+  }
+  times.add(base.getTime());
+  return true;
+}*/
+
+/*
+
+Recebe o número de um possivel time.
+Retorna true caso ele exista nessa instancia da Arena.
+False c.c.
+
+*/
+
+public boolean existeTime(int timeId)
+{
+  return this.mapa.existeTime(timeId); //Como por enquanto a Arena só tem um mapa, isso basta.
 }
 
 
@@ -276,6 +300,8 @@ private boolean insereRobo(Robo rb)
 
 public void insereExercito(Programa[] programas, int time)
 {
+
+  if(existeTime(time)) throw new IllegalArgumentException();
   int tam = programas.length;
   
   int maxX = this.mapa.largura() -1;
