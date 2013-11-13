@@ -196,7 +196,7 @@ public class Arena
                     if(terrTemp != null) resp = terrTemp;
                     break;
               case DROP :
-                    if(terrTemp.eBase()) 
+                    if(terrTemp.eBase() && terrTemp.toBase().getTime() != robo.getTime())
                     {
                       dropCristal(robo, terrTemp);
                       System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
@@ -205,7 +205,7 @@ public class Arena
                     else
                     {
                       System.out.println("Robo "+indRobo+" tentou deixar cristal na base, mas acabou perdendo ele");
-                      perdeCristal(robo);
+                      perdeCristal(robo);System.out.println("PERDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEU PLAYBOY!");
                     }
                     break;
               case GETROBO :

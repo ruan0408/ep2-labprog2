@@ -84,7 +84,6 @@ class Campo extends JPanel
 	{
 		this.mapa = mapa;
 		this.criaCampo(L);
-
 	}
 
 	private void criaCampo(int L)
@@ -137,7 +136,8 @@ class Campo extends JPanel
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		try {
+		try 
+		{
 			Rectangle rec = new Rectangle(0,0,background.getWidth(),background.getHeight());
 			g2d.setPaint(new TexturePaint(background, rec));
 			Rectangle rec2 = new Rectangle(0,0,10000,10000);
@@ -145,10 +145,9 @@ class Campo extends JPanel
         	  
  		  //g2d.drawImage(background, null, 0, 0);		
  
-       		} catch (Exception e) {
-       			System.out.println("");
-       		} 
-
+       	} 
+       	catch (Exception e) { System.out.println("");}
+       		 
 		for (int i = 0; i < cel.length; i++) 
 			for (int j = 0; j < cel[0].length; j++)
 			{

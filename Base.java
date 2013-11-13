@@ -33,4 +33,9 @@ public class Base extends Terreno
 	{
 		return cristais.size();
 	}
+
+	public int getTime()
+	{
+		return this.time;
+	}
 }
