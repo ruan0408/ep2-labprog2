@@ -27,9 +27,7 @@ public class Arena
       Robo roboTemp;
       RndIterator<Robo> it;
       boolean alguemTemAcao = false;
-      /* Aleatoriza o vetor de robôs. */
-      //Collections.shuffle(robos);
-
+      
       /* Percorre a lista de robôs, executando os comandos de cada um (de acordo com o estado de seu atraso). */
       for(it = new RndIterator<Robo>(robos); it.hasNext();)
       {
@@ -121,7 +119,8 @@ public class Arena
                   case DR : terrTemp = mapa.getDownRight(x, y); break;        
                   case DW : terrTemp = mapa.getDown(x, y); break;        
                   case DL : terrTemp = mapa.getDownLeft(x, y); break;        
-                  case UL : terrTemp = mapa.getUpLeft(x, y); break;        
+                  case UL : terrTemp = mapa.getUpLeft(x, y); break; 
+                  case HR : terrTemp = mapa.getTerreno(x,y); break;       
                   default : System.out.println("Direçao inválida!");
                 }
               }
@@ -194,10 +193,15 @@ public class Arena
                     if(terrTemp != null) resp = terrTemp;
                     break;
               case DROP :
-                    if(terrTemp.eBase() && terrTemp.toBase().getTime().getId() != robo.getTime())
+                    if(terrTemp.eBase() && terrTemp.toBase().getTime() != robo.getTime())
                     {
                       dropCristal(robo, terrTemp);
                       System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
+                      //mapa.getTimes().get(robo.getTime()).ganhaPonto();
+                      //if(mapa.getTimes().get(robo.getTime()).getPontos() == 5)
+                      //{
+                        //AQUI TERMINA O JOGO. JJ digo... GG.
+                      //}
                       resp = new Numero(1);        
                     }
                     else
@@ -211,14 +215,22 @@ public class Arena
                     break;
             }
       break;
-      case GETTIME:
+      case TIMERB:
             Empilhavel roboAlvo = robo.pop();
             if(roboAlvo instanceof Robo)
-              resp = new Numero(((Robo)roboAlvo).getTime());
+              resp = ((Robo)roboAlvo).getTime();
             else
-              System.out.println("GETTIME em argumento não robo!!");
+              System.out.println("TIMERB em argumento não robo!!");
       break;
-      case MYTIME: resp = new Numero(robo.getTime()); break;
+      case GETTIME:
+            Empilhavel empId = robo.pop();
+            if(empId instanceof Numero)
+            {
+              int timeId = (int) ((Numero)empId).getVal();
+              if(existeTime(timeId)) resp = mapa.getTime(timeId);
+            }
+            break;
+      case MYTIME: robo.getTime(); break;
       default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 
@@ -298,10 +310,11 @@ private boolean insereRobo(Robo rb)
   return false;
 }
 
-public void insereExercito(Programa[] programas, int time)
+public void insereExercito(Programa[] programas, int timeId)
 {
 
-  if(existeTime(time)) throw new IllegalArgumentException();
+  if(!existeTime(timeId)) throw new IllegalArgumentException();
+  Time time = mapa.getTime(timeId);
   int tam = programas.length;
   
   int maxX = this.mapa.largura() -1;
@@ -333,7 +346,7 @@ public void removeExercito(int time)
   while (it.hasNext()) 
   {
     Robo rb = it.next();
-    if (rb.getTime() == time) removeRobo(rb);      
+    if (rb.getTime().getId() == time) removeRobo(rb);      
   }
 }
 

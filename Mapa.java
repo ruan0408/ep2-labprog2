@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.*;
+import java.lang.*;
+
 
 /* Referencia usada para visualização da numeração
 do mapa: 
@@ -14,24 +16,11 @@ public class Mapa
 	int altura, largura;
 	Terreno[][] matriz;
 	ArrayList<Time> times;
+
 	
 
 	/****** Construtor ******/
 
-
-	/*  Retorna uma matriz hexagonal de altura "alt" e 
-	    largura "larg".                                 */
-	public Mapa(int alt, int larg)
-	{
-		matriz = new Terreno[alt][larg];
-		altura = alt;
-		largura = larg;
-		
-
-		for(int i = 0; i < alt; i++)
-			for(int j = 0; j < larg; j++)
-				matriz[i][j] = new Terreno(new Posicao(i,j));
-	}
 
 	public Mapa(String arquivo)
 	{
@@ -94,14 +83,17 @@ public class Mapa
 		     			case 3: this.matriz[i][j] = new Deposito(pos); 
 		     					this.matriz[i][j].toDeposito().putCristal(new Cristal(i,j));
 		     					break;
-		     			default: 
-		     				if(mapaInt[i][j] < 0){
+		     			default: //Base
+		     				if(mapaInt[i][j] < 0)
+		     				{
 		     					int timeId = Math.abs(mapaInt[i][j]);
+		     					System.out.println(timeId);
 		     					if(existeTime(timeId)) throw new IllegalArgumentException();
-		     					this.matriz[i][j] = new Base(pos,timeId );
-		     					times.add(new Time(timeId,(Base)this.matriz[i][j]));
+		     					this.matriz[i][j] = new Base(pos, timeId);
+		     					times.add(new Time(timeId, this.matriz[i][j].toBase()));
 						 	}
-						 	else { 
+						 	else 
+						 	{ 
 								this.matriz[i][j] = new Liso(pos);
 							}
 
@@ -137,38 +129,19 @@ public class Mapa
 		return this.times;
 	}
 
-	//Construtor de mapa predefinido
-	public Mapa()
+	public Time getTime(int id)
 	{
-		/*{ 0, 0, 0, 1, 2, 2, 2, 2, 1, 1},
-		 { 0, 0, 1, 1, 2, 2, 2, 2, 1, 1},
-		{ 0, 0, 1, 2, 2, 2, 0, 2, 1, 1},
-		 { 0, 0, 1, 1, 1, 2, 2, 2, 2, 2},
-		{ 0, 0, 0, 0, 1, 2, 2, 2, 2, 2},
-		 { 0, 0, 0, 1, 0, 2, 2, 2, 2, 2},
-		{ 0, 0, 1, 1, 0, 0, 0, 2, 2, 1},
-		 { 0, 0, 1, 1, 0, 0, 2, 2, 2, 1},
-		{ 1, 1, 1, 1, 0, 0, 0, 1, 1, 1 },
-		 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}*/
-
-		matriz = new Terreno[10][10];
-		altura = 10;
-		largura = 10;
-
-		for(int i = 0; i < altura; i++)
-			for(int j = 0; j < largura; j++)
-				if(i > j+1)
-					matriz[i][j] = new Rugoso(new Posicao(i,j));
-				else if(j > i+1)
-					matriz[i][j] = new Liso(new Posicao(i,j));
-				else //if(i == j)
-					matriz[i][j] = new Agua(new Posicao(i,j));
-				
-
-		//matriz[0][0] = new Base(new Posicao(0, 0), 1);
-		//matriz[9][9] = new Base(new Posicao(9, 9), 2);
+		Time timeTemp;
+		for(ListIterator<Time> it = times.listIterator(); it.hasNext();)
+		{
+			timeTemp = it.next();
+			if(timeTemp.getId() == id) return timeTemp;
+		}
+		return null;
 	}
 
+	//Construtor de mapa predefinido
+	
 	public int altura()
 	{
 		return this.altura;

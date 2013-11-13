@@ -8,7 +8,7 @@ public class Robo implements Programavel, Empilhavel
   private Maquina vm;
   private int vida;
   private Posicao pos;
-  private int time;
+  private Time time;
   private Atraso atraso;
   private Cristal cristal;
 
@@ -16,7 +16,7 @@ public class Robo implements Programavel, Empilhavel
   /****** Construtor ******/
 
 
-  Robo(Arena arena,Posicao pos, int time)
+  Robo(Arena arena,Posicao pos, Time time)
   {
     this.vm = new Maquina(arena,this);
     this.vida = 100; //Total de vida
@@ -57,7 +57,7 @@ public class Robo implements Programavel, Empilhavel
     return this.vida;
   }
 
-  public int getTime()
+  public Time getTime()
   {
     return this.time;
   }

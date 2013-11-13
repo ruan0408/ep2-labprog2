@@ -1,3 +1,4 @@
+inicio:
 PUSH 1
 STO 1 
 
@@ -41,6 +42,161 @@ coleta:
 	COLLECT
 	JIF procuraCristal
 	PUSH GG
-	JMP anda
 	PRN
+	JMP levaBase
 	END
+
+
+levaBase: #supondo que o time inimigo seja o time 2
+	PUSH 2
+	GETTIME
+	GETBASE
+	GETPOS
+	STO 3
+	RCL 3
+	GETX
+	PUSH 7
+	LOOK
+	GETPOS 
+	GETX
+	SUB
+	DUP
+	PUSH 0
+	LT
+	JIT baseAcima
+	PUSH 0
+	GT
+	JIT baseAbaixo
+	PUSH WATAFUQ
+	PRN
+	JMP linhaDaBase
+
+baseAcima:
+	PUSH CIMA
+	PRN
+	PUSH 1
+	STO 4 
+	JMP baseLoop
+
+baseAbaixo:
+	PUSH BAIXO
+	PRN
+	PUSH 4
+	STO 4
+	
+baseLoop:
+	RCL 4 # Direção definida acima
+	WALK
+	PUSH 7
+	LOOK 
+	GETPOS
+	GETX
+	RCL 3
+	GETX
+	EQ
+	JIF baseLoop
+
+linhaDaBase:
+	PUSH QUASELA
+	PRN
+	RCL 3
+	GETY
+	DUP
+	PRN
+	PUSH 7
+	LOOK
+	GETPOS
+	GETY
+	DUP
+	PRN
+	DUP
+	STO 5 # GUARDA O Y DO ROBO
+	SUB
+	DUP
+	DUP
+	PRN
+	PUSH 0
+	GT #SEGUNDO MAIOR QUE O PRIMEIRO
+	JIT direita
+	PUSH 0 
+	LT
+	JIT esquerda
+	JMP coleta
+
+# 6 - direção caso coluna impar
+# 7 - direção caso coluna par
+
+direita:
+	PUSH DIREITA
+	PRN
+	PUSH 2
+	STO 6 
+	PUSH 3
+	STO 7
+	JMP andaDeLado
+
+esquerda:
+	PUSH ESQUERDA
+	PRN
+	PUSH 6
+	STO 6
+	PUSH 5
+	STO 7
+
+andaDeLado:
+	PUSH 7
+	LOOK
+	GETPOS
+	GETY
+	PUSH 2
+	MOD
+	DUP
+	PRN
+	PUSH 1
+	EQ
+	JIT impar
+par:
+	RCL 7
+	WALK
+	JMP seraQueChegou
+
+impar:
+	RCL 6
+	WALK
+	#JMP seraQueChegou
+# 3 guarda a pos da base
+seraQueChegou:
+	RCL 3
+	GETY
+	PUSH 7 
+	LOOK
+	GETPOS
+	GETY
+	EQ
+	JIT dropar
+	JMP andaDeLado
+
+dropar:
+	PUSH 0
+	DROP
+	PUSH GG2
+	PRN
+	PUSH TENHO
+	PRN
+	PUSH QUE
+	PRN
+	PUSH PEGAR
+	PRN
+	PUSH MAIS
+	PRN
+	JMP inicio
+	
+
+
+
+procuraBase: #E coloca na posicao 3 da memoria
+
+	MYTIME
+	STO 3
+
+

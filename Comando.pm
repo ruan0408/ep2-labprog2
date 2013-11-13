@@ -39,8 +39,15 @@ my %hashComandos = (
 	LOOK => 0,
 	ISA => 0,
 	GETROBO => 0,
-	GETTIME => 0,
+	TIMERB => 0,
 	MYTIME => 0,
+	GETTIME => 0,
+	TIMEID => 0,
+	GETPOS => 0,
+	GETX => 0,
+	GETY => 0,
+	GETBASE => 0,
+	MOD => 0
 );
 
 #Construtor do objeto comando.

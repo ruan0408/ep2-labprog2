@@ -85,7 +85,7 @@ class Campo extends JPanel
 	{
 		this.mapa = mapa;
 		this.criaCampo(L);
-		this.setSize(800, 800);
+		//this.setSize(800, 800);
 	}
 
 	private void criaCampo(int L)
@@ -95,7 +95,7 @@ class Campo extends JPanel
 		double Dy = (L*Math.sqrt(3)-1);// o -1 é optimal
 		double metadeAlt = L*Math.sqrt(3)/2;
 		double metadeLarg = L;
-		double raio = L;//(L/2.0 + L*Math.sqrt(3)/2.0-7);// o 7 é optimal
+		double raio = L;
 		BufferedImage lama, grama, agua, fundo, deposito; 
 		lama = grama = agua = fundo = deposito = null;
 		
@@ -128,16 +128,18 @@ class Campo extends JPanel
 				if(mapa.getTerreno(i, j).eRugoso())    fundo = lama;
 				else if(mapa.getTerreno(i, j).eLiso()) fundo = grama;
 				else if(mapa.getTerreno(i, j).eAgua()) fundo = agua;
-				//else if(mapa.getTerreno(i, j).eDeposito() && mapa.getTerreno(i, j).toDeposito().temCristal())
-				else if(mapa.getTerreno(i, j).eDeposito())
-					//fundo = depComCristal;
-					fundo = deposito;
+				else if(mapa.getTerreno(i, j).eDeposito() && mapa.getTerreno(i, j).toDeposito().temCristal())  fundo = depComCristal;
+				//else if(mapa.getTerreno(i, j).eBase()) fundo = base;
+				else fundo = grama; //Default em caso de erro
+				//else if(mapa.getTerreno(i, j).eDeposito())
+					
+					//fundo = deposito;
 				cel[i][j] = new Celula((int)(metadeLarg + j*Dx),(int)(metadeAlt + i*Dy + DELTA ), raio, fundo);
 			}
 		}
 	}
 
-	public void paintComponent(Graphics g) 
+	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -157,35 +159,24 @@ class Campo extends JPanel
 		for (int i = 0; i < cel.length; i++) 
 			for (int j = 0; j < cel[0].length; j++)
 			{
-				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
 
 				//cel[i][j].draw(g2d); // pinta as células no contexto gráfico
 				//if(mapa.getTerreno(i,j).eDeposito())
-				if(mapa.getTerreno(i,j).eDeposito() && mapa.getTerreno(i,j).toDeposito().temCristal())
+				if(mapa.getTerreno(i,j).eDeposito()) //&& mapa.getTerreno(i,j).toDeposito().temCristal())
 				{
-					//if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depComCristal);
+					if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depComCristal);
 					//cel[i][j].setIme(deposito);
-					desenhaCristal(i, j, g2d);
+					//desenhaCristal(i, j, g2d);
 
-					//else cel[i][j].setIme(depSemCristal);
+					else cel[i][j].setIme(depSemCristal);
 				}
-				if(mapa.getTerreno(i,j).eBase()) desenhaBase(i, j, g2d); 
+				
+				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
+				if(mapa.getTerreno(i,j).eBase()) desenhaBase(i, j, g2d);
 				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j, g2d);
 				
 			}
 	}
-
-	/*private void desenhaDepositoVazio(int i, int j,Graphics2D g2d)
-	{
-		Celula cel = this.cel[i][j];
-		int x = cel.x();
-		int y = cel.y();
-		int raio = cel.raio();
-
-		Rectangle rec = new Rectangle(0,0,100,100);
-		g2d.setPaint(new TexturePaint(depSemCristal, rec));
-		g2d.fill(rec);
-	}*/
 
 	private void desenhaRobo(int i, int j, Graphics2D g2d)
 	{
@@ -197,17 +188,6 @@ class Campo extends JPanel
 		Rectangle rec = new Rectangle(x-15,y-20,30,40);
 		g2d.setPaint(new TexturePaint(robo, rec));
 		g2d.fill(rec);
-
-		//g2d.drawRect(x-20, y-51, 800, 500);
-		
-		//Graphics2D g2d = (Graphics2D)g;
-		// Assume x, y, and diameter are instance variables.
-	/*	Ellipse2D.Double circle = new Ellipse2D.Double(x-raio/2, y-raio/2, raio, raio);
-		g2d.setPaint(Color.blue);
-		g2d.fill(circle);*/
-/*
-		g2d.setColor(Color.BLACK);
-        g2d.fillOval(x, y, 10, 10);*/
 	}
 
 	private void desenhaBase(int i, int j, Graphics2D g2d)
@@ -222,7 +202,6 @@ class Campo extends JPanel
 	}
 
 	private void desenhaCristal(int i, int j, Graphics2D g2d)
-	/* Cópia do desenhaBase. */
 	{
 		Celula cel = this.cel[i][j];
 		int x = cel.x();
@@ -249,7 +228,7 @@ class Tela extends JFrame
 				System.exit(0);
 			}
 		});
-
+		this.setLocationRelativeTo(null);
 		add(campo);
 		
 		setVisible(true);

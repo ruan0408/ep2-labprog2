@@ -1,6 +1,6 @@
 public enum Direcao
 {
-	UP(1), UR(2), DR(3), DW(4), DL(5), UL(6);
+	UP(1), UR(2), DR(3), DW(4), DL(5), UL(6),HR(7);
 
 	private final int value;
 

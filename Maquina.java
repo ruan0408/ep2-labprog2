@@ -90,6 +90,7 @@ private int executaCmd(Comando cmd)
     case ADD : this.add(); break;
     case SUB : this.sub(); break;
     case DIV : this.div(); break;
+    case MOD : this.mod(); break;
     case MUL : this.mul(); break;
     case EQ  : this.eq(); break;
     case GT  : this.gt(); break;
@@ -114,6 +115,17 @@ private int executaCmd(Comando cmd)
                this.dados.push( this.mem[index1] ); break;//não remove o valor da memoria
     
     case END : novoIndice = this.prog.size(); break;
+
+    case GETPOS: this.getpos();break;
+
+    case GETX: this.getx();break;
+
+    case GETY: this.gety();break;
+
+
+    case  TIMEID: this.timeid();break;
+
+    case GETBASE: this.getbase();break;
     
     case PRN : this.prn(); break;
     case ALO : this.alo(); break;
@@ -241,6 +253,21 @@ private int executaCmd(Comando cmd)
     else throw new ArithmeticException("Tentando dividir não-números");
   }
 
+  private void mod()
+  {
+    Empilhavel aux1 = this.dados.pop();//pode gerar exceções
+    Empilhavel aux2 = this.dados.pop();
+
+    if(aux1 instanceof Numero && aux2 instanceof Numero)
+    {
+      Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
+      System.out.println(n2.getVal()+"%"+n1.getVal());
+      Numero resu = new Numero(n2.getVal()%n1.getVal());
+      this.dados.push(resu);
+    }
+    else throw new ArithmeticException("Tentando dividir não-números");
+  }
+
   private void eq()
   {
     Empilhavel aux1 = this.dados.pop();//pode gerar exceções
@@ -253,7 +280,11 @@ private int executaCmd(Comando cmd)
       else resu = new Numero(0);
       this.dados.push(resu);
     }
-    else throw new ArithmeticException("Tentando comparar não-números");
+    else 
+    {
+      System.out.println("EQ"+this.index+":Tentando comparar não-números");
+      this.dados.push(new Numero(0));
+    }
   }
 
   private void ne()
@@ -410,6 +441,63 @@ private int executaCmd(Comando cmd)
 
       default: break;
     }
+
+    this.dados.push(resp);
+
+  }
+
+  private void timeid()
+  {
+    Numero idResp = new Numero(0); // Resposta default
+    Empilhavel time = this.dados.pop();
+    if(time instanceof Time )
+      idResp = new Numero(((Time)time).getId());
+    this.dados.push(idResp);
+
+
+  }
+
+
+  /*
+
+  Empilha a posição de um Terreno empilhado
+
+  */
+  private void getpos()
+  {
+    Empilhavel terreno = this.dados.pop();
+    Empilhavel resp = new Numero(0); // Resposta default
+    if(terreno instanceof Terreno)
+      resp = ((Terreno)terreno).getPos();
+    else 
+      System.out.println("GETPOS"+this.index+": Tentou ver posição de algo que não é um terreno");
+    this.dados.push(resp);
+  }
+
+  private void getx()
+  {
+    Empilhavel pos = this.dados.pop();
+    Numero resp = new Numero(-1); // Resposta padrãp
+    if(pos instanceof Posicao)
+      resp = new Numero( ((Posicao)pos).getX() );
+    this.dados.push(resp);
+  }
+
+  private void gety()
+  {
+    Empilhavel pos = this.dados.pop();
+    Numero resp = new Numero(-1); // Resposta padrãp
+    if(pos instanceof Posicao)
+      resp = new Numero( ((Posicao)pos).getY() );
+    this.dados.push(resp);
+  }
+
+  private void getbase()
+  {
+    Empilhavel time = this.dados.pop();
+    Empilhavel resp = new Numero(0); // Resposta padrão
+    if(time instanceof Time)
+      resp = ((Time)time).getBase();
 
     this.dados.push(resp);
 
