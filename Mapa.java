@@ -113,7 +113,7 @@ public class Mapa
 	}
 
 	public boolean existeTime(int timeId)
-	{System.out.println(times);
+	{
 	  for(ListIterator<Time> it = times.listIterator(); it.hasNext();)
 	  {
 	    Time timeTemp = it.next();

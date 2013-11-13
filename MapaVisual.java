@@ -216,7 +216,7 @@ class Campo extends JPanel
 		int x = cel.x();
 		int y = cel.y();
 
-		Rectangle rec = new Rectangle(x-15,y-20,35,50);
+		Rectangle rec = new Rectangle(x-15,y-20,30,40);
 		g2d.setPaint(new TexturePaint(base, rec));
 		g2d.fill(rec);
 	}
