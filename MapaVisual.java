@@ -201,7 +201,6 @@ class Campo extends JPanel
 	}
 
 	private void desenhaBase(int i, int j, Graphics2D g2d)
-	/* Cópia do desenhaRobo. */
 	{
 		Celula cel = this.cel[i][j];
 		int x = cel.x();
@@ -220,8 +219,7 @@ class Tela extends JFrame
 	{
 		setTitle("Caça aos cristais!");
 		setSize(H, W);
-		JScrollPane scrollers = new JScrollPane (this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
 		addWindowListener(new WindowAdapter() 
 		{
 			public void windowClosing(WindowEvent e) 
@@ -229,8 +227,7 @@ class Tela extends JFrame
 				System.exit(0);
 			}
 		});
-		this.setLocationRelativeTo(null);
-		add(scrollers);
+		//this.setPositionRelativeTo(null);
 		add(campo);
 		setVisible(true);
 	}

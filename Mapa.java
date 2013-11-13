@@ -26,7 +26,7 @@ public class Mapa
 		matriz = new Terreno[alt][larg];
 		altura = alt;
 		largura = larg;
-		this.times = new ArrayList<Time>();
+		
 
 		for(int i = 0; i < alt; i++)
 			for(int j = 0; j < larg; j++)
@@ -37,6 +37,7 @@ public class Mapa
 	{
 		String linTemp;
 		int[][] mapaInt = null;
+		this.times = new ArrayList<Time>();
 
 		 try
 		 {
@@ -112,7 +113,7 @@ public class Mapa
 	}
 
 	public boolean existeTime(int timeId)
-	{
+	{System.out.println(times);
 	  for(ListIterator<Time> it = times.listIterator(); it.hasNext();)
 	  {
 	    Time timeTemp = it.next();

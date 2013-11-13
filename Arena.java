@@ -301,7 +301,7 @@ private boolean insereRobo(Robo rb)
 public void insereExercito(Programa[] programas, int time)
 {
 
-  if(!existeTime(time)) throw new IllegalArgumentException();
+  if(existeTime(time)) throw new IllegalArgumentException();
   int tam = programas.length;
   
   int maxX = this.mapa.largura() -1;
