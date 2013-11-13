@@ -13,6 +13,7 @@ public class Mapa
 {
 	int altura, largura;
 	Terreno[][] matriz;
+	ArrayList<Time> times;
 	
 
 	/****** Construtor ******/
@@ -25,6 +26,7 @@ public class Mapa
 		matriz = new Terreno[alt][larg];
 		altura = alt;
 		largura = larg;
+		this.times = new ArrayList<Time>();
 
 		for(int i = 0; i < alt; i++)
 			for(int j = 0; j < larg; j++)
@@ -93,24 +95,30 @@ public class Mapa
 		     					break;
 		     			default: 
 		     				if(mapaInt[i][j] < 0){
-		     					this.matriz[i][j] = new Base(pos, Math.abs(mapaInt[i][j]));
+		     					int timeId = Math.abs(mapaInt[i][j]);
+		     					if(existeTime(timeId)) throw new IllegalArgumentException();
+		     					this.matriz[i][j] = new Base(pos,timeId );
+		     					times.add(new Time(timeId,(Base)this.matriz[i][j]));
 						 	}
 						 	else { 
 								this.matriz[i][j] = new Liso(pos);
 							}
 
 		     		}
-		     	}
+		     	}	
 
 
 
+	}
 
-
-
-		
-
-
-
+	public boolean existeTime(int timeId)
+	{
+	  for(ListIterator<Time> it = times.listIterator(); it.hasNext();)
+	  {
+	    Time timeTemp = it.next();
+	    if(timeTemp.getId() == timeId) return true;
+	  }
+	  return false;
 	}
 
 	private int[] traduzLinha(String linha, int tam)
@@ -121,6 +129,11 @@ public class Mapa
 				resp[i] = Integer.parseInt(nums[i]);
 
 		return resp;
+	}
+
+	public ArrayList<Time> getTimes()
+	{
+		return this.times;
 	}
 
 	//Construtor de mapa predefinido

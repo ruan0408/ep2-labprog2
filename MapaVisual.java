@@ -220,6 +220,8 @@ class Tela extends JFrame
 	{
 		setTitle("Caça aos cristais!");
 		setSize(H, W);
+		JScrollPane scrollers = new JScrollPane (this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		addWindowListener(new WindowAdapter() 
 		{
 			public void windowClosing(WindowEvent e) 
@@ -227,6 +229,8 @@ class Tela extends JFrame
 				System.exit(0);
 			}
 		});
+		this.setLocationRelativeTo(null);
+		add(scrollers);
 		add(campo);
 		setVisible(true);
 	}
