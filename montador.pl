@@ -61,7 +61,7 @@ while($time > 0 && @args)
 
 print SAIDA <<FIM;
 
-		MapaVisual mv = new MapaVisual(mapa, 800, 800,30);
+		MapaVisual mv = new MapaVisual(mapa, (mapa.largura()*60),(int)(mapa.altura()*Math.sqrt(3)*30), 30);
 
 		mv.abreJanela();
 
@@ -70,11 +70,11 @@ print SAIDA <<FIM;
 		{
 			mv.atualiza();
 
-			try {
+			try 
+			{
    				 Thread.sleep(100);
-			} catch(InterruptedException ex) {
-   				 Thread.currentThread().interrupt();
-			}
+			} 
+			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
 	}
