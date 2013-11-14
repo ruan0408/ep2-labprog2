@@ -74,7 +74,8 @@ class Campo extends JPanel
 	Celula[][] cel;
 	Mapa mapa;
 	BufferedImage base = null;
-	BufferedImage robo = null;
+	BufferedImage roboV = null;
+	BufferedImage roboA = null;
 	BufferedImage depSemCristal = null;
 	BufferedImage depComCristal = null;
 	BufferedImage background = null;
@@ -106,7 +107,8 @@ class Campo extends JPanel
 			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
 			grama = ImageIO.read(this.getClass().getResource("grama.png"));
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
-			robo = ImageIO.read(this.getClass().getResource("robo.png"));
+			roboV = ImageIO.read(this.getClass().getResource("roboV.png"));
+			roboA = ImageIO.read(this.getClass().getResource("roboA.png"));
 			base = ImageIO.read(this.getClass().getResource("base2.png"));
 			background = ImageIO.read(this.getClass().getResource("background.jpg"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
@@ -172,13 +174,19 @@ class Campo extends JPanel
 				}
 				
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
-				if(mapa.getTerreno(i,j).eBase()) desenhaBase(i, j, g2d);
-				if(mapa.getTerreno(i,j).temRobo()) desenhaRobo(i, j, g2d);
-				
+				if(mapa.getTerreno(i,j).eBase()) desenhaElemento(base, i, j, g2d);
+				if(mapa.getTerreno(i,j).temRobo())
+				{
+					switch(mapa.getTerreno(i,j).getRobo().getTime().getId())
+					{
+				 		case 1 :desenhaElemento(roboV, i, j, g2d);break;
+				 		case 2 :desenhaElemento(roboA, i, j, g2d);break;
+				 	}
+				}
 			}
 	}
 
-	private void desenhaRobo(int i, int j, Graphics2D g2d)
+	private void desenhaElemento(BufferedImage elem, int i, int j, Graphics2D g2d)
 	{
 		Celula cel = this.cel[i][j];
 		int x = cel.x();
@@ -186,31 +194,10 @@ class Campo extends JPanel
 		double raio = cel.raio();
 
 		Rectangle rec = new Rectangle(x-15,y-20,30,40);
-		g2d.setPaint(new TexturePaint(robo, rec));
+		g2d.setPaint(new TexturePaint(elem, rec));
 		g2d.fill(rec);
 	}
-
-	private void desenhaBase(int i, int j, Graphics2D g2d)
-	{
-		Celula cel = this.cel[i][j];
-		int x = cel.x();
-		int y = cel.y();
-
-		Rectangle rec = new Rectangle(x-15,y-20,30,40);
-		g2d.setPaint(new TexturePaint(base, rec));
-		g2d.fill(rec);
-	}
-
-	private void desenhaCristal(int i, int j, Graphics2D g2d)
-	{
-		Celula cel = this.cel[i][j];
-		int x = cel.x();
-		int y = cel.y();
-
-		Rectangle rec = new Rectangle(x-15,y-20,30,40);
-		g2d.setPaint(new TexturePaint(cristal, rec));
-		g2d.fill(rec);
-	}
+	
 }
 
 
