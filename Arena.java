@@ -63,9 +63,28 @@ public class Arena
    this.tempo++;
 
 
-   /*Remove da lista principal os robos mortos */
 
-  for(ListIterator<Robo> it2 = robosMortos.listIterator(); it2.hasNext(); robos.remove(it2.next()));
+   /*Remove da lista principal os robos mortos */
+   for(ListIterator<Robo> it2 = robosMortos.listIterator(); it2.hasNext(); robos.remove(it2.next()));
+
+
+   /* Verifica se tem algum time que tenha já 3 cristais na base, e portanto tenha perdido */
+
+   ArrayList<Time> times = mapa.getTimes();
+   for(ListIterator<Time> it3 = times.listIterator();it3.hasNext();)
+   {
+      Time timeTemp = it3.next();
+      if(timeTemp.getBase().numCristais()>=1)
+      {
+        removeExercito(timeTemp.getId());
+        times.remove(timeTemp);
+        System.out.println("Time "+timeTemp.getId()+" perdeu! Seu robôs irão para o inferno!");
+      }
+   }
+
+
+
+  
 
 
 
