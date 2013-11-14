@@ -113,8 +113,8 @@ class Campo extends JPanel
 			baseV = ImageIO.read(this.getClass().getResource("baseV.png"));
 			baseA = ImageIO.read(this.getClass().getResource("baseA.png"));
 			background = ImageIO.read(this.getClass().getResource("background.jpg"));
-			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
-			depComCristal = ImageIO.read(this.getClass().getResource("depositoocupado.png"));
+			depSemCristal = ImageIO.read(this.getClass().getResource("newDepVoid.png"));
+			depComCristal = ImageIO.read(this.getClass().getResource("newDep.png"));
 		}
 		catch (Exception e) 
 		{	
