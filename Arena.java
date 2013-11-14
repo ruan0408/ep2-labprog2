@@ -201,11 +201,14 @@ public class Arena
                     {
                       dropCristal(robo, terrTemp);
                       System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
-                      //mapa.getTimes().get(robo.getTime()).ganhaPonto();
-                      //if(mapa.getTimes().get(robo.getTime()).getPontos() == 5)
-                      //{
-                        //AQUI TERMINA O JOGO. JJ digo... GG.
-                      //}
+                      if(terrTemp.toBase().numCristais() >= 1)
+                      {
+                        System.out.println("Time: "+terrTemp.toBase().getTime().getId()+" perdeu! Todos os robos desse time irão");
+                        System.out.println("para o inferno");
+                        removeExercito(terrTemp.toBase().getTime().getId());
+                        mapa.getTimes().remove(terrTemp.toBase().getTime());
+
+                      }
                       resp = new Numero(1);        
                     }
                     else
