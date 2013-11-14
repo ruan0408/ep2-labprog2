@@ -329,7 +329,9 @@ public void insereExercito(Programa[] programas, int timeId)
   {
     Posicao pos = new Posicao(0,0);
    /* Robo rb = new Robo(this,posicoes[i], time);*/
-    pos.randXY(maxX,maxY);
+    do pos.randXY(maxX,maxY);
+    while(mapa.getTerreno(pos).eAgua());
+    
     Robo rb = new Robo(this, pos, time);
 
     rb.carregaPrograma(programas[i]);
