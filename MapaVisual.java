@@ -105,16 +105,16 @@ class Campo extends JPanel
 		{
 			deposito = ImageIO.read(this.getClass().getResource("deposito.png"));
 			cristal = ImageIO.read(this.getClass().getResource("cristal.png"));
-			lama = ImageIO.read(this.getClass().getResource("lama.jpg"));
-			grama = ImageIO.read(this.getClass().getResource("grama.png"));
-			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
-			roboV = ImageIO.read(this.getClass().getResource("roboV.png"));
-			roboA = ImageIO.read(this.getClass().getResource("roboA.png"));
-			baseV = ImageIO.read(this.getClass().getResource("baseV.png"));
-			baseA = ImageIO.read(this.getClass().getResource("baseA.png"));
-			background = ImageIO.read(this.getClass().getResource("background.jpg"));
-			depSemCristal = ImageIO.read(this.getClass().getResource("newDepVoid.png"));
-			depComCristal = ImageIO.read(this.getClass().getResource("newDep.png"));
+			lama = ImageIO.read(this.getClass().getResource("data/img/lama.jpg"));
+			grama = ImageIO.read(this.getClass().getResource("data/img/grama.png"));
+			agua = ImageIO.read(this.getClass().getResource("data/img/agua.jpg"));
+			roboV = ImageIO.read(this.getClass().getResource("data/img/roboV.png"));
+			roboA = ImageIO.read(this.getClass().getResource("data/img/roboA.png"));
+			baseV = ImageIO.read(this.getClass().getResource("data/img/baseV.png"));
+			baseA = ImageIO.read(this.getClass().getResource("data/img/baseA.png"));
+			background = ImageIO.read(this.getClass().getResource("data/img/background.jpg"));
+			depSemCristal = ImageIO.read(this.getClass().getResource("data/img/newDepVoid.png"));
+			depComCristal = ImageIO.read(this.getClass().getResource("data/img/newDep.png"));
 		}
 		catch (Exception e) 
 		{	
