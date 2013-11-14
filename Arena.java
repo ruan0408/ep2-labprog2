@@ -63,9 +63,31 @@ public class Arena
    this.tempo++;
 
 
-   /*Remove da lista principal os robos mortos */
 
-  for(ListIterator<Robo> it2 = robosMortos.listIterator(); it2.hasNext(); robos.remove(it2.next()));
+   /*Remove da lista principal os robos mortos */
+   //for(ListIterator<Robo> it2 = robosMortos.listIterator(); it2.hasNext(); robos.remove(it2.next()));
+   robos.removeAll(robosMortos);
+
+    ArrayList<Time> timesMortos = new ArrayList<Time>();
+   /* Verifica se tem algum time que tenha já 3 cristais na base, e portanto tenha perdido */
+   ArrayList<Time> times = mapa.getTimes();
+   for(ListIterator<Time> it3 = times.listIterator();it3.hasNext();)
+   {
+      Time timeTemp = it3.next();
+      if(timeTemp.getBase().numCristais()>=1)
+      {
+        removeExercito(timeTemp.getId());
+        System.out.println("Time "+timeTemp.getId()+" perdeu! Seu robôs irão para o inferno!");
+        timesMortos.add(timeTemp);
+      }
+   }
+
+   /*Remove os times perdedores*/
+   times.removeAll(timesMortos);
+
+
+
+  
 
 
 
@@ -349,13 +371,19 @@ public void insereExercito(Programa[] programas, int timeId)
 /* Remove todos os robos que pertencem ao time passado */
 public void removeExercito(int time)
 {
-
+  ArrayList<Robo> robosMortos = new ArrayList<Robo>();
   Iterator<Robo> it = robos.iterator();
   while (it.hasNext()) 
   {
     Robo rb = it.next();
-    if (rb.getTime().getId() == time) removeRobo(rb);      
+    if (rb.getTime().getId() == time)
+    {
+      removeRobo(rb);
+      robosMortos.add(rb);  
+    }    
   }
+
+  robos.removeAll(robosMortos);
 }
 
  /* Recebe um robo, que será retirado da lista de robos
