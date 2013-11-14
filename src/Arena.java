@@ -85,12 +85,18 @@ public class Arena
    /*Remove os times perdedores*/
    times.removeAll(timesMortos);
 
-
-
-  
-
-
-
+   if(times.size() == 1)
+   {
+      String timeVencedor = null;
+      switch(times.get(0).getId())
+      {
+        case 1: timeVencedor = "Vermelho";break;
+        case 2: timeVencedor = "Azul";break;
+        default:System.out.println("Não suportamos mais de 2 times");
+      }
+      System.out.println("O time "+timeVencedor+" ganhou!!");
+      return false;
+   }
 
    return alguemTemAcao;
  }

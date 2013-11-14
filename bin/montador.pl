@@ -1,7 +1,13 @@
 #! /usr/bin/perl -w
 
+# Próximos dois use's úteis para usar o diretório do arquivo desse código fonte como
+# base para os paths usados
+use FindBin qw($Bin);	
+use lib "$Bin";
+
 use Comando;
-use Programa;	
+use Programa;
+
 #use Maquina;
 package main;
 			
@@ -9,12 +15,10 @@ package main;
 #Cada linha é interpretada e vira um comando, ao termino do while, temos um programa ($prog),
 #que será executado pela maquina ($maq);
 
-
-
 my $erro = 0;
 
 $n = @ARGV;
-open (SAIDA, ">Main.java") or die "Erro ao tentar iniciar o programa";
+open (SAIDA, ">", "$Bin/../src/Main.java") or die "Erro ao tentar iniciar o programa";
 print SAIDA <<INTRO;
 public class Main{
 	public static void main(String args[]){
