@@ -73,7 +73,8 @@ class Campo extends JPanel
 {
 	Celula[][] cel;
 	Mapa mapa;
-	BufferedImage base = null;
+	BufferedImage baseV = null;
+	BufferedImage baseA = null;
 	BufferedImage roboV = null;
 	BufferedImage roboA = null;
 	BufferedImage depSemCristal = null;
@@ -109,7 +110,8 @@ class Campo extends JPanel
 			agua = ImageIO.read(this.getClass().getResource("agua.jpg"));
 			roboV = ImageIO.read(this.getClass().getResource("roboV.png"));
 			roboA = ImageIO.read(this.getClass().getResource("roboA.png"));
-			base = ImageIO.read(this.getClass().getResource("base2.png"));
+			baseV = ImageIO.read(this.getClass().getResource("baseV.png"));
+			baseA = ImageIO.read(this.getClass().getResource("baseA.png"));
 			background = ImageIO.read(this.getClass().getResource("background.jpg"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("depositovazio.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("depositoocupado.png"));
@@ -174,13 +176,22 @@ class Campo extends JPanel
 				}
 				
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
-				if(mapa.getTerreno(i,j).eBase()) desenhaElemento(base, i, j, g2d);
+				if(mapa.getTerreno(i,j).eBase()) 
+					{
+						switch(mapa.getTerreno(i,j).toBase().getTime().getId())
+						{
+							case 1 :desenhaElemento(baseV, i, j, g2d);break;
+				 			case 2 :desenhaElemento(baseA, i, j, g2d);break;
+				 			default: System.out.println("Ainda não suportamos mais times");
+						}	
+					}
 				if(mapa.getTerreno(i,j).temRobo())
 				{
 					switch(mapa.getTerreno(i,j).getRobo().getTime().getId())
 					{
 				 		case 1 :desenhaElemento(roboV, i, j, g2d);break;
 				 		case 2 :desenhaElemento(roboA, i, j, g2d);break;
+				 		default: System.out.println("Ainda não suportamos mais times");
 				 	}
 				}
 			}
