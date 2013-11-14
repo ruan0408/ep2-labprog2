@@ -23,7 +23,7 @@ print SAIDA <<INTRO;
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[$n];
-		Mapa mapa = new Mapa("mapa.txt");
+		Mapa mapa = new Mapa("$Bin/../data/map/mapa.txt");
 	    Arena arena = new Arena(mapa);
 	    Programa programa;
 
@@ -56,7 +56,7 @@ while($time > 0 && @args)
 	while(@arquivos)
 	{
 		my $arq =  shift @arquivos;
-		interpretaArquivo($arq);
+		interpretaArquivo("$Bin/../test/$arq");
 	}
 
 	print SAIDA "arena.insereExercito(programas, $time);\n";
