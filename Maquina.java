@@ -261,7 +261,6 @@ private int executaCmd(Comando cmd)
     if(aux1 instanceof Numero && aux2 instanceof Numero)
     {
       Numero n1 = (Numero) aux1; Numero n2 = (Numero) aux2;
-      System.out.println(n2.getVal()+"%"+n1.getVal());
       Numero resu = new Numero(n2.getVal()%n1.getVal());
       this.dados.push(resu);
     }

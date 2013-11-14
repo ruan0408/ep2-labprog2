@@ -1,6 +1,6 @@
 public enum Direcao
 {
-	UP(1), UR(2), DR(3), DW(4), DL(5), UL(6),HR(7);
+	HR(0),UP(1), UR(2), DR(3), DW(4), DL(5), UL(6);
 
 	private final int value;
 
@@ -15,6 +15,6 @@ public enum Direcao
 
     public static Direcao toDirecao(int i)
     {
-    	return Direcao.values()[i-1];
+    	return Direcao.values()[i];
     }
 }

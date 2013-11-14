@@ -167,7 +167,8 @@ public class Mapa
 	/* Retorna o terreno na posição i,j */
 	public Terreno getTerreno(int i, int j)
 	{
-		if(!existeTerreno(i,j)) throw new ArrayIndexOutOfBoundsException();
+		if(!existeTerreno(i,j))
+		 throw new ArrayIndexOutOfBoundsException();
 		return matriz[i][j];
 	}
 

@@ -39,6 +39,8 @@ anda:
 
 coleta:
 	RCL 0
+	DUP 
+	PRN
 	COLLECT
 	JIF procuraCristal
 	PUSH GG
@@ -55,7 +57,7 @@ levaBase: #supondo que o time inimigo seja o time 2
 	STO 3
 	RCL 3
 	GETX
-	PUSH 7
+	PUSH 0
 	LOOK
 	GETPOS 
 	GETX
@@ -87,7 +89,7 @@ baseAbaixo:
 baseLoop:
 	RCL 4 # Direção definida acima
 	WALK
-	PUSH 7
+	PUSH 0
 	LOOK 
 	GETPOS
 	GETX
@@ -103,7 +105,7 @@ linhaDaBase:
 	GETY
 	DUP
 	PRN
-	PUSH 7
+	PUSH 0
 	LOOK
 	GETPOS
 	GETY
@@ -121,7 +123,7 @@ linhaDaBase:
 	PUSH 0 
 	LT
 	JIT esquerda
-	JMP coleta
+	JMP dropar
 
 # 6 - direção caso coluna impar
 # 7 - direção caso coluna par
@@ -144,7 +146,7 @@ esquerda:
 	STO 7
 
 andaDeLado:
-	PUSH 7
+	PUSH 0
 	LOOK
 	GETPOS
 	GETY
@@ -168,7 +170,7 @@ impar:
 seraQueChegou:
 	RCL 3
 	GETY
-	PUSH 7 
+	PUSH 0
 	LOOK
 	GETPOS
 	GETY

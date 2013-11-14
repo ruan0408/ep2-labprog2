@@ -124,8 +124,9 @@ public class Arena
                   default : System.out.println("Direçao inválida!");
                 }
               }
-              catch(ArrayIndexOutOfBoundsException e)
+              catch(Exception e)
               {
+                System.out.println("Tentou acesssar posição inexistente:("+x+","+y+")");
                 push(robo, resp);
                 return;
               } 
@@ -187,12 +188,15 @@ public class Arena
                       }
                       else System.out.println("O depósito esta vazio!");
                     }
-                    else System.out.println("O terreno não é deposito!");
+                    else
+                      if(!terrTemp.eDeposito()) System.out.println("O terreno não é deposito!");
+                      else System.out.println("O robo ja tem cristal");
                     break;
               case LOOK :
                     if(terrTemp != null) resp = terrTemp;
                     break;
               case DROP :
+                    System.out.println("DROP");
                     if(terrTemp.eBase() && terrTemp.toBase().getTime() != robo.getTime())
                     {
                       dropCristal(robo, terrTemp);
