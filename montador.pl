@@ -61,7 +61,7 @@ while($time > 0 && @args)
 
 print SAIDA <<FIM;
 
-		MapaVisual mv = new MapaVisual(mapa, (mapa.largura()*60),(int)(mapa.altura()*Math.sqrt(3)*30), 30);
+		MapaVisual mv = new MapaVisual(mapa,(int)(mapa.altura()*Math.sqrt(3)*30 + Math.sqrt(3)*15), 90*mapa.largura()/2 + 30, 30);
 
 		mv.abreJanela();
 
