@@ -103,18 +103,18 @@ class Campo extends JPanel
 		
 		try 
 		{
-			deposito = ImageIO.read(this.getClass().getResource("deposito.png"));
-			cristal = ImageIO.read(this.getClass().getResource("cristal.png"));
-			lama = ImageIO.read(this.getClass().getResource("data/img/lama.jpg"));
-			grama = ImageIO.read(this.getClass().getResource("data/img/grama.png"));
-			agua = ImageIO.read(this.getClass().getResource("data/img/agua.jpg"));
-			roboV = ImageIO.read(this.getClass().getResource("data/img/roboV.png"));
-			roboA = ImageIO.read(this.getClass().getResource("data/img/roboA.png"));
-			baseV = ImageIO.read(this.getClass().getResource("data/img/baseV.png"));
-			baseA = ImageIO.read(this.getClass().getResource("data/img/baseA.png"));
-			background = ImageIO.read(this.getClass().getResource("data/img/background.jpg"));
-			depSemCristal = ImageIO.read(this.getClass().getResource("data/img/newDepVoid.png"));
-			depComCristal = ImageIO.read(this.getClass().getResource("data/img/newDep.png"));
+			//deposito = ImageIO.read(this.getClass().getResource("deposito.png"));
+			//cristal = ImageIO.read(this.getClass().getResource("cristal.png"));
+			lama = ImageIO.read(this.getClass().getResource("/img/lama.jpg"));
+			grama = ImageIO.read(this.getClass().getResource("/img/grama.png"));
+			agua = ImageIO.read(this.getClass().getResource("/img/agua.jpg"));
+			roboV = ImageIO.read(this.getClass().getResource("/img/roboV.png"));
+			roboA = ImageIO.read(this.getClass().getResource("/img/roboA.png"));
+			baseV = ImageIO.read(this.getClass().getResource("/img/baseV.png"));
+			baseA = ImageIO.read(this.getClass().getResource("/img/baseA.png"));
+			background = ImageIO.read(this.getClass().getResource("/img/background.jpg"));
+			depSemCristal = ImageIO.read(this.getClass().getResource("/img/newDepVoid.png"));
+			depComCristal = ImageIO.read(this.getClass().getResource("/img/newDep.png"));
 		}
 		catch (Exception e) 
 		{	
@@ -216,6 +216,9 @@ class Tela extends JFrame
 {
 	public Tela(Campo campo, int H, int W) 
 	{
+		//JScrollPane scroller = new JScrollPane(campo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//add(scroller);
+
 		setTitle("Caça aos cristais!");
 		setSize(H, W);
 		

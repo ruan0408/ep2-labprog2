@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="LabProgII-EP3" default="dist" basedir=".">
+    
+    <!-- Atributos -->
+    <property name="src.dir"   value="src"                 />
+    <property name="build.dir" value="build"               />
+    <property name="data.dir"  value="data"                />
+    <property name="dist.dir"  value="dist"                />
+    <property name="jar.path"  value="${dist.dir}/EP3.jar" />
+    <property name="main.mf"   value="Main"                />
+    
+    <!-- Cria diretórios -->
+    <target name="init">
+        <mkdir dir="${dist.dir}"  />
+        <mkdir dir="${build.dir}" />
+    </target>
+    
+    <!-- Compila -->
+    <target name="compile" depends="init">
+        <javac destdir = "${build.dir}"
+            srcdir  = "${src.dir}"
+            includeAntRuntime = "no"/>
+    </target>  
+    
+    <!-- Gera .jar -->
+    <target name="dist" depends="compile">
+        <jar destfile = "${jar.path}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.mf}"/>
+            </manifest>
+            <fileset dir = "${build.dir}"/>
+            <fileset dir = "${data.dir}"/>
+        </jar>
+    </target>
+    
+    <!-- Clean -->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+</project>

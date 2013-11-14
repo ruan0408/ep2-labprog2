@@ -1,1 +1,5 @@
 *.class
+
+# LaTeX
+*.aux
+*.log

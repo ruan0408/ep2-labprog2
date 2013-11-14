@@ -1,7 +1,7 @@
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[4];
-		Mapa mapa = new Mapa("mapa.txt");
+		Mapa mapa = new Mapa("data/map/mapa.txt");
 	    Arena arena = new Arena(mapa);
 	    Programa programa;
 
