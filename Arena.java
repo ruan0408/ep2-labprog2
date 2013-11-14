@@ -146,7 +146,6 @@ public class Arena
                       }
                       else
                       {              
-
                         this.moveRobo(terrAtual, terrTemp);
                         System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
                         resp = new Numero(1);
@@ -201,14 +200,14 @@ public class Arena
                     {
                       dropCristal(robo, terrTemp);
                       System.out.println("Robo "+indRobo+" deixou 1 cristal na base");
-                      if(terrTemp.toBase().numCristais() >= 1)
+                      /*if(terrTemp.toBase().numCristais() >= 1)
                       {
                         System.out.println("Time: "+terrTemp.toBase().getTime().getId()+" perdeu! Todos os robos desse time irão");
                         System.out.println("para o inferno");
                         removeExercito(terrTemp.toBase().getTime().getId());
                         mapa.getTimes().remove(terrTemp.toBase().getTime());
 
-                      }
+                      }*/
                       resp = new Numero(1);        
                     }
                     else
