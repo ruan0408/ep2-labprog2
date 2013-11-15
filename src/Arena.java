@@ -74,7 +74,7 @@ public class Arena
    for(ListIterator<Time> it3 = times.listIterator();it3.hasNext();)
    {
       Time timeTemp = it3.next();
-      if(timeTemp.getBase().numCristais()>=1)
+      if(timeTemp.getBase().numCristais() >= 5)
       {
         removeExercito(timeTemp.getId());
         System.out.println("Time "+timeTemp.getId()+" perdeu! Seu robôs irão para o inferno!");
@@ -154,7 +154,7 @@ public class Arena
               }
               catch(Exception e)
               {
-                System.out.println("Tentou acesssar posição inexistente:("+x+","+y+")");
+                //System.out.println("Tentou acesssar posição inexistente:("+x+","+y+")");
                 push(robo, resp);
                 return;
               } 

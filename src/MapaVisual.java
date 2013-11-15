@@ -11,7 +11,6 @@ class Celula
 { 
 		Polygon p = new Polygon();
 		BufferedImage ime;
-		Graphics2D Gime;
 		int x,y;
 		double r;
 
@@ -26,7 +25,6 @@ class Celula
 				p.addPoint(x + (int) (r * Math.cos(i * 2 * Math.PI / 6)),
 						   y + (int) (r * Math.sin(i * 2 * Math.PI / 6)));
 			
-			//Gime = ime.createGraphics();
 		}
 
 		void draw(Graphics g) 
@@ -38,9 +36,7 @@ class Celula
 
 			Rectangle rec = new Rectangle(0,0,(int)(height*scale),(int)(width*scale));
 			g2d.setPaint(new TexturePaint(ime, rec));
-			//g2d.setColor(Color.blue);
 			g2d.fill(p);
-		//		try{			Thread.sleep(50);}catch(Exception e){System.out.println("HUE");} 
 		}
 
 		public int x()
@@ -63,10 +59,6 @@ class Celula
 			this.ime = img;
 		}
 
-		public void trans(int dx, int dy) 
-		{
-			p.translate(dx, dy);
-		}
 }	
 
 class Campo extends JPanel
@@ -87,7 +79,6 @@ class Campo extends JPanel
 	{
 		this.mapa = mapa;
 		this.criaCampo(L);
-		//this.setSize(800, 800);
 	}
 
 	private void criaCampo(int L)
@@ -103,8 +94,6 @@ class Campo extends JPanel
 		
 		try 
 		{
-			//deposito = ImageIO.read(this.getClass().getResource("deposito.png"));
-			//cristal = ImageIO.read(this.getClass().getResource("cristal.png"));
 			lama = ImageIO.read(this.getClass().getResource("/img/lama.jpg"));
 			grama = ImageIO.read(this.getClass().getResource("/img/grama.png"));
 			agua = ImageIO.read(this.getClass().getResource("/img/agua.jpg"));
@@ -133,11 +122,8 @@ class Campo extends JPanel
 				else if(mapa.getTerreno(i, j).eLiso()) fundo = grama;
 				else if(mapa.getTerreno(i, j).eAgua()) fundo = agua;
 				else if(mapa.getTerreno(i, j).eDeposito() && mapa.getTerreno(i, j).toDeposito().temCristal())  fundo = depComCristal;
-				//else if(mapa.getTerreno(i, j).eBase()) fundo = base;
 				else fundo = grama; //Default em caso de erro
-				//else if(mapa.getTerreno(i, j).eDeposito())
-					
-					//fundo = deposito;
+									
 				cel[i][j] = new Celula((int)(metadeLarg + j*Dx),(int)(metadeAlt + i*Dy + DELTA ), raio, fundo);
 			}
 		}
@@ -154,24 +140,16 @@ class Campo extends JPanel
 			g2d.setPaint(new TexturePaint(background, rec));
 			Rectangle rec2 = new Rectangle(0,0,10000,10000);
 			g2d.fill(rec2);
-        	  
- 		  //g2d.drawImage(background, null, 0, 0);		
- 
+        		   
        	} 
        	catch (Exception e) { System.out.println("");}
        		 
 		for (int i = 0; i < cel.length; i++) 
 			for (int j = 0; j < cel[0].length; j++)
 			{
-
-				//cel[i][j].draw(g2d); // pinta as células no contexto gráfico
-				//if(mapa.getTerreno(i,j).eDeposito())
 				if(mapa.getTerreno(i,j).eDeposito()) //&& mapa.getTerreno(i,j).toDeposito().temCristal())
 				{
 					if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depComCristal);
-					//cel[i][j].setIme(deposito);
-					//desenhaCristal(i, j, g2d);
-
 					else cel[i][j].setIme(depSemCristal);
 				}
 				
@@ -231,8 +209,8 @@ class Tela extends JFrame
 		});
 		this.setLocationRelativeTo(null);
 		add(campo);
-		
-		setVisible(true);
+				
+		//setVisible(true);
 	}
 }
 
@@ -242,6 +220,7 @@ public class MapaVisual
 	Celula[][] cel;
 	int W, H, L;
 	Tela tela;
+	//Campo campo;
 
 	public MapaVisual(Mapa mapa, int H, int W, int L) 
 	{
@@ -249,6 +228,7 @@ public class MapaVisual
 		this.W = W;
 		this.H = H;
 		this.L = L;
+		//this.campo = null;
 	}
 
 	public void atualiza()
@@ -259,17 +239,31 @@ public class MapaVisual
 	public void abreJanela() 
 	{
 		Campo campo = new Campo(mapa,L);
+		//this.campo = new Campo(mapa,L);
 		this.tela = new Tela(campo, H, W);
         SwingUtilities.invokeLater(new Runnable() 
         {
             @Override
             public void run() 
             {
-                Tela telah = tela;
-                telah.setVisible(true);
+                tela.setVisible(true);
             }
         });
 
+    }
+
+    public void gameOver()
+    {
+    	/*JPanel gameOver = new JPanel();
+    	ImageIcon image = new ImageIcon("/img/game_over.jpg");
+   		JLabel label = new JLabel("", image, JLabel.CENTER);
+		gameOver.add( label, BorderLayout.CENTER );
+		tela.add(gameOver);*/
+		tela.setVisible(false);
+		System.exit(0);
+		//campo.setVisible(true);
+    	//BufferedImage gameOver = ImageIO.read(this.getClass().getResource("/img/game_over.jpg"));
+    	
     }
 
 

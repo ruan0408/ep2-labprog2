@@ -1,7 +1,7 @@
 public class Main{
 	public static void main(String args[]){
-		Programa[] programas = new Programa[2];
-		Mapa mapa = new Mapa("/home/ruan/Documentos/labprog2/ep2-labprog2/bin/../data/map/mapa2.txt");
+		Programa[] programas = new Programa[4];
+		Mapa mapa = new Mapa("/home/ruan/Documentos/labprog2/ep2-labprog2/bin/../data/map/mapa.txt");
 	    Arena arena = new Arena(mapa);
 	    Programa programa;
 
@@ -170,6 +170,23 @@ programa.add( new Comando("MYTIME", null));
 programa.add( new Comando("STO", new Numero(3) ));
 programas[0] = programa;
 arena.insereExercito(programas, 1);
+programas = new Programa[1];
+programa = new Programa();
+programa.add( new Comando("PUSH", new Numero(1) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(2) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(3) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(4) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(5) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(6) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("JMP", new Numero( 0 )));
+programas[0] = programa;
+arena.insereExercito(programas, 2);
 
 		int larguraJanela, alturaJanela;
 		if(mapa.largura()%2 == 1) larguraJanela = ((mapa.largura()-1)/2)*90 + 60;
@@ -191,6 +208,13 @@ arena.insereExercito(programas, 1);
 			} 
 			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+
+		try 
+		{
+   			Thread.sleep(1000);
+		} 
+		catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+		mv.gameOver();
 		
 	}
 }
