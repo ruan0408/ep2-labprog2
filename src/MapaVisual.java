@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import javax.swing.SwingUtilities;
-import java.awt.geom.Ellipse2D; // Circulo do robo
 
 class Celula
 { 
@@ -65,6 +64,7 @@ class Campo extends JPanel
 {
 	Celula[][] cel;
 	Mapa mapa;
+	boolean gameOver = false;
 	BufferedImage baseV = null;
 	BufferedImage baseA = null;
 	BufferedImage roboV = null;
@@ -73,6 +73,7 @@ class Campo extends JPanel
 	BufferedImage depComCristal = null;
 	BufferedImage background = null;
 	BufferedImage cristal = null;
+	BufferedImage game_over = null;
 
 
 	public Campo(Mapa mapa, int L)
@@ -104,6 +105,7 @@ class Campo extends JPanel
 			background = ImageIO.read(this.getClass().getResource("/img/background.jpg"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("/img/newDepVoid.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("/img/newDep.png"));
+			game_over = ImageIO.read(this.getClass().getResource("/img/game_over.jpg"));
 		}
 		catch (Exception e) 
 		{	
@@ -155,14 +157,14 @@ class Campo extends JPanel
 				
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
 				if(mapa.getTerreno(i,j).eBase()) 
+				{
+					switch(mapa.getTerreno(i,j).toBase().getTime().getId())
 					{
-						switch(mapa.getTerreno(i,j).toBase().getTime().getId())
-						{
-							case 1 :desenhaElemento(baseV, i, j, g2d);break;
-				 			case 2 :desenhaElemento(baseA, i, j, g2d);break;
-				 			default: System.out.println("Ainda não suportamos mais times");
-						}	
-					}
+						case 1 :desenhaElemento(baseV, i, j, g2d);break;
+			 			case 2 :desenhaElemento(baseA, i, j, g2d);break;
+			 			default: System.out.println("Ainda não suportamos mais times");
+					}	
+				}
 				if(mapa.getTerreno(i,j).temRobo())
 				{
 					switch(mapa.getTerreno(i,j).getRobo().getTime().getId())
@@ -173,6 +175,15 @@ class Campo extends JPanel
 				 	}
 				}
 			}
+
+		if (this.gameOver) 
+		{
+			game_over = getScaledImage(game_over, MapaVisual.W, MapaVisual.H);
+			Rectangle rec = new Rectangle(0,0, game_over.getWidth(), game_over.getHeight());
+			g2d.setPaint(new TexturePaint(game_over, rec));
+			Rectangle rec2 = new Rectangle(0,0, game_over.getWidth(), game_over.getHeight());
+			g2d.fill(rec2);
+		}
 	}
 
 	private void desenhaElemento(BufferedImage elem, int i, int j, Graphics2D g2d)
@@ -186,7 +197,16 @@ class Campo extends JPanel
 		g2d.setPaint(new TexturePaint(elem, rec));
 		g2d.fill(rec);
 	}
-	
+
+	private BufferedImage getScaledImage(Image srcImg, int w, int h)
+	{
+	    BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+	    Graphics2D g2 = resizedImg.createGraphics();
+	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g2.drawImage(srcImg, 0, 0, w, h, null);
+	    g2.dispose();
+	    return resizedImg;
+	}
 }
 
 
@@ -218,9 +238,9 @@ public class MapaVisual
 {
 	Mapa mapa;
 	Celula[][] cel;
-	int W, H, L;
+	static int W, H, L;
 	Tela tela;
-	//Campo campo;
+	Campo campo;
 
 	public MapaVisual(Mapa mapa, int H, int W, int L) 
 	{
@@ -228,7 +248,7 @@ public class MapaVisual
 		this.W = W;
 		this.H = H;
 		this.L = L;
-		//this.campo = null;
+		this.campo = null;
 	}
 
 	public void atualiza()
@@ -238,8 +258,8 @@ public class MapaVisual
 	
 	public void abreJanela() 
 	{
-		Campo campo = new Campo(mapa,L);
-		//this.campo = new Campo(mapa,L);
+		//Campo campo = new Campo(mapa,L);
+		this.campo = new Campo(mapa,L);
 		this.tela = new Tela(campo, H, W);
         SwingUtilities.invokeLater(new Runnable() 
         {
@@ -259,6 +279,12 @@ public class MapaVisual
    		JLabel label = new JLabel("", image, JLabel.CENTER);
 		gameOver.add( label, BorderLayout.CENTER );
 		tela.add(gameOver);*/
+		campo.gameOver = true;
+		try 
+		{
+   			Thread.sleep(5000);
+		} 
+		catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		tela.setVisible(false);
 		System.exit(0);
 		//campo.setVisible(true);

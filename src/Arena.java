@@ -74,7 +74,7 @@ public class Arena
    for(ListIterator<Time> it3 = times.listIterator();it3.hasNext();)
    {
       Time timeTemp = it3.next();
-      if(timeTemp.getBase().numCristais() >= 5)
+      if(timeTemp.getBase().numCristais() >= 1)
       {
         removeExercito(timeTemp.getId());
         System.out.println("Time "+timeTemp.getId()+" perdeu! Seu robôs irão para o inferno!");

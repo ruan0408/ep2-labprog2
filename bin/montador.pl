@@ -86,11 +86,6 @@ print SAIDA <<FIM;
 			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		try 
-		{
-   			Thread.sleep(1000);
-		} 
-		catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		mv.gameOver();
 		
 	}

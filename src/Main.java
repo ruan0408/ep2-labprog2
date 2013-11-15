@@ -209,11 +209,11 @@ arena.insereExercito(programas, 2);
 			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		try 
+		/*try 
 		{
    			Thread.sleep(1000);
 		} 
-		catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+		catch(InterruptedException ex) {Thread.currentThread().interrupt();}*/
 		mv.gameOver();
 		
 	}
