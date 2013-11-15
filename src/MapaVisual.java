@@ -220,7 +220,7 @@ class Tela extends JFrame
 		//add(scroller);
 
 		setTitle("Caça aos cristais!");
-		setSize(H, W);
+		setSize(W, H);
 		
 		addWindowListener(new WindowAdapter() 
 		{
@@ -243,7 +243,7 @@ public class MapaVisual
 	int W, H, L;
 	Tela tela;
 
-	public MapaVisual(Mapa mapa, int W, int H, int L) 
+	public MapaVisual(Mapa mapa, int H, int W, int L) 
 	{
 		this.mapa = mapa;
 		this.W = W;
