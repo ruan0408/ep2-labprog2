@@ -9,6 +9,23 @@ public class Main{
 programas = new Programa[1];
 programa = new Programa();
 programa.add( new Comando("PUSH", new Numero(1) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(2) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(3) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(4) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(5) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("PUSH", new Numero(6) ));
+programa.add( new Comando("WALK", null));
+programa.add( new Comando("JMP", new Numero( 0 )));
+programas[0] = programa;
+arena.insereExercito(programas, 1);
+programas = new Programa[1];
+programa = new Programa();
+programa.add( new Comando("PUSH", new Numero(1) ));
 programa.add( new Comando("STO", new Numero(1) ));
 programa.add( new Comando("PUSH", new Numero(1) ));
 programa.add( new Comando("STO", new Numero(0) ));
@@ -169,23 +186,6 @@ programa.add( new Comando("JMP", new Numero( 0 )));
 programa.add( new Comando("MYTIME", null));
 programa.add( new Comando("STO", new Numero(3) ));
 programas[0] = programa;
-arena.insereExercito(programas, 1);
-programas = new Programa[1];
-programa = new Programa();
-programa.add( new Comando("PUSH", new Numero(1) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("PUSH", new Numero(2) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("PUSH", new Numero(3) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("PUSH", new Numero(4) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("PUSH", new Numero(5) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("PUSH", new Numero(6) ));
-programa.add( new Comando("WALK", null));
-programa.add( new Comando("JMP", new Numero( 0 )));
-programas[0] = programa;
 arena.insereExercito(programas, 2);
 
 		int larguraJanela, alturaJanela;
@@ -209,11 +209,6 @@ arena.insereExercito(programas, 2);
 			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		/*try 
-		{
-   			Thread.sleep(1000);
-		} 
-		catch(InterruptedException ex) {Thread.currentThread().interrupt();}*/
 		mv.gameOver();
 		
 	}

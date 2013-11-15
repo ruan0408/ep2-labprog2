@@ -105,7 +105,7 @@ class Campo extends JPanel
 			background = ImageIO.read(this.getClass().getResource("/img/background.jpg"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("/img/newDepVoid.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("/img/newDep.png"));
-			game_over = ImageIO.read(this.getClass().getResource("/img/game_over.jpg"));
+			game_over = ImageIO.read(this.getClass().getResource("/img/game_over.png"));
 		}
 		catch (Exception e) 
 		{	
