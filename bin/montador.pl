@@ -16,14 +16,14 @@ package main;
 #que será executado pela maquina ($maq);
 
 my $erro = 0;
-
+my $mapa = shift(@ARGV);
 $n = @ARGV;
 open (SAIDA, ">", "$Bin/../src/Main.java") or die "Erro ao tentar iniciar o programa";
 print SAIDA <<INTRO;
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[$n];
-		Mapa mapa = new Mapa("$Bin/../data/map/mapa.txt");
+		Mapa mapa = new Mapa("$Bin/../data/map/$mapa");
 	    Arena arena = new Arena(mapa);
 	    Programa programa;
 
@@ -86,7 +86,7 @@ print SAIDA <<FIM;
 			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		mv.gameOver();
+			mv.gameOver();
 		
 	}
 }
