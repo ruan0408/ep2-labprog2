@@ -248,21 +248,26 @@ public class Arena
                     if(terrTemp.temRobo()) resp = terrTemp.getRobo();
                     break;
             }
-      break;
+           break;
       case TIMERB:
             Empilhavel roboAlvo = robo.pop();
             if(roboAlvo instanceof Robo)
               resp = ((Robo)roboAlvo).getTime();
             else
               System.out.println("TIMERB em argumento não robo!!");
-      break;
-      case GETTIME:
-            Empilhavel empId = robo.pop();
-            if(empId instanceof Numero)
+           break;
+      case GETTIME://pega o Time dado o timeId ou dado o robo passado
+            Empilhavel emp = robo.pop();
+            if(emp instanceof Numero)
             {
-              int timeId = (int) ((Numero)empId).getVal();
+              int timeId = (int) ((Numero)emp).getVal();
               if(existeTime(timeId)) resp = mapa.getTime(timeId);
             }
+            else if(emp instanceof Robo)
+            {
+              resp = ((Robo)emp).getTime();
+            }
+            else System.out.println("Robo "+indRobo+ " do time "+robo.getTime().getId()+" fez uso errado da chamada GETTIME!");
             break;
       case MYTIME: robo.getTime(); break;
       default://Talvez outras chamadas venham aqui
