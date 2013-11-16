@@ -269,7 +269,7 @@ public class Mapa
 		/* Caso seja possível (a posição do robô não esteja ocupada e nem se encontre
 		   fora dos limites do mapa, inserimos o robô no mapa e retornamos TRUE. É  
 		   retornado o valor FALSE caso contrário.                                    */
-		if(x < largura && y < altura && y >= 0 && x >= 0)
+		if(x < altura && y < largura && y >= 0 && x >= 0)
 		{
 			if(!matriz[x][y].temRobo())
 			{
@@ -283,7 +283,7 @@ public class Mapa
 	/* Função que receberá uma posição e removerá o robô localizado nesta posição. */
 	public void removeRobo(int x, int y)
 	{
-		if(x < largura && y < altura && y > 0 && x > 0)
+		if(x < altura && y < largura && y >= 0 && x >= 0)
 			matriz[x][y].removeRobo();
 	}
 }

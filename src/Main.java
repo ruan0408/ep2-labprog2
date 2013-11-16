@@ -1,7 +1,7 @@
 public class Main{
 	public static void main(String args[]){
 		Programa[] programas = new Programa[4];
-		Mapa mapa = new Mapa("/home/ruan/Documentos/labprog2/ep2-labprog2/bin/../data/map/mapa.txt");
+		Mapa mapa = new Mapa("/home/ruan/Documentos/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");
 	    Arena arena = new Arena(mapa);
 	    Programa programa;
 

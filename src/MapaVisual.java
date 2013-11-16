@@ -249,6 +249,7 @@ public class MapaVisual
 		this.H = H;
 		this.L = L;
 		this.campo = null;
+		this.tela = null;
 	}
 
 	public void atualiza()

@@ -351,8 +351,8 @@ public void insereExercito(Programa[] programas, int timeId)
   Time time = mapa.getTime(timeId);
   int tam = programas.length;
   
-  int maxX = this.mapa.largura() -1;
-  int maxY = this.mapa.altura() -1;
+  int maxY = this.mapa.largura() -1;
+  int maxX = this.mapa.altura() -1;
 
 
   for(int i = 0; i < tam; i++)
