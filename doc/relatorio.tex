@@ -7,7 +7,7 @@
 \usepackage{graphicx}
 
 
-\title{Relatório - EP Fase 2 \\ Laboratório de Programação 2}
+\title{Relatório - EP Fase 3 \\ Laboratório de Programação 2}
 
 
 
@@ -29,169 +29,147 @@
 
 \section{Introdução}
 
-Neste relatório temos como objetivo dar uma explicação concisa sobre a organização das classes no funcionamento do programa atualmente. Para isso, explicaremos o funcionamento do programa inteiro, e iremos nos aprofundar nos assuntos que forem necessários.
+Nesta fase foram implementados a parte visual do jogo, algumas instruções adicionais para melhor desenvolvimento dos robos através do nosso \emph{Assembly}, e foram impelmentados alguns melhoramentos de algumas instruções. Este relatório tem como objetivo dar uma visão geral de todas essas mudanças.
 
+\section{Interface gráfica}
 
-\section{Funcionamento}
-
-Nessa fase o EP ainda não têm o funcionamento de um jogo em si, mas já é possível ver diversos robôs agindo em paralelo. Para isso, o script em Perl\footnote{Explicação do mesmo feita mais a frente} traduz diversos programas para um arquivo chamado \textbf{\color{red}Main.java}. 
-
-Todos os robôs traduzidos serão colocados no mesmo time. Ao rodar o programa, os programas de cada robô serão executados até o fim. Quando todos os robos tiverem encerrado sua execução, o programa será finalizado.
-
-Cada robô imprime as instruções que executou para que assim possamos acompanhá-las.
-
-\section{Classes}
-
-\subsection{Classe Arena}
-
-
-Essa classe representa a Arena em si. Nela, temos os seguintes atributos:
+Toda a parte da interface gráfica está implementada no arquivo \textbf{\color{red}MapaVisual.java}. Neste arquivo há diversas classes e estruturas que controlam a parte gráfica do jogo. Uma breve explicação sobre algumas dessas estruturas:
 
 \begin{itemize}
 
-	\item \textbf{Mapa}: Objeto do tipo \textbf{\color{red}Mapa} que representa o mapa em si. Nesse objeto existe uma matriz de Terrenos, cada um contendo informações como robôs naquele terreno, assim como cristais, bases, etc. Melhores explicações sobre esse objeto serão dadas mais a frente.
+	\item \textbf{classe Célula}: Representa um hexagono do do campo. Seus atributos são o  centro (x, y), o raio, a imagem dessa célula e o hexagono(polígono). O construtor constrói o hexagono de maneira similar à disponibilizada no paca. A função draw desenha uma célula
+
+	\item \textbf{classe Campo}: Extensão de JPanel. Tem como atributos uma matriz de células, o mapa, um boolean que diz se o jogo acabou e as imagens usadas no jogo. O construtor seta o mapa e cria um campo com hexagonos de lado L. 
 	
-	\item \textbf{List<{\color{red}Robos}>}: Objeto do tipo \textbf{\color{red}List} usado como uma lista de objetos do tipo \textbf{\color{red}Robo}. Essa lista contêm todos os robôs em jogo.
+	A função \textbf{\color{red}criaCampo()} carrega as imagens e varre a matriz de células configurando suas respectivas coordenadas de centro e a imagem de fundo de cada célula, de acordo com o Terreno que aquela célula representa.
 	
-	\item \textbf{Tempo}: Uma variável inteira representando o número de rodadas já passadas. O valor inicial dessa variável é 0 e, a cada rodada, é incrementada em 1.
+	A função \textbf{\color{red}paintComponent(Graphics g)} é um override da função de mesmo nome implementada em JPanel. Percorre o campo desenhando os hexagonos com suas respectivas imagens. Caso o jogo já tenha acabado, também exibe uma imagem de game over.
+	
+	A função \textbf{\color{red}desenhaElemento(...)} desenha o elemento passado em cima da imagem de fundo da célula de coordenadas passadas. É usada para desenhar robos e bases.
+	
+	A função \textbf{\color{red}getScaledImage(...)} converte a imagem passada por argumento para uma outra com as dimensões passadas também por argumento.
 
-\end{itemize}
+	\item \textbf{classe Tela}: Extensão de JFrame. O construtor dá o título da janela, seta seu tamanho, adiciona um listener e adiciona o JPanel campo.
 
-Principais métodos dessa classe:
-
-\begin{itemize}
-
-\item \textbf{Arena({\color{red}Mapa})}: Construtor da classe. Recebe uma mapa, e retorna uma arena vazia, ou seja, com nenhum robo, o tempo é iniciado com 0, e o mapa passado é definido como o mapa da arena.
-
-\item \textbf{{\color{red}void} atualiza()}: Função que faz a Arena executar uma rodada. Atualmente, essa função percorre a lista de robôs de forma aleatória, executando em cada robô uma instrução de máquina. Em caso de conflito de instruções, tem preferência o robô que for executado primeiro naquela iteração.
-
-\item \textbf{{\color{red}void} sistema({\color{red}Operacao})}: Função chamada pelos robôs para fazerem chamadas ao sistema. Toda vez que os robôs tentam executar uma ação que influencia seu exterior, ele só pode fazê-la chamando esse método. O objeto do tipo \textbf{\color{red}Operacao} recebido descreve qual operação está sendo executada, e qual objeto Programável está tentando executar aquela ação. Dependendo da operação, esse método mexe na pilha do robo, e executa as ações pedidas, caso possível.
-
-\item \textbf{{\color{red}void} insereExercito({\color{red}Programa[ ]},{\color{red}Posicao[ ]},{\color{red}int})}: Função para inserir um exército de robôs na Arena. Para isso, recebe três argumentos:
-		\begin{itemize}
-			
-			\item[+] \textbf{Programa[ ]}: Um vetor de objetos do 				tipo {\color{red}Programa}. Para cada programa desse vetor será criado um robô a ser inserido na Arena.
-			
-			\item[+] \textbf{Posicao[ ]}: Um vetor com posições x,y 				indicando onde cada robô criado deve ser posicionado, 				seguindo a ordem do vetor de programas.
-			
-			\item[+] \textbf{{\color{red}int} time}: Um inteiro que 				indica a qual time esse exército pertencerá.  			
-			
-		\end{itemize}				
+	\item \textbf{classe MapaVisual}: Classe que interfaceia a comunicação entre a estrutura do jogo e a parte gráfica. Possui como atributos o mapa, os valores estáticos de largura, altura (da janela) e lado do hexagono (em pixels), um objeto Tela e um objeot Campo.	O construtor apenas seta os atributos.
+	
+	A função \textbf{\color{red}atualiza()} repinta a tela(que é uma janela).
+	
+	A função \textbf{\color{red}abreJanela()} seta os atributos campo e tela e cria um Runnable, tal que o método sobrecarregado run() apenas faz com que a tela(janela), seja visível.
+	
+	A função \textbf{\color{red}gameOver()} seta para true o boolean gameOver do atributo campo e assim encerra o jogo.
 
 \end{itemize}
 
 
-\subsection{Classe Maquina}
+\section{Arquivos de mapas}
 
-Um objeto da classe Máquina possui os seguintes atributos:
-\begin{itemize}
+Nessa fase, para uma edição e criação facilitada de mapas, fizemos com que os mapas fossem gerados a partir de um aruqivo 
+de entrada de texto.
+Exemplo:
+\begin{verbatim}
 
-\item \textbf{dados}
-	Objeto do tipo Pilha. É a pilha de dados da máquina.
-\item \textbf{mem}
-	Vetor de Empilháveis usado para o robô armazenar constantes.
-\item \textbf{prog}
-	Objeto do tipo Programa. É o vetor de comandos que aquela máquina executará.
-\item \textbf{vars}
-	Objeto do tipo variáveis. Guarda o estado atual das variáveis de determinada máquina.
-\item \textbf{arena}
-	Referência para a Arena para a realização de chamadas ao sistema.
-\item \textbf{index}
-	Inteiro que guarda o índice do próximo comando do programa a ser executado.
-\item \textbf{obj}
-	Objeto do tipo Programável. A princípio é apenas uma referência para o robô que contém aquela máquina.
-\end{itemize}
+6 6
+1 1 1 1 1 1
+1 -1 0 0 0 1
+1 0 1 1 0 1
+1 0 1 1 0 1
+1 0 0 0 0 1
+1 2 2 2 2 1
 
+\end{verbatim}
 
-Principais métodos:
+Na primeira linha deve ter um par de números representando o número de \textbf{linhas} e de \textbf{colunas}, respectivamente.
+Em seguida, cada linha de números representa uma linha do mapa, onde cada número representa um terreno. Legenda dos números:
 
-\begin{itemize}
+\begin{center}
+	\begin{tabular}{ | c | c |}
+	\hline
+	Número & Terreno\\
+	\hline 
+	-N & Base do time de Id N\\
+	\hline
+	0 & Liso\\
+	\hline
+	1 & Rugoso\\
+	\hline
+	2 & Água\\
+	\hline
+	3 & Depósito de cristais\\
+	\hline
+	Default & Liso \\
+	\hline
 
-	\item \textbf{Construtor}: Recebe o sistema (arena) com o qual a máquina vai se comunicar e o Programável que a possuirá.
-				Mais uma vez, nesse ep, Programáveis são sempre robôs. Inicializa mem com tamanho 10 e index setado em 0(zero).
-		
-
-	\item \textbf{{\color{red}int} executaProx()}: executa o comando cmd da posição index do programa. Para isso chama a função executaCmd(cmd), caso o programa não tenha chegado ao fim.
-		
-	\item \textbf{{\color{red}int} executaCmd({\color{red}Comando})}: Executa o comando passado como argumento. Verifica  qual o código do comando e realiza a devida ação.
-									 Retorna o índice do pŕoximo comando a ser lido. O sistema é chamado por meio da função sistema(), caso o comando passado precise de permissão da arena(i.e, se for ATK, COLLECT, DROP ou WALK).
-
-	\item \textbf{{\color{red}void} sistema({\color{red}Comando})}:	 Pede para o sistema executar o Comando cmd.
-
-		As outras funções são, em geral, auxiliares e estão bem explicadas nos comentários.
-
-\end{itemize}
-
-\subsection{Classe Mapa}
-
-Essa classe é usada para representar o mapa que, em linhas gerais, é uma matriz hexagonal de objetos do tipo \textbf{\color{red}Terreno}. Nessa classe, temos 3 atributos: \textbf{\color{red}altura},\textbf{\color{red}largura} e uma matriz de objetos do tipo \textbf{\color{red}Terreno}.
-
-Os métodos dessa classe estão bem explicados já no código.
-
-Para transformar a matriz normal em uma matriz hexagonal, tratamos ela assim como mostrado na imagem a seguir. Assim, apesar da matriz ser a usual, com a altura e largura definidas no atributo, usamos ela como uma matriz hexagonal através dos métodos da classe.
-
-\begin{figure}[h]
-
-    \center
-
-    \includegraphics[width=10cm]{hex_array.jpg}
-
-    \label{hexmatrix}
-
-    \caption{Imagem mostrando o modo de enumeração dos terrenos}
-
-\end{figure}
-
-
-\section{Interfaces}
-
-Aqui daremos uma breve explicação sobre as interfaces presentes no projeto:
-
-\begin{itemize}
-
-	\item \textbf{Programável}: Toda classe que implementa essa interface pode ser colocada dentro
-	de um obejto do tipo \textbf{\color{red}Maquina}. Ou seja, quem implementa essa interface é
-	todo aquele objeto que conterá uma máquina virtual. Por enquanto, só os robôs são programáveis,
-	mas no futuro alguns terrenos poderão ser programáveis.
-
-	\item \textbf{Empilhável}: Toda classe que implementa essa interface é tratada como um \emph{Empilhável},
-	ou seja, objetos que a máquina virtual manipula em sua pilha de execução e em sua memória.
-
-\end{itemize}
+	\end{tabular} 
+\end{center}
 
 \section{Novas instruções}
 
-Nessa fase, criamos novas instruções. Breve explicação sobre elas:
-
 \begin{itemize}
 
-	\item \textbf{ALO}: Aloca uma variável local, e empilha um objeto do tipo \textbf{\color{red}Endereço}.
-	\item \textbf{GET}: Desempilha um \textbf{\color{red}Endereço}, e empilha o valor contido nesse Endereço.
-	\item \textbf{SET}: Desempilha dois elementos da pilha. Se o segundo for do tipo \textbf{\color{red}Endereço},
-	é colocado o valor do primeiro argumento desempilhado na variavel localizada no endereço desempilhado.
-	\item \textbf{Chamadas ao sistema}\footnote{Atualmente, só o WALK chegou a ser testado e de fato implementado. Os outros comandos, apesar de implementados, não são possíveis de serem testados, já que o mapa é todod de terreno liso sem cristais e todos os robôs são do mesmo time.}: Atualmente, todas as chamadas ao sistema devem ser acompanhadas de um argumento indicando a direção. As direções podem ser: 1 - Cima, 2 - Direita superior, 3 - Direita inferior, 4 - Baixo, 5 - Esquerda inferior, 6 - Esquerda superior. As instruções implementadas são:
-		\begin{itemize}
+\item \textbf{\color{red}MOD}: Desempilha dois números da pilha, e empilha o resto da divisão do segundo pelo primeiro.
 
-		\item[+] \textbf{WALK}: O robô tenta andar para a posição indicada
-		\item[+] \textbf{COLLECT}: O robô tenta coletar cristais da posição indicada
-		\item[+] \textbf{DROP}: O robô tenta deixar o cristal na posição desejada. Se a posição não for uma base, o cristal é retornado para seu ponto inicial.
-		\item[+] \textbf{ATK}: O robô tenta atacar outro robo localizado na posição indicada.
+\item \textbf{\color{red}GETPOS}: Desempilha um Terreno da pilha, e empilha a posição do mesmo (obejto \textbf{Posicao}) do mesmo como resposta. 
 
-		\end{itemize}
+\item \textbf{\color{red}GETX}: Desempilha um objeto Posicao da pilha, e empilha sua coordenada x como resposta.
+
+\item \textbf{\color{red}GETY}: Desempilha um objeto Posicao da pilha, e empilha sua coordenada y como resposta.
+
+\item \textbf{\color{red}TIMEID}: Desempilha um time da pilha de dados, e empilha o número que representa aquela time (o ID do time).
+
+\item \textbf{\color{red}GETBASE}: Desempilha um time da pilha de dados, e empilha o Terreno do tipo Base daquele time.
+
+\item \textbf{\color{red}ISA}: Desempilha um número e um empilhável. Esse comando irá empilhar 1 caso o objeto desempilhado seja do tipo representado por aquele número (Vide tabela abaixo), e 0 c.c.
+\begin{center}
+	\begin{tabular}{ | c | c |}
+	\hline
+	Número & Tipo\\
+	\hline
+	0 & Numero\\
+	\hline
+	1 & Terreno\\
+	\hline
+	2 & Liso\\
+	\hline
+	3 & Robo\\
+	\hline
+	4 & Deposito\\
+	\hline
+	5 & Rugoso\\
+	\hline
+	\end{tabular}
+
+\end{center}
+
+\item \textbf{\color{red}GETROBO}: Desempilha um número, representando uma direção, e empilha o Robo que está naquele terreno, e empilha 0 caso não haja Robo. 
+
+\item \textbf{\color{red}GETTIME}: Desempilha um número, e é empilhado como resposta o time correspondente a aquele número. Empilha 0 caso não existe tal time.
+
+\item \textbf{\color{red}MYTIME}: Empilha o time do próprio robo.
+
+\item \textbf{\color{red}LOOK}: Desempilha um número representando uma direção, e empilha o terreno daquela posição. Empilha 0 caso não exista nada naquela direção.
 
 \end{itemize}
+
+Além disso, os comandos de chamada ao sistema: \textbf{WALK}, \textbf{ATK}, \textbf{COLLECT} e \textbf{DROP} usam como argumento de direção um número no topo da pilha da máquina virtual.
+
+
+
+
+
 
 
 \section{Tradutor em Perl}
 
-Para efeito de teste, adaptamos o montador em perl para gerar um arquivo Java que, ao ser executado, irá transformar os programas em linguagem de máquina para robôs e irá executar iterações da Arena até que não exista mais nenhum outro robô para ser executado.
+Nessa fase, o nosso tradutor em Perl recebe diversos robos como argumento e é possível separá-los em diversos times. Apesar do número de times ser indefinido, nossa interface gráfica suporta somente 2 times. Sintaxe:
 
-Assim, para gerar esse arquivo em Java, chamado \textbf{\color{red}Main.java}, execute a seguinte linha de comando:
 \begin{verbatim}
 
-$>./montador.pl arquivo1 arquivo2 ... arquivoN
+$>perl bin/montador.pl 1 robo1_time1 robo2_time1 2 robo1_time2 robo2_time2  ... n robo1_timen
 
 \end{verbatim}
+
+Com isso, será gerado um novo arquivo Main.java na pasta src.
 
 \section{Modo de compilação}
 
@@ -199,15 +177,15 @@ Para compilar, execute o seguinte comando:
 
 \begin{verbatim}
 
-$> javac *.java
+$> ant
 
 \end{verbatim}
 
-Caso você tenha gerado o arquivo Main.java com o script em perl, para executar o programa, execute:
+Com isso, o jogo será compilado, e será gerado um arquivo .jar localizado na pasta dist/. Assim, parara executar o jogo, a sintaxe é:
 
 \begin{verbatim}
 
-$> java Main
+$> java -jar dist/EP3.jar
 
 \end{verbatim}
 
