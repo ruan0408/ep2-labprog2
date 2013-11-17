@@ -242,7 +242,7 @@ public class MapaVisual
 	Tela tela;
 	Campo campo;
 
-	public MapaVisual(Mapa mapa, int H, int W, int L) 
+	public MapaVisual(Mapa mapa, int H, int W, int L)
 	{
 		this.mapa = mapa;
 		this.W = W;
@@ -259,9 +259,12 @@ public class MapaVisual
 	
 	public void abreJanela() 
 	{
-		//Campo campo = new Campo(mapa,L);
 		this.campo = new Campo(mapa,L);
 		this.tela = new Tela(campo, H, W);
+		campo.setPreferredSize(new Dimension( W, H));
+		JScrollPane scrollFrame = new JScrollPane(campo, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		tela.add(scrollFrame);
+
         SwingUtilities.invokeLater(new Runnable() 
         {
             @Override
@@ -275,24 +278,13 @@ public class MapaVisual
 
     public void gameOver()
     {
-    	/*JPanel gameOver = new JPanel();
-    	ImageIcon image = new ImageIcon("/img/game_over.jpg");
-   		JLabel label = new JLabel("", image, JLabel.CENTER);
-		gameOver.add( label, BorderLayout.CENTER );
-		tela.add(gameOver);*/
-		campo.gameOver = true;
+   		campo.gameOver = true;
 		try 
 		{
    			Thread.sleep(5000);
 		} 
 		catch(InterruptedException ex) {Thread.currentThread().interrupt();}
 		tela.setVisible(false);
-		System.exit(0);
-		//campo.setVisible(true);
-    	//BufferedImage gameOver = ImageIO.read(this.getClass().getResource("/img/game_over.jpg"));
-    	
+		System.exit(0);    	
     }
-
-
-
 }
