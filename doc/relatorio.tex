@@ -161,11 +161,12 @@ Além disso, os comandos de chamada ao sistema: \textbf{WALK}, \textbf{ATK}, \te
 
 \section{Tradutor em Perl}
 
-Nessa fase, o nosso tradutor em Perl recebe diversos robos como argumento e é possível separá-los em diversos times. Apesar do número de times ser indefinido, nossa interface gráfica suporta somente 2 times. Sintaxe:
+Nessa fase, o nosso tradutor em Perl recebe o mapa, diversos robos como argumento e é possível separá-los em diversos times. Apesar do número de times ser indefinido, nossa interface gráfica suporta somente 2 times. O mapa deve ser estar na pasta data/map. Os robos na pasta test e com extensão .asm.
+Sintaxe:
 
 \begin{verbatim}
 
-$>perl bin/montador.pl 1 robo1_time1 robo2_time1 2 robo1_time2 robo2_time2  ... n robo1_timen
+$>perl bin/montador.pl mapa3.txt 1 robo1_time1 robo2_time1 2 robo1_time2 robo2_time2  ... n robo1_timen
 
 \end{verbatim}
 
