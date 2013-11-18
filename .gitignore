@@ -1,5 +1,8 @@
+
+*.jar
 *.class
 
 # LaTeX
 *.aux
 *.log
+*.jar
