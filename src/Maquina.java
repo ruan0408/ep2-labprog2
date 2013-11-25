@@ -186,8 +186,8 @@ private int executaCmd(Comando cmd)
   na pilha*/
   private void set()
   {
-    Empilhavel aux1 = this.dados.pop();//pode gerar exceções
-    Empilhavel aux2 = this.dados.pop();
+    Empilhavel aux2 = this.dados.pop();//pode gerar exceções
+    Empilhavel aux1 = this.dados.pop();
     if(aux2 instanceof Endereco) vars.set((Endereco)aux2, aux1);
     this.dados.push(aux1);   
   }
