@@ -9,12 +9,15 @@ PARSER_BEGIN(Parser)
 import java.util.Vector;
 
 public class Parser {
+  static TabSim Nomes  = new TabSim(); // nomes globais
+	static TabSim Locais = null;		 // nomes locais (ativada dentro de função)
   Programa[] programas = new Programa[1];
 	Mapa mapa = new Mapa("/nfs/home/bcc/ruan/Documents/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
   Arena arena = new Arena(mapa);
 	Programa programa;
 	
-	static int tam = 0;						 // tamanho do programa
+	static int 
+ = 0;						 // tamanho do programa
 
 	public static void main(String args[]) throws ParseException 
   {
@@ -81,7 +84,7 @@ Vector<Comando> Instrucao() :
 	 x = Laço()		     {p.addAll(x);}
 	 |
 	 x = Função()		 {
-		 p.add(new Comando("GOTO", x.size()+1)); // pula a descrição da função
+		 p.add(new Comando("JMP", new Numero(x.size() + tam))); // pula a descrição da função. Checar o lugar do pulo
 		 p.addAll(x);
 	 }
 	 | 
@@ -154,12 +157,14 @@ Vector<Comando> Fator() :
 	Endereco v;
 }
 {
-	x=Chamada() {				// Chamada de função
+	x=Chamada()// Chamada de função 
+  {				
 		p.addAll(x); 
 		return p;
 	}
 |								// Atribuição
-	 t=<ID> "=" x=Expressão() {	
+	 t=<ID> "=" x=Expressão() 
+   {	
 		p.addAll(x);
 		p.add(new Comando("DUP", null));		// deixa uma cópia na pilha
 
@@ -167,16 +172,17 @@ Vector<Comando> Fator() :
 		if ((Locais != null) && Locais.exists(t.image)) 
     {
 			v = Locais.get(t.image);
-      p.add(new Comando("PUSH", v));
-			p.add(new Comando("SET", null));
+    //  p.add(new Comando("PUSH", new Numero(0))); Var recebe expressão, já empilhado
+      p.add(new Comando("STO", new Numero(v.get()))); // V é endereço. Atenção
+			
     }
 		else if (Nomes.exists(t.image)) 
-    { // existe como global?
+    { // existe como global? sera?
 			v = Nomes.get(t.image);
 			if (v instanceof Endereco)
       {
-        p.add(new Comando("PUSH", v));
-				p.add(new Comando("SET", null));
+        // p.add(new Comando("PUSH", new Numero(0))); 
+         p.add(new Comando("STO", new Numero(v.get()))); // V é endereço. Atenção
       }
 			else 
       {
@@ -190,29 +196,29 @@ Vector<Comando> Fator() :
 			if (Locais != null) 
       { // dentro de função -> local
 				Locais.add(t.image,v);
-        p.add(new Comando("PUSH", v));
-				p.add(new Comando("SET", null));
+       // p.add(new Comando("PUSH", new Numero(0))); 
+        p.add(new Comando("STO", new Numero(v.get()))); // V é endereço. Atenção
 			}
 			else 
       {				// global
 				Nomes.add(t.image,v);
-        p.add(new Comando("PUSH", v));
-				p.add(new Comando("SET", null);
+       // p.add(new Comando("PUSH", new Numero(0))); 
+        p.add(new Comando("STO", new Numero(v.get()))); // V é endereço. Atenção
 			}
 		}
-		return p;
+	 return p;
 	}
 	|
 	t=<ID> {					// variável, tratamento similar ao de cima
 		if ((Locais != null) && Locais.exists(t.image)) 
     {
-  			v = Locais.get(t.image);	
-  			p.add(new Comando("PUSH", v);
+  		v = Locais.get(t.image);	
+  		p.add(new Comando("RCL", new Numero(v.get())); // V é endereço. Lembre-se.
    	}
 		else if (Nomes.exists(t.image)) 
     {
 			v = Nomes.get(t.image);
-			if (v instanceof Endereco) p.add(new Comando("PUSH", v);
+			if (v instanceof Endereco) p.add(new Comando("RCL", new Numero(v.get())); // V é endereço. Sacou né?
 			else
       {
         p.add(new Comando("PUSH", new Frase("DEU MERDA!")); 
@@ -222,20 +228,20 @@ Vector<Comando> Fator() :
  		else 
     {
  			// Variável não inicializada
- 			v = new Variável();//?????????????????????????????????????????????????????????????????????????????????????
+ 			v = new Variável();
 			p.add(new Comando("PUSH", new Numero(0)));
 			p.add(new Comando("DUP", null));
 			if (Locais != null) 
       {
 				Locais.add(t.image,v);
-			  p.add(new Comando("PUSH", v);
-				p.add(new Comando("SET", null);
+			  p.add(new Comando("STO", new Numero(v.get()));// V é....adivinha?
+				//p.add(new Comando("SET", null);
 			}
 			else 
       {
 				Nomes.add(t.image,v);
-        p.add(new Comando("PUSH", v);
-				p.add(new Comando("SET", null);
+        p.add(new Comando("STO", new Numero(v.get()));
+				//p.add(new Comando("SET", null);
 			}
  		}
 		return p;
@@ -250,4 +256,35 @@ Vector<Comando> Fator() :
 		p.addAll(x); 
 		return p;
 	}
+}
+
+Vector<Instrução> Condicional() :
+{
+	Vector<Instrução> p = new Vector<Instrução>(0);
+	Vector<Instrução> x = new Vector<Instrução>(0);
+	int delta, pos;
+}
+{
+	("if" | "se") 
+    "(" 
+		x=Expressão() {p.addAll(x);} 
+	")" 
+	("then" | "então")
+	x = Bloco() {
+		delta = x.size(); 
+		pos = p.size(); // para arrumar no else, se preciso
+		p.add(new Comando("JIF",(tam + delta + pos + 2))); 
+		p.addAll(x); 
+		//		return p;
+	}
+	( 
+	 ("else" | "senão" )
+	 x = Bloco() {
+		 //p.set(pos, new ZERO(delta+2));
+		 delta += x.size();
+		 p.add(new GOTO(tam + pos + delta+2 )); // Contas estão na lousa da Linux-BCC
+		 p.addAll(x);
+	 } 
+	  )?
+		{ return p; }
 }
