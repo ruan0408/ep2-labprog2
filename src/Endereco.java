@@ -1,6 +1,6 @@
 /* Classe que representa endereço de uma variável local */
 
-public class Endereco implements Empilhavel
+public class Endereco implements Empilhavel 
 {
 	int end;
 

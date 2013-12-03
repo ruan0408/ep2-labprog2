@@ -173,7 +173,16 @@ public class Arena
                         //resp = new Numero(1); // Conseguiu se mover, mas vai demorar
                       }
                       else
-                      {              
+                      {
+		      	// Faremos com que o robo só possa andar 1 vez por rodada, tornando assim
+			// essa operação bem custosa, para que o robo não acabe se
+			// "teleportando"
+		      	if(!robo.temAtraso())
+			{
+				robo.setAtraso(new Atraso(op,0));
+				robo.push(new Numero(dir)); // Reempilha a direção para que possa ser usada depois.
+				return;
+			}
                         this.moveRobo(terrAtual, terrTemp);
                         System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
                         resp = new Numero(1);
