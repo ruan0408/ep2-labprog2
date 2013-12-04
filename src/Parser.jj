@@ -53,10 +53,11 @@ Vector<Comando> Compila() :
 	//Comando[] a = new Comando[0]; // auxiliar
 }
 {
-	 (
-	  x = Instrucao() {p.addAll(x); tam += p.size();}
-	 )*
-	<EOF> {
+	(
+	 	x = Instrucao() {p.addAll(x); tam += p.size();}
+	)*
+	<EOF> 
+	{
 		p.add(new Comando("RET", null));		// para garantir que tem um RET
 		return p;
 		//return  p.toArray(a);
@@ -71,26 +72,29 @@ Vector<Comando> Instrucao() :
 }
 {
 	(
-	 x = Expressão() ";" {p.addAll(x);}
-	 |
-	 x = Condicional()   {p.addAll(x);}
-	 |
-	 x = Laço()	{p.addAll(x);}
-	 |
-	 x = Função()		 {
-		 p.add(new Comando("JMP", new Numero(x.size() + tam))); // pula a descrição da função. Checar o lugar do pulo
-		 p.addAll(x);
-	 }
-	 | 
-	 "return" (x=Expressão() {p.addAll(x);})? ";" {p.add(new Comando("RET", null));}
-	 |
-	 "print" x=ListPrint() {p.addAll(x);} ";"
-	 |
-	 "println" ";"{
-		 p.add(new Comando("PUSH", new Frase("\n")));
-		 p.add(new Comando("PRN", null));
-	 }
-	 ) {return p;}
+		x = Expressão() ";" {p.addAll(x);}
+		|
+		x = Condicional()   {p.addAll(x);}
+		|
+		x = Laço()	{p.addAll(x);}
+		|
+		x = Função()		 
+		{
+			p.add(new Comando("JMP", new Numero(x.size() + tam))); // pula a descrição da função. Checar o lugar do pulo
+			p.addAll(x);
+		}
+		| 
+		"return" (x=Expressão() {p.addAll(x);})? ";" {p.add(new Comando("RET", null));}
+		|
+		"print" x=ListPrint() {p.addAll(x);} ";"
+		|
+		"println" ";"
+		{
+			p.add(new Comando("PUSH", new Frase("\n")));
+			p.add(new Comando("PRN", null));
+		}
+	) 
+	{return p;}
 }
 
 Vector<Comando> Expressão() :
@@ -101,18 +105,19 @@ Vector<Comando> Expressão() :
 {
 	x = Arit() { p.addAll(x); }
 	(
-	 "<=" x = Arit() {p.addAll(x); p.add(new Comando("LE", null));}
-	 |
-	 ">=" x = Arit() {p.addAll(x); p.add(new Comando("GE", null));}
-	 |
-	 "!=" x = Arit() {p.addAll(x); p.add(new Comando("NE", null));}
-	 |
-	 "==" x = Arit() {p.addAll(x); p.add(new Comando("EQ", null));}
-	 |
-	 "<"  x = Arit() {p.addAll(x); p.add(new Comando("LT", null));}
-	 |
-	 ">"  x = Arit() {p.addAll(x); p.add(new Comando("GT", null));}
-	 )* {return p;}
+		"<=" x = Arit() {p.addAll(x); p.add(new Comando("LE", null));}
+		|
+		">=" x = Arit() {p.addAll(x); p.add(new Comando("GE", null));}
+		|
+		"!=" x = Arit() {p.addAll(x); p.add(new Comando("NE", null));}
+		|
+		"==" x = Arit() {p.addAll(x); p.add(new Comando("EQ", null));}
+		|
+		"<"  x = Arit() {p.addAll(x); p.add(new Comando("LT", null));}
+		|
+		">"  x = Arit() {p.addAll(x); p.add(new Comando("GT", null));}
+	)* 
+	{return p;}
 }
 
 Vector<Comando> Arit() :
@@ -123,10 +128,11 @@ Vector<Comando> Arit() :
 {
 	x = Termo() { p.addAll(x); }
 	(
-	 "+" x = Termo() {p.addAll(x); p.add(new Comando("ADD", null));}
-	 |
-	 "-" x = Termo() {p.addAll(x); p.add(new Comando("SUB", null));}
-	 )* {return p;}
+		"+" x = Termo() {p.addAll(x); p.add(new Comando("ADD", null));}
+		|
+		"-" x = Termo() {p.addAll(x); p.add(new Comando("SUB", null));}
+	)* 
+	{return p;}
 }
 
 Vector<Comando> Termo() :
@@ -137,10 +143,11 @@ Vector<Comando> Termo() :
 {
 	x = Fator() { p.addAll(x); }
 	(
-	 "*" x = Fator() {p.addAll(x); p.add(new Comando("MUL", null));}
-	 |
-	 "/" x = Fator() {p.addAll(x); p.add(new Comando("DIV", null));}
-	 )* {return p;}
+		"*" x = Fator() {p.addAll(x); p.add(new Comando("MUL", null));}
+		|
+		"/" x = Fator() {p.addAll(x); p.add(new Comando("DIV", null));}
+	)* 
+	{return p;}
 }
 
 Vector<Comando> Fator() :
@@ -152,101 +159,103 @@ Vector<Comando> Fator() :
 }
 {
 	x=Chamada()// Chamada de função 
-  {				
+  	{				
 		p.addAll(x); 
 		return p;
 	}
-|								// Atribuição
-	 t=<ID> "=" x=Expressão() 
-   {	
+	|								// Atribuição
+	t=<ID> "=" x=Expressão() 
+   	{	
 		p.addAll(x);
 		p.add(new Comando("DUP", null));		// deixa uma cópia na pilha
 
 		// Verifica se estamos dentro de uma função
 		if ((Locais != null) && Locais.exists(t.image)) 
-    {
+    	{
 			v = Locais.get(t.image);
-    //  p.add(new Comando("PUSH", new Numero(0))); Var recebe expressão, já empilhado
-      p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
-			
-    }
+    		//  p.add(new Comando("PUSH", new Numero(0))); Var recebe expressão, já empilhado
+      		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
+    	}
 		else if (Nomes.exists(t.image)) 
-    { // existe como global? sera?
+    	{ // existe como global? sera?
 			v = Nomes.get(t.image);
 			if (!(v instanceof Função))
-      {
-        // p.add(new Comando("PUSH", new Numero(0))); 
-         p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
-      }
-	else 
-      {
-        p.add(new Comando("PUSH", new Frase("DEU MERDA!")));
-        p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
-      }
+      		{
+        		// p.add(new Comando("PUSH", new Numero(0))); 
+         		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
+      		}
+			else 
+      		{
+        		p.add(new Comando("PUSH", new Frase("DEU MERDA!")));
+        		p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
+      		}
 		}
 		else 
-    {					// cria local ou global, de acordo
+    	{					// cria local ou global, de acordo
 			v = new Variável();//???????????????????????????????????????????????????????????????????????????????
 			if (Locais != null) 
-      { // dentro de função -> local
+      		{ // dentro de função -> local
 				Locais.add(t.image,v);
-       // p.add(new Comando("PUSH", new Numero(0))); 
-        p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
+       			// p.add(new Comando("PUSH", new Numero(0))); 
+        		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
 			}
 			else 
-      {				// global
+      		{				// global
 				Nomes.add(t.image,v);
-       // p.add(new Comando("PUSH", new Numero(0))); 
-        p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
+       			// p.add(new Comando("PUSH", new Numero(0))); 
+        		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
 			}
 		}
-	 return p;
+	 	return p;
 	}
 	|
-	t=<ID> {					// variável, tratamento similar ao de cima
+	t=<ID> 
+	{					// variável, tratamento similar ao de cima
 		if ((Locais != null) && Locais.exists(t.image)) 
-    {
-  		v = Locais.get(t.image);	
-  		p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Lembre-se.
-   	}
+    	{
+  			v = Locais.get(t.image);	
+  			p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Lembre-se.
+   		}
 		else if (Nomes.exists(t.image)) 
-    {
+    	{
 			v = Nomes.get(t.image);
 			if (!(v instanceof Função)) p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Sacou né?
 			else
-      {
-        p.add(new Comando("PUSH", new Frase("DEU MERDA!"))); 
-        p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
-      }
+      		{
+        		p.add(new Comando("PUSH", new Frase("DEU MERDA!"))); 
+        		p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
+      		}
 		}
  		else 
-    {
+    	{
  			// Variável não inicializada
  			v = new Variável();
 			p.add(new Comando("PUSH", new Numero(0)));
 			p.add(new Comando("DUP", null));
 			if (Locais != null) 
-      {
+      		{
 				Locais.add(t.image,v);
 			  p.add(new Comando("STO", new Numero(v.pos.get())));// V é....adivinha?
 				//p.add(new Comando("SET", null);
 			}
 			else 
-      {
+      		{
 				Nomes.add(t.image,v);
-        p.add(new Comando("STO", new Numero(v.pos.get())));
+        		p.add(new Comando("STO", new Numero(v.pos.get())));
 				//p.add(new Comando("SET", null);
 			}
  		}
 		return p;
 	}
-|
-	t=<NUM> {
+	|
+	t=<NUM> 
+	{
 		p.add(new Comando("PUSH", new Numero(Double.parseDouble(t.image)))); 
 		return p;
 	}
-|
-    "(" x = Expressão() ")"	{
+	|
+    "(" x = Expressão() ")"	
+    {
 		p.addAll(x); 
 		return p;
 	}
@@ -264,7 +273,8 @@ Vector<Comando> Condicional() :
 		x=Expressão() {p.addAll(x);} 
 	")" 
 	("then" | "então")
-	x = Bloco() {
+	x = Bloco() 
+	{
 		delta = x.size(); 
 		pos = p.size(); // para arrumar no else, se preciso
 		p.add(new Comando("JIF",new Numero((tam + delta + pos + 2)))); 
@@ -272,15 +282,16 @@ Vector<Comando> Condicional() :
 		//		return p;
 	}
 	( 
-	 ("else" | "senão" )
-	 x = Bloco() {
-		 //p.set(pos, new ZERO(delta+2));
-		 delta += x.size();
-		 p.add(new Comando("JMP",new Numero(tam + pos + delta+2 ))); // Contas estão na lousa da Linux-BCC
-		 p.addAll(x);
-	 } 
-	  )?
-		{ return p; }
+		("else" | "senão" )
+		x = Bloco() 
+		{
+			//p.set(pos, new ZERO(delta+2));
+			delta += x.size();
+			p.add(new Comando("JMP", new Numero(tam + pos + delta+2 ))); // Contas estão na lousa da Linux-BCC
+			p.addAll(x);
+		} 
+	)?
+	{ return p; }
 }
 
 Vector<Comando> Laço() :
@@ -291,13 +302,15 @@ Vector<Comando> Laço() :
 }
 {
 	( "while" | "enquanto" )
-	"("x = Expressão() {
+	"("x = Expressão() 
+	{
 		exp = x.size(); 
 		p.addAll(x);
 	}
 	")" 
     ( "do" | "faça" ) 
-	  x = Bloco() {
+	x = Bloco() 
+	{
 		delta = x.size();
 		p.add(new Comando("JIF",new Numero(tam+delta+exp)));
 		p.addAll(x);
@@ -312,8 +325,7 @@ Vector<Comando> Bloco() :
 	Vector<Comando> x = new Vector<Comando>(0);
 }
 {
-	"{" ( x=Instrucao() { p.addAll(x); } )* "}" {return p;}
-	  
+	"{" ( x=Instrucao() { p.addAll(x); } )* "}" {return p;}	  
 }
 
 Vector<Comando> Função() :
@@ -326,15 +338,18 @@ Vector<Comando> Função() :
 	TabSim Lorig;
 }
 {
-	"func" t=<ID> {				// t.image contém o nome
-		if (Nomes.exists(nome = t.image)) { // já foi definida?
+	"func" t=<ID> 
+	{				// t.image contém o nome
+		if (Nomes.exists(nome = t.image)) 
+		{ 	// já foi definida?
 			v = (Função)Nomes.get(nome);
 			// Isto NÃO é um tratamento de erro decente!!!!!
 			// Melhore
 			p.add(new Comando("PUSH",new Frase("Nome já usado:" + nome)));
 			p.add(new Comando("PRN",null));
 		}
-		else {					// cria a função
+		else 
+		{					// cria a função
 			v = new Função(tam);
 			Nomes.add(nome,v);
 		}
@@ -367,10 +382,9 @@ void Arg(String fnom, Função f) :
 	Token t;
 }
 {
-	t=<ID> {
-		if (!f.exists(t.image)){
-			f.addarg(t.image);
-		}
+	t=<ID> 
+	{
+		if (!f.exists(t.image)) f.addarg(t.image);	
 	}
 }
 
@@ -385,12 +399,15 @@ Vector<Comando> Chamada() :
 	TabSim Lorig;
 }
 {
-    t=<ID> {					// nome da função
-  		if (Nomes.exists(nome = t.image)) {
+    t=<ID> 
+    {					// nome da função
+  		if (Nomes.exists(nome = t.image)) 
+  		{
 			f =  (Função) Nomes.get(t.image); // Aqui gera erro se não for função
 			e = f.pos;
 		}
-		else { 
+		else 
+		{ 
 			e  = new Endereco(-1); //MUITO ARRISCADO!!!! Colete os
 								   //pontos na tabela de símbolos e
 								   //corrija os pontos depois
@@ -425,22 +442,23 @@ Vector<Comando> ListParms(Função f) :
 	x = Parm(f,n++) {p.addAll(x); } // compila cada argumento
 	
 	(
-	 ","
-	 x = Parm(f,n++) {p.addAll(x);}
+		","
+		x = Parm(f,n++) {p.addAll(x);}
 	)*
 	{ 
 		//p.add(new ENTRA());		// novo contexto
 		// populando
-		for (int i = n-1; i >=0 ; i--) {
+		for (int i = n-1; i >=0 ; i--) 
+		{
 			pnom = f.getarg(i);
 			
-			if (!Locais.exists(pnom)){
+			if (!Locais.exists(pnom))
+			{
 				// adiciona na tabela quando usada
 				v = new Variável();
 				Locais.add(pnom,v);
 			}
 			v = (Variável) Locais.get(pnom);
-			
 			p.add(new Comando("STO", new Numero(v.pos.get())));
 		}
 		return p;
@@ -455,7 +473,8 @@ Vector<Comando> Parm(Função f, int n) :
 	Vector<Comando> x = new Vector<Comando>(0);
 }
 {
-	x = Expressão() {
+	x = Expressão() 
+	{
 		p.addAll(x);
 		return p;
 	}
@@ -469,15 +488,17 @@ Vector<Comando> ListPrint() :
 	Vector<Comando> x = new Vector<Comando>(0);
 }
 {
-	x=ItemPrint() {
+	x=ItemPrint() 
+	{
 		p.addAll(x);
 	}
 	
 	(
-	 ","
-	 x=ItemPrint() {
-		 p.addAll(x);
-	 }
+		","
+		x=ItemPrint() 
+		{
+			p.addAll(x);
+		}
 	)*
 	{ return p;}
 }
@@ -491,39 +512,40 @@ Vector<Comando> ItemPrint() :
 }
 {
 	(
-	 x=Expressão() {
-		 p.addAll(x);
-		 p.add(new Comando("PRN", null));
-	 }
-	 |
-	 t=<STRING_LITERAL> {
-		 String s =  t.image;
-		 while (s.contains("\\n"))
-			 s = s.replace("\\n","\n");
-		 while (s.contains("\\t"))
-			 s = s.replace("\\t", "\t");
-		 while (s.contains("\\b"))
-			 s = s.replace("\\b", "\b");
-		 while (s.contains("\\r"))
-			 s = s.replace("\\r", "\r");
-		 while (s.contains("\\f"))
-			 s = s.replace("\\f", "\f");
-		 while (s.contains("\\\\"))
-			 s = s.replace("\\\\", "\\");
+		x=Expressão() 
+		{
+			p.addAll(x);
+			p.add(new Comando("PRN", null));
+		}
+		|
+		t=<STRING_LITERAL> 
+		{
+			String s =  t.image;
+			while (s.contains("\\n"))
+				s = s.replace("\\n","\n");
+			while (s.contains("\\t"))
+				s = s.replace("\\t", "\t");
+			while (s.contains("\\b"))
+				s = s.replace("\\b", "\b");
+			while (s.contains("\\r"))
+				s = s.replace("\\r", "\r");
+			while (s.contains("\\f"))
+				s = s.replace("\\f", "\f");
+			while (s.contains("\\\\"))
+				s = s.replace("\\\\", "\\");
 
-		 p.add(new Comando("PUSH", new Frase(s.substring(1,s.length()-1))));
-		 p.add(new Comando("PRN", null));
-	 }
+			p.add(new Comando("PUSH", new Frase(s.substring(1,s.length()-1))));
+			p.add(new Comando("PRN", null));
+		}
 	)
 	{ return p;}
 }
 
 TOKEN :
 {
- < NUM: ( ["0"-"9"] )+ >
-|
- < ID: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9","@"] )* >
-|
-  <STRING_LITERAL: "\"" ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])?  | ["0"-"3"] ["0"-"7"] ["0"-"7"] | ( ["\n","\r"] | "\r\n")))* "\"">
-
+	< NUM: ( ["0"-"9"] )+ >
+	|
+	< ID: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9","@"] )* >
+	|
+	<STRING_LITERAL: "\"" ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])?  | ["0"-"3"] ["0"-"7"] ["0"-"7"] | ( ["\n","\r"] | "\r\n")))* "\"">
 }
