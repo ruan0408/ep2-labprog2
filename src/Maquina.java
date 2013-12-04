@@ -101,7 +101,7 @@ private int executaCmd(Comando cmd)
     case RET : novoIndice = this.ret(); break;
     case CALL : novoIndice = this.call((Endereco)valor); break;
     
-    case JMP : novoIndice = (int) ((Numero)valor).getVal(); break;
+    case JMP : novoIndice = this.index + (int) ((Numero)valor).getVal(); System.out.println("novoIndice:"+novoIndice); break;
     
     case JIT : arg = (int) ((Numero)valor).getVal();
                novoIndice = this.jit(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
@@ -198,9 +198,8 @@ private int executaCmd(Comando cmd)
   private int ret()
   {
     Empilhavel resu = dados.pop();
-    while( !(dados.look() instanceof Endereco) ){ System.out.println("WAAAAAAAAAAAAAAAAAAAAAT");dados.pop();}
+    while( !(dados.look() instanceof Endereco) )dados.pop(); //Procura o próximo Endereço na pilha
     Endereco endRet = (Endereco) dados.pop();
-    System.out.println("HUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE:"+endRet.get());
     return endRet.get();
   }
 
@@ -209,6 +208,7 @@ private int executaCmd(Comando cmd)
   {
     Endereco ende = new Endereco(index);
     dados.push(ende);
+    System.out.println("CALL:"+end.get());
     return end.get();
   }
 
@@ -386,7 +386,7 @@ private int executaCmd(Comando cmd)
     Empilhavel aux1 = this.dados.pop();
     if(aux1 instanceof Numero)
     {
-      if((int)(((Numero)aux1).getVal()) != 0) return arg; 
+      if((int)(((Numero)aux1).getVal()) != 0) return arg + this.index; 
       else return indexAtual;
     }
     else throw new ArithmeticException("Tentando comparar não-números");
@@ -397,7 +397,7 @@ private int executaCmd(Comando cmd)
     Empilhavel aux1 = this.dados.pop();
     if(aux1 instanceof Numero)
     {
-      if((int)(((Numero)aux1).getVal()) == 0) return arg; 
+      if((int)(((Numero)aux1).getVal()) == 0) return arg + this.index; 
       else return indexAtual;
     }
     else throw new ArithmeticException("Tentando comparar não-números");

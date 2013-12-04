@@ -79,6 +79,7 @@ Vector<Comando> Compila() :
 	Vector<Comando> x = new Vector<Comando>(0); // trecho compilado
 													// por outras regras
 	p.add(new Comando("PUSH", new Endereco(-1))); //Para ter um endereco para o último ret.
+	tam++;
 
 	//Comando[] a = new Comando[0]; // auxiliar
 }
@@ -110,7 +111,7 @@ Vector<Comando> Instrucao() :
 		|
 		x = Função()		 
 		{
-			p.add(new Comando("JMP", new Numero(x.size() + tam))); // pula a descrição da função. Checar o lugar do pulo
+			p.add(new Comando("JMP", new Numero(x.size()+1))); // pula a descrição da função. Checar o lugar do pulo
 			p.addAll(x);
 		}
 		| 
@@ -122,6 +123,12 @@ Vector<Comando> Instrucao() :
 		{
 			p.add(new Comando("PUSH", new Frase("\n")));
 			p.add(new Comando("PRN", null));
+		}
+		|
+		"move" "(" x=Expressão() ")" ";"
+		{
+			p.addAll(x);
+			p.add(new Comando("WALK",null));			
 		}
 	) 
 	{return p;}
@@ -307,7 +314,7 @@ Vector<Comando> Condicional() :
 	{
 		delta = x.size(); 
 		pos = p.size(); // para arrumar no else, se preciso
-		p.add(new Comando("JIF",new Numero((tam + delta + pos + 2)))); 
+		p.add(new Comando("JIF",new Numero((delta + 1)))); //ANTIGO: tam + delta + pos + 2 
 		p.addAll(x); 
 		//		return p;
 	}
@@ -316,8 +323,8 @@ Vector<Comando> Condicional() :
 		x = Bloco() 
 		{
 			//p.set(pos, new ZERO(delta+2));
-			delta += x.size();
-			p.add(new Comando("JMP", new Numero(tam + pos + delta+2 ))); // Contas estão na lousa da Linux-BCC
+			delta = x.size();
+			p.add(new Comando("JMP", new Numero(delta + 1)));  //ANTIGO: tam + pos + delta+2
 			p.addAll(x);
 		} 
 	)?
@@ -342,9 +349,9 @@ Vector<Comando> Laço() :
 	x = Bloco() 
 	{
 		delta = x.size();
-		p.add(new Comando("JIF",new Numero(tam+delta+exp)));
+		p.add(new Comando("JIF",new Numero(delta+1)));
 		p.addAll(x);
-		p.add(new Comando("JMP",  new Numero(tam)));
+		p.add(new Comando("JMP",  new Numero(-(delta+exp+1))));
 		return p;
 	}
 }
@@ -380,7 +387,7 @@ Vector<Comando> Função() :
 		}
 		else 
 		{					// cria a função
-			v = new Função(tam);
+			v = new Função(tam+1);//+1 pra pular o JMP que vem antes da função
 			Nomes.add(nome,v);
 		}
 		Lorig = Locais;			// guarda a tabela de símbolos locais
