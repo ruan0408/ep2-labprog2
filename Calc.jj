@@ -69,7 +69,7 @@ Vector<Instrução> Comando() :
 	 x = Laço()		     {p.addAll(x);}
 	 |
 	 x = Função()		 {
-		 p.add(new GOTO(tam + x.size()+1)); // pula a descrição da função
+		 p.add(new GOTO(x.size()+1)); // pula a descrição da função
 		 p.addAll(x);
 	 }
 	 | 

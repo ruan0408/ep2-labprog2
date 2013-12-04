@@ -152,7 +152,8 @@ Em seguida, cada linha de números representa uma linha do mapa, onde cada núme
 \end{itemize}
 
 Além disso, os comandos de chamada ao sistema: \textbf{WALK}, \textbf{ATK}, \textbf{COLLECT} e \textbf{DROP} usam como argumento de direção um número no topo da pilha da máquina virtual.
-
+Outra modificação foi que, para evitar que o robô se "teletransportasse", já que a cada iteração cada robo executa 5 comandos de máquina, fizemos com que o robô acabe sua
+rodada ao tentar se mover. Caso isso não acontecesse, seria possível que ele conseguisse andar duas vezes em uma só iteração, dando a impressão que o robô pudesse "voar".
 
 
 
@@ -161,7 +162,8 @@ Além disso, os comandos de chamada ao sistema: \textbf{WALK}, \textbf{ATK}, \te
 
 \section{Tradutor em Perl}
 
-Nessa fase, o nosso tradutor em Perl recebe o mapa, diversos robos como argumento e é possível separá-los em diversos times. Apesar do número de times ser indefinido, nossa interface gráfica suporta somente 2 times. O mapa deve ser estar na pasta data/map. Os robos na pasta test e com extensão .asm.
+Nessa fase, o nosso tradutor em Perl recebe o mapa, diversos robos como argumento e é possível separá-los em diversos times. Apesar do número de times ser indefinido,
+nossa interface gráfica suporta somente 2 times. O mapa deve ser estar na pasta \textbf{\color{red}data/map}. Os robos na pasta \textbf{\color{red}test} e com extensão .asm.
 Sintaxe:
 
 \begin{verbatim}
@@ -170,8 +172,6 @@ $>perl bin/montador.pl mapa3.txt 1 robo1_time1 robo2_time1 2 robo1_time2
   robo2_time2  ... n robo1_timen
 
 \end{verbatim}
-
-Sendo que o arquivo \textbf{\color{red}mapa.txt} deve estar na pasta data/map.
 Com isso, será gerado um novo arquivo Main.java na pasta src.
 
 \section{Modo de compilação}

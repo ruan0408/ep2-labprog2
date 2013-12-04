@@ -48,7 +48,7 @@ public class Maquina
   /* Retorna TRUE se ainda não estivermos no fim do programa (se ainda houver um próximo comando) e FALSE c.c. */
   private boolean temProx()
   {
-    return !(index >= prog.size() && index >=0);
+    return !(index >= prog.size() || index <0);
   }
 
  /* Chama a função "executaCmd" no próximo comando, se o mesmo existir. */

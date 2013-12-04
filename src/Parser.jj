@@ -13,7 +13,7 @@ public class Parser
   	static TabSim Nomes  = new TabSim(); // nomes globais
   	static TabSim Locais = null;		 // nomes locais (ativada dentro de função)
   	static Programa[] programas = new Programa[1];
-  	static Mapa mapa = new Mapa("/nfs/home/bcc/ruan/Documents/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
+  	static Mapa mapa = new Mapa("/home/bcc/victorvsp/Labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
   	static Arena arena = new Arena(mapa);
 	static Programa programa;
 	static Vector<Comando> progTemp;
@@ -28,6 +28,7 @@ public class Parser
 		programas[0] = programa;
 		arena.insereExercito(programas, 1);
 
+
 		int larguraJanela, alturaJanela;
 		if(mapa.largura()%2 == 1) larguraJanela = ((mapa.largura()-1)/2)*90 + 60;
 		else larguraJanela = mapa.largura()*90/2 + 15;
@@ -36,10 +37,10 @@ public class Parser
 		MapaVisual mv = new MapaVisual(mapa, alturaJanela, larguraJanela, 30);
 
 		mv.abreJanela();
-		int i = 10;
 
 
-		while(arena.atualiza() && i-- >0)
+
+		while(arena.atualiza())
 		{
 			mv.atualiza();
 
@@ -343,7 +344,7 @@ Vector<Comando> Laço() :
 		delta = x.size();
 		p.add(new Comando("JIF",new Numero(tam+delta+exp)));
 		p.addAll(x);
-		p.add(new Comando("JMP",  new Numero(tam + exp)));
+		p.add(new Comando("JMP",  new Numero(tam)));
 		return p;
 	}
 }
