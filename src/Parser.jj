@@ -12,10 +12,10 @@ public class Parser
 {
   	static TabSim Nomes  = new TabSim(); // nomes globais
   	static TabSim Locais = null;		 // nomes locais (ativada dentro de função)
-  	Programa[] programas = new Programa[1];
-  	Mapa mapa = new Mapa("/nfs/home/bcc/ruan/Documents/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
-  	Arena arena = new Arena(mapa);
-	Programa programa;
+  	static Programa[] programas = new Programa[1];
+  	static Mapa mapa = new Mapa("/nfs/home/bcc/ruan/Documents/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
+  	static Arena arena = new Arena(mapa);
+	static Programa programa;
 	static Vector<Comando> progTemp;
 	
 	static int tam = 0;						 // tamanho do programa
@@ -24,6 +24,33 @@ public class Parser
   	{
 		Parser parser = new Parser(System.in); // cria o compilador
 		progTemp = parser.Compila();		   // compila e retorna o código de máquina
+		programa = new Programa(progTemp);
+		programas[0] = programa;
+		arena.insereExercito(programas, 1);
+
+		int larguraJanela, alturaJanela;
+		if(mapa.largura()%2 == 1) larguraJanela = ((mapa.largura()-1)/2)*90 + 60;
+		else larguraJanela = mapa.largura()*90/2 + 15;
+		alturaJanela = (int)((mapa.altura()+1)*Math.sqrt(3)*30);
+
+		MapaVisual mv = new MapaVisual(mapa, alturaJanela, larguraJanela, 30);
+
+		mv.abreJanela();
+
+
+		while(arena.atualiza())
+		{
+			mv.atualiza();
+
+			try 
+			{
+   				 Thread.sleep(100);
+			} 
+			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+
+			mv.gameOver();
+		
 		//FALTA FAZER roda e mostra o resultado
 	}
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="LabProgII-EP3" default="dist" basedir=".">
+<project name="LabProgII-EP4" default="dist" basedir=".">
     
     <!-- Atributos -->
     <property name="src.dir"   value="src"                 />
     <property name="build.dir" value="build"               />
     <property name="data.dir"  value="data"                />
     <property name="dist.dir"  value="dist"                />
-    <property name="jar.path"  value="${dist.dir}/EP3.jar" />
-    <property name="main.mf"   value="Main"                />
+    <property name="jar.path"  value="${dist.dir}/EP4.jar" />
+    <property name="main.mf"   value="Parser"              />
     
     <!-- Cria diretórios -->
     <target name="init">

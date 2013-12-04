@@ -14,6 +14,11 @@ public class Programa
 		prog = new ArrayList<Comando>();
 	}
 
+	public Programa(Vector<Comando> prog)
+	{
+		this.prog = new ArrayList<Comando>(prog);
+	}
+
 
         /****** Getters ******/
 
