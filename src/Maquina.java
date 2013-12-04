@@ -48,7 +48,7 @@ public class Maquina
   /* Retorna TRUE se ainda não estivermos no fim do programa (se ainda houver um próximo comando) e FALSE c.c. */
   private boolean temProx()
   {
-   return !(index >= prog.size());
+    return !(index >= prog.size() && index >=0);
   }
 
  /* Chama a função "executaCmd" no próximo comando, se o mesmo existir. */
@@ -63,7 +63,7 @@ public class Maquina
 
  public void pushDados(Empilhavel resp)
  {
-  dados.push(resp);
+    dados.push(resp);
  }
 
  public Empilhavel popDados()
@@ -98,6 +98,8 @@ private int executaCmd(Comando cmd)
     case LT  : this.lt(); break;
     case LE  : this.le(); break;
     case NE  : this.ne(); break;
+    case RET : novoIndice = this.ret(); break;
+    case CALL : novoIndice = this.call((Endereco)valor); break;
     
     case JMP : novoIndice = (int) ((Numero)valor).getVal(); break;
     
@@ -190,6 +192,24 @@ private int executaCmd(Comando cmd)
     Empilhavel aux1 = this.dados.pop();
     if(aux2 instanceof Endereco) vars.set((Endereco)aux2, aux1);
     this.dados.push(aux1);   
+  }
+
+  /* RET*/
+  private int ret()
+  {
+    Empilhavel resu = dados.pop();
+    while( !(dados.look() instanceof Endereco) ){ System.out.println("WAAAAAAAAAAAAAAAAAAAAAT");dados.pop();}
+    Endereco endRet = (Endereco) dados.pop();
+    System.out.println("HUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE:"+endRet.get());
+    return endRet.get();
+  }
+
+  /*CALL*/
+  private int call(Endereco end)
+  {
+    Endereco ende = new Endereco(index);
+    dados.push(ende);
+    return end.get();
   }
 
   /*

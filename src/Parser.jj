@@ -36,9 +36,10 @@ public class Parser
 		MapaVisual mv = new MapaVisual(mapa, alturaJanela, larguraJanela, 30);
 
 		mv.abreJanela();
+		int i = 10;
 
 
-		while(arena.atualiza())
+		while(arena.atualiza() && i-- >0)
 		{
 			mv.atualiza();
 
@@ -76,6 +77,7 @@ Vector<Comando> Compila() :
 	Vector<Comando> p = new Vector<Comando>(0); // para retornar
 	Vector<Comando> x = new Vector<Comando>(0); // trecho compilado
 													// por outras regras
+	p.add(new Comando("PUSH", new Endereco(-1))); //Para ter um endereco para o último ret.
 
 	//Comando[] a = new Comando[0]; // auxiliar
 }
