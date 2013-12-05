@@ -34,9 +34,7 @@ public class Parser
 
 
 
-		
-		
-		//FALTA FAZER roda e mostra o resultado
+
 	
 }
 
@@ -254,7 +252,7 @@ Vector<Comando> Fator() :
     	{
 			v = Locais.get(t.image);
     		//  p.add(new Comando("PUSH", new Numero(0))); Var recebe expressão, já empilhado
-      		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
+      		p.add(new Comando("LSTO", new Numero(v.pos.get()))); // V é símbolo. Atenção
     	}
 		else if (Nomes.exists(t.image)) 
     	{ // existe como global? sera?
@@ -273,12 +271,13 @@ Vector<Comando> Fator() :
 		else 
     	{					// cria local ou global, de acordo
 			v = new Variável();
+			System.out.println("HUE"+v.pos.get());
 			if (Locais != null) 
       		{ // dentro de função -> local
 				Locais.add(t.image,v);
 				System.out.println("Nova variavel local:"+t.image+" em "+v.pos.get());
        			// p.add(new Comando("PUSH", new Numero(0))); 
-        		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
+        		p.add(new Comando("LSTO", new Numero(v.pos.get()))); // V é símbolo. Atenção
 			}
 			else 
       		{				// global
@@ -296,7 +295,7 @@ Vector<Comando> Fator() :
 		if ((Locais != null) && Locais.exists(t.image)) 
     	{
   			v = Locais.get(t.image);	
-  			p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Lembre-se.
+  			p.add(new Comando("LRCL", new Numero(v.pos.get()))); // V é símbolo. Lembre-se.
    		}
 		else if (Nomes.exists(t.image)) 
     	{
@@ -318,7 +317,7 @@ Vector<Comando> Fator() :
       		{
 				Locais.add(t.image,v);
 				System.out.println("Nova variavel local:"+t.image+" em "+v.pos.get());
-			  p.add(new Comando("STO", new Numero(v.pos.get())));// V é....adivinha?
+			  p.add(new Comando("LSTO", new Numero(v.pos.get())));// V é....adivinha?
 				//p.add(new Comando("SET", null);
 			}
 			else 
@@ -444,6 +443,8 @@ Vector<Comando> Função() :
 								// apesar do escopo de função ser
 								// global)
 		Locais = v.Vars;
+		Variável.pushFrame(); //Define um novo frame para separar uma nova seção de 
+							  // Variáveis locais
 	}
 	"(" (Args(nome,v))? ")"		// lista de argumentos
 	x=Bloco() 					// corpo
@@ -451,6 +452,7 @@ Vector<Comando> Função() :
 		p.addAll(x); 
 		p.add(new Comando("RET",null)); 		// garante RET
 		Locais = Lorig;			// restaura tabela de símbolos
+		Variável.popFrame();   // Retira o frame
 		return p;
 	}
 }
@@ -532,7 +534,7 @@ Vector<Comando> ListParms(Função f) :
 		x = Parm(f,n++) {p.addAll(x);}
 	)*
 	{ 
-		//p.add(new ENTRA());		// novo contexto
+		p.add(new Comando("ENTRA",null));		// novo contexto
 		// populando
 		for (int i = n-1; i >=0 ; i--) 
 		{
@@ -548,7 +550,7 @@ Vector<Comando> ListParms(Função f) :
 			}
 			v = (Variável) Locais.get(pnom);
 			System.out.println("JIROMBA:"+pnom+"    "+v.pos.get()+"--- "+Locais.exists(pnom));
-			p.add(new Comando("STO", new Numero(v.pos.get())));
+			p.add(new Comando("LSTO", new Numero(v.pos.get())));
 		}
 		return p;
 	}

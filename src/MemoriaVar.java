@@ -1,7 +1,9 @@
+import java.util.*;
+
 public class MemoriaVar
 {
 	private static int NUMEROQUENAOVAIMUDAR = 0;
 
-	static int getMem(){return NUMEROQUENAOVAIMUDAR++;}
+	static int getMem(){System.out.println(NUMEROQUENAOVAIMUDAR);return NUMEROQUENAOVAIMUDAR++;}
 
 }

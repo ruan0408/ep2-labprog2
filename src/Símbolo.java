@@ -1,4 +1,5 @@
 import java.util.Vector;
+import java.util.Stack;
 
 // Símbolo: pode ser nome de variável ou função
 class Símbolo {
@@ -43,9 +44,28 @@ class Função extends Símbolo {
 }
 
 // Variável
+
 class Variável extends Símbolo {
 	private static int nvars=0;			// número de variáveis globais
+	private static Stack<Integer> frame = new Stack<Integer>();
 
-	Variável() {super(MemoriaVar.getMem());
-				System.out.println(nvars-1);}
+
+	Variável()
+	{
+		super(nvars++);
+	}
+
+
+	public static void pushFrame()
+	{
+		frame.push(nvars);
+	}
+
+	public static void popFrame()
+	{
+		nvars = frame.pop();
+	}
+
+
+
 }

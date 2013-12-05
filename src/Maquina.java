@@ -4,12 +4,13 @@ import java.lang.String;
 public class Maquina
 {
   private Pilha dados;
-  private Empilhavel[] mem;
+  private Vetor mem, memLocal;
   private Programa prog;
   private Variaveis vars;
   private Arena arena;
   private int index;
   private Programavel obj;
+  private Stack<Vetor> pilhaLocais;
   
 
   /****** Construtor ******/
@@ -18,10 +19,12 @@ public class Maquina
   public Maquina(Arena arena)
   {
     this.arena = arena;
-    mem = new Empilhavel[10];
+    mem = new Vetor(10);
+    memLocal = null;
     prog = new Programa();
     dados = new Pilha();
     vars = new Variaveis();
+    pilhaLocais = new Stack<Vetor>();
 
     obj = null;
 
@@ -82,6 +85,7 @@ private int executaCmd(Comando cmd)
   int arg;
 
 
+  System.out.println(code);
   switch(Instrucoes.valueOf(code))
   {
     case PUSH: this.dados.push(valor); break;
@@ -111,11 +115,22 @@ private int executaCmd(Comando cmd)
     
     case STO : int index = ((int)((Numero)valor).getVal());
                this.sto(index); break;
+
+    case LSTO: int index1 = ((int)((Numero)valor).getVal());
+               this.lsto(index1); break;
     
-    case RCL : int index1;
-               index1 = (int) ((Numero)valor).getVal();
-               this.dados.push( this.mem[index1] ); break;//não remove o valor da memoria
+    case RCL : int index2;
+               index2 = (int) ((Numero)valor).getVal();
+               this.dados.push( this.mem.get(index2) ); break;//não remove o valor da memoria
+
+    case LRCL : int index3;
+               index3 = (int) ((Numero)valor).getVal();
+               if(memLocal == null) throw new ArrayIndexOutOfBoundsException();
+               this.dados.push( this.memLocal.get(index3) ); break;//não remove o valor da memoria
     
+    case ENTRA: this.entra(); break;
+
+
     case END : novoIndice = this.prog.size(); break;
 
     case GETPOS: this.getpos();break;
@@ -201,6 +216,7 @@ private int executaCmd(Comando cmd)
     while( !(dados.look() instanceof Endereco) )dados.pop(); //Procura o próximo Endereço na pilha
     Endereco endRet = (Endereco) dados.pop();
     System.out.println("Voltando para:"+endRet.get());
+    memLocal = pilhaLocais.pop(); // Volta a memória local para ser a anterior.
     return endRet.get() + 1; // +1 porque o endereçoi guardado é o endereço do CALL
   }
 
@@ -210,6 +226,16 @@ private int executaCmd(Comando cmd)
     Endereco ende = new Endereco(index);
     dados.push(ende);
     return end.get();
+  }
+
+
+  /*
+  Cria uma nova memória local, e empilha a antiga.
+  */
+  private void entra()
+  {
+    pilhaLocais.push(memLocal);
+    memLocal = new Vetor(10);
   }
 
   /*
@@ -406,10 +432,19 @@ private int executaCmd(Comando cmd)
   private void sto(int index)
   {
     Empilhavel aux1 = this.dados.pop();
-    if((this.mem.length) <= index)
-      this.mem = Arrays.copyOf(this.mem, index+1);
+   /* if((this.mem.length) <= index)
+      this.mem = Arrays.copyOf(this.mem, index+1);*/
     
-    this.mem[index] = aux1;
+    mem.set(aux1,index);
+  }
+
+  private void lsto(int index)
+  {
+    Empilhavel aux1 = this.dados.pop();
+   /* if((this.mem.length) <= index)
+      this.mem = Arrays.copyOf(this.mem, index+1);*/
+    
+    memLocal.set(aux1,index);
   }
 
   private void prn()
