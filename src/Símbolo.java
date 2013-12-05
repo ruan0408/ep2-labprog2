@@ -23,6 +23,7 @@ class Função extends Símbolo {
 		Variável v = new Variável();
 		args.add(a);
 		Vars.add(a,v);
+		System.out.println("Variavel"+a+" em "+v.pos.get()+" Adicionado");
 	}
 
 	// pega o nome do argumento na posição n
@@ -43,7 +44,8 @@ class Função extends Símbolo {
 
 // Variável
 class Variável extends Símbolo {
-	static int nvars=0;			// número de variáveis globais
+	private static int nvars=0;			// número de variáveis globais
 
-	Variável() {super(nvars++);}
+	Variável() {super(MemoriaVar.getMem());
+				System.out.println(nvars-1);}
 }

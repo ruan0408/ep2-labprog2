@@ -22,6 +22,7 @@ public class Main
 		catch(Exception e)
 		{
 			System.out.println("Problema ao tentar traduzir o arquivo "+args[i]);
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		}	
 
@@ -29,7 +30,7 @@ public class Main
 
 		System.out.println("Quantidade de robos: "+progAux.length);
 		arena.insereExercito(progAux, 1);
-		arena.insereExercito(progAux,2);
+		//arena.insereExercito(progAux,2);
 				
 		int larguraJanela, alturaJanela;
 		if(mapa.largura()%2 == 1) larguraJanela = ((mapa.largura()-1)/2)*90 + 60;

@@ -11,6 +11,7 @@ public class TabSim {
 
 	public void add(String s, Símbolo o) {
 		H.put(s,o);
+		System.out.println("ADICONANDO:"+s);
 		if (o instanceof Variável)
 			o.SetPos(pos++);
 	}

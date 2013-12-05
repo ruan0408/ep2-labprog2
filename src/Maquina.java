@@ -200,7 +200,8 @@ private int executaCmd(Comando cmd)
     Empilhavel resu = dados.pop();
     while( !(dados.look() instanceof Endereco) )dados.pop(); //Procura o próximo Endereço na pilha
     Endereco endRet = (Endereco) dados.pop();
-    return endRet.get();
+    System.out.println("Voltando para:"+endRet.get());
+    return endRet.get() + 1; // +1 porque o endereçoi guardado é o endereço do CALL
   }
 
   /*CALL*/
@@ -459,6 +460,8 @@ private int executaCmd(Comando cmd)
       case 5: //Rugoso
            if(emp2 instanceof Rugoso) resp = new Numero(1);
         break;
+      case 6:
+            if(emp2 instanceof Agua) resp = new Numero(1);
 
       default: break;
     }

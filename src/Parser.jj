@@ -107,12 +107,7 @@ Vector<Comando> Instrucao() :
 			p.add(new Comando("PUSH", new Frase("\n")));
 			p.add(new Comando("PRN", null));
 		}
-		|
-		"move" "(" x=Expressão() ")" ";"
-		{
-			p.addAll(x);
-			p.add(new Comando("WALK",null));			
-		}
+		
 	) 
 	{return p;}
 }
@@ -136,6 +131,8 @@ Vector<Comando> Expressão() :
 		"<"  x = Arit() {p.addAll(x); p.add(new Comando("LT", null));}
 		|
 		">"  x = Arit() {p.addAll(x); p.add(new Comando("GT", null));}
+		|
+		"isa" x = Arit() {p.addAll(x); p.add(new Comando("ISA", null));}
 	)* 
 	{return p;}
 }
@@ -183,6 +180,69 @@ Vector<Comando> Fator() :
 		p.addAll(x); 
 		return p;
 	}
+	|
+	"move" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("WALK",null));
+		return p;			
+	}
+	|
+	"look" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("LOOK", null));
+		return p;
+	}
+	|
+	"getRobo" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("GETROBO",null));	
+		return p;		
+	}
+	|
+	"myTime" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("MYTIME",null));	
+		return p;		
+	}
+	|
+	"atk" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("ATK",null));	
+		return p;		
+	}
+	|
+	"collect" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("COLLECT",null));	
+		return p;		
+	}
+	|
+	"drop" "(" x=Expressão() ")"
+	{
+		p.addAll(x);
+		p.add(new Comando("DROP",null));	
+		return p;		
+	}
+	|
+	"getTime" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("GETTIME",null));	
+		return p;		
+	}
+	|
+	"timeRobo" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("TIMERB",null));
+		return p;			
+	}
 	|								// Atribuição
 	t=<ID> "=" x=Expressão() 
    	{	
@@ -206,22 +266,24 @@ Vector<Comando> Fator() :
       		}
 			else 
       		{
-        		p.add(new Comando("PUSH", new Frase("DEU MERDA!")));
+        		p.add(new Comando("PUSH", new Frase(t.image)));
         		p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
       		}
 		}
 		else 
     	{					// cria local ou global, de acordo
-			v = new Variável();//???????????????????????????????????????????????????????????????????????????????
+			v = new Variável();
 			if (Locais != null) 
       		{ // dentro de função -> local
 				Locais.add(t.image,v);
+				System.out.println("Nova variavel local:"+t.image+" em "+v.pos.get());
        			// p.add(new Comando("PUSH", new Numero(0))); 
         		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
 			}
 			else 
       		{				// global
 				Nomes.add(t.image,v);
+				System.out.println("1Nova variavel global:"+t.image+" em "+v.pos.get());
        			// p.add(new Comando("PUSH", new Numero(0))); 
         		p.add(new Comando("STO", new Numero(v.pos.get()))); // V é símbolo. Atenção
 			}
@@ -242,7 +304,7 @@ Vector<Comando> Fator() :
 			if (!(v instanceof Função)) p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Sacou né?
 			else
       		{
-        		p.add(new Comando("PUSH", new Frase("DEU MERDA!"))); 
+        		p.add(new Comando("PUSH", new Frase("DEU MERDA2:"+t.image))); 
         		p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
       		}
 		}
@@ -255,12 +317,14 @@ Vector<Comando> Fator() :
 			if (Locais != null) 
       		{
 				Locais.add(t.image,v);
+				System.out.println("Nova variavel local:"+t.image+" em "+v.pos.get());
 			  p.add(new Comando("STO", new Numero(v.pos.get())));// V é....adivinha?
 				//p.add(new Comando("SET", null);
 			}
 			else 
       		{
 				Nomes.add(t.image,v);
+				System.out.println("Nova variavel global:"+t.image+" em "+v.pos.get());
         		p.add(new Comando("STO", new Numero(v.pos.get())));
 				//p.add(new Comando("SET", null);
 			}
@@ -279,6 +343,7 @@ Vector<Comando> Fator() :
 		p.addAll(x); 
 		return p;
 	}
+
 }
 
 Vector<Comando> Condicional() :
@@ -332,7 +397,7 @@ Vector<Comando> Laço() :
 	x = Bloco() 
 	{
 		delta = x.size();
-		p.add(new Comando("JIF",new Numero(delta+1)));
+		p.add(new Comando("JIF",new Numero(delta+2)));
 		p.addAll(x);
 		p.add(new Comando("JMP",  new Numero(-(delta+exp+1))));
 		return p;
@@ -372,6 +437,7 @@ Vector<Comando> Função() :
 		{					// cria a função
 			v = new Função(tam+1);//+1 pra pular o JMP que vem antes da função
 			Nomes.add(nome,v);
+			System.out.println("Adicionando função:"+nome);
 		}
 		Lorig = Locais;			// guarda a tabela de símbolos locais
 								// (isso permite definições encaixadas,
@@ -475,10 +541,13 @@ Vector<Comando> ListParms(Função f) :
 			if (!Locais.exists(pnom))
 			{
 				// adiciona na tabela quando usada
+				System.out.println("GIROMBA:"+pnom);
 				v = new Variável();
 				Locais.add(pnom,v);
+				System.out.println("Nova variavel local:"+pnom+" em "+v.pos.get());
 			}
 			v = (Variável) Locais.get(pnom);
+			System.out.println("JIROMBA:"+pnom+"    "+v.pos.get()+"--- "+Locais.exists(pnom));
 			p.add(new Comando("STO", new Numero(v.pos.get())));
 		}
 		return p;
