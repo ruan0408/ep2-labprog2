@@ -101,7 +101,7 @@ private int executaCmd(Comando cmd)
     case RET : novoIndice = this.ret(); break;
     case CALL : novoIndice = this.call((Endereco)valor); break;
     
-    case JMP : novoIndice = this.index + (int) ((Numero)valor).getVal(); System.out.println("novoIndice:"+novoIndice); break;
+    case JMP : novoIndice = this.index + (int) ((Numero)valor).getVal(); break;
     
     case JIT : arg = (int) ((Numero)valor).getVal();
                novoIndice = this.jit(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
@@ -208,7 +208,6 @@ private int executaCmd(Comando cmd)
   {
     Endereco ende = new Endereco(index);
     dados.push(ende);
-    System.out.println("CALL:"+end.get());
     return end.get();
   }
 

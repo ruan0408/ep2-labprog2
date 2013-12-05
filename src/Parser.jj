@@ -1,6 +1,7 @@
 options {
 	IGNORE_CASE = true;
 	LOOKAHEAD   = 2;			// para eliminar conflitos
+	STATIC = true;
 }
 
 // Descrição da classe Calc
@@ -12,55 +13,31 @@ import java.io.*;
 public class Parser 
 {
   	static TabSim Nomes  = new TabSim(); // nomes globais
-  	static TabSim Locais = null;		 // nomes locais (ativada dentro de função)
-  	static Programa[] programas = new Programa[10];
-  	static Mapa mapa = new Mapa("/home/bcc/ruan/Labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
-  	static Arena arena = new Arena(mapa);
+  	static TabSim Locais = null;		 // nomes locais (ativada dentro de função) 	
 	static Programa programa;
 	static Vector<Comando> progTemp;
 	
 	static int tam = 0;						 // tamanho do programa
 
-	public static void main(String args[]) throws ParseException 
+	public static Programa traduzRobo(String arq) throws ParseException, FileNotFoundException
   	{
   		FileInputStream fstream;
-  		Parser parser;
-  		for(int i=0; args.length > 0 && i < args.length; i++)
-  		{
-  			fstream = new FileInputStream(args[i]);
-  			parser = new Parser(fstream); // cria o compilador
-  			progTemp = parser.Compila(); // compila e retorna o código de máquina
-  			programa = new Programa(progTemp);
-			programas[i] = programa;
-			arena.insereExercito(programas, 1);
-  		}
-				
-		int larguraJanela, alturaJanela;
-		if(mapa.largura()%2 == 1) larguraJanela = ((mapa.largura()-1)/2)*90 + 60;
-		else larguraJanela = mapa.largura()*90/2 + 15;
-		alturaJanela = (int)((mapa.altura()+1)*Math.sqrt(3)*30);
-
-		MapaVisual mv = new MapaVisual(mapa, alturaJanela, larguraJanela, 30);
-
-		mv.abreJanela();
+  		//Parser parser;
+  		
+		fstream = new FileInputStream(arq);
+		//parser = new Parser(fstream); // cria o compilador
+		Parser.ReInit(fstream);
+		progTemp = Parser.Compila(); // compila e retorna o código de máquina
+		programa = new Programa(progTemp);
+		return programa;
+	}
 
 
 
-		while(arena.atualiza())
-		{
-			mv.atualiza();
-
-			try 
-			{
-   				 Thread.sleep(100);
-			} 
-			catch(InterruptedException ex) {Thread.currentThread().interrupt();}
-		}
-
-			mv.gameOver();
+		
 		
 		//FALTA FAZER roda e mostra o resultado
-	}
+	
 }
 
 PARSER_END(Parser)

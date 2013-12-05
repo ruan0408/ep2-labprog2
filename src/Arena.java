@@ -26,7 +26,7 @@ public class Arena
       ArrayList<Robo> robosMortos = new ArrayList<Robo>();
       Robo roboTemp;
       RndIterator<Robo> it;
-      boolean alguemTemAcao = false;
+      boolean alguemTemAcao = true; // ARRUMAR
       
       /* Percorre a lista de robôs, executando os comandos de cada um (de acordo com o estado de seu atraso). */
       for(it = new RndIterator<Robo>(robos); it.hasNext();)
