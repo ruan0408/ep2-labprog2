@@ -83,9 +83,6 @@ private int executaCmd(Comando cmd)
   String code = cmd.getCode();
   int novoIndice = this.index + 1;
   int arg;
-
-
-  System.out.println(code);
   switch(Instrucoes.valueOf(code))
   {
     case PUSH: this.dados.push(valor); break;
@@ -215,7 +212,8 @@ private int executaCmd(Comando cmd)
     Empilhavel resu = dados.pop();
     while( !(dados.look() instanceof Endereco) )dados.pop(); //Procura o próximo Endereço na pilha
     Endereco endRet = (Endereco) dados.pop();
-    System.out.println("Voltando para:"+endRet.get());
+    dados.push(resu);
+    if(pilhaLocais.empty()) return -1; // Fim do programa
     memLocal = pilhaLocais.pop(); // Volta a memória local para ser a anterior.
     return endRet.get() + 1; // +1 porque o endereçoi guardado é o endereço do CALL
   }

@@ -23,6 +23,8 @@ public class Parser
   	{
   		FileInputStream fstream;
   		//Parser parser;
+
+  		tam = 0;
   		
 		fstream = new FileInputStream(arq);
 		//parser = new Parser(fstream); // cria o compilador
@@ -66,7 +68,7 @@ Vector<Comando> Compila() :
 }
 {
 	(
-	 	x = Instrucao() {p.addAll(x); tam += p.size();}
+	 	x = Instrucao() {p.addAll(x); tam = p.size();}
 	)*
 	<EOF> 
 	{
@@ -271,7 +273,6 @@ Vector<Comando> Fator() :
 		else 
     	{					// cria local ou global, de acordo
 			v = new Variável();
-			System.out.println("HUE"+v.pos.get());
 			if (Locais != null) 
       		{ // dentro de função -> local
 				Locais.add(t.image,v);
@@ -303,8 +304,7 @@ Vector<Comando> Fator() :
 			if (!(v instanceof Função)) p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Sacou né?
 			else
       		{
-        		p.add(new Comando("PUSH", new Frase("DEU MERDA2:"+t.image))); 
-        		p.add(new Comando("PRN", null)); // colocar erro de compilação aqui
+        		throw new ParseException(t.image+" esta definida como função, mas está sendo usada como variável");
       		}
 		}
  		else 
@@ -316,14 +316,12 @@ Vector<Comando> Fator() :
 			if (Locais != null) 
       		{
 				Locais.add(t.image,v);
-				System.out.println("Nova variavel local:"+t.image+" em "+v.pos.get());
 			  p.add(new Comando("LSTO", new Numero(v.pos.get())));// V é....adivinha?
 				//p.add(new Comando("SET", null);
 			}
 			else 
       		{
 				Nomes.add(t.image,v);
-				System.out.println("Nova variavel global:"+t.image+" em "+v.pos.get());
         		p.add(new Comando("STO", new Numero(v.pos.get())));
 				//p.add(new Comando("SET", null);
 			}
@@ -427,16 +425,12 @@ Vector<Comando> Função() :
 		if (Nomes.exists(nome = t.image)) 
 		{ 	// já foi definida?
 			v = (Função)Nomes.get(nome);
-			// Isto NÃO é um tratamento de erro decente!!!!!
-			// Melhore
-			p.add(new Comando("PUSH",new Frase("Nome já usado:" + nome)));
-			p.add(new Comando("PRN",null));
+			throw new ParseException(nome+" já foi definido anteriormente, impossível criar função com esse nome.");
 		}
 		else 
 		{					// cria a função
 			v = new Função(tam+1);//+1 pra pular o JMP que vem antes da função
 			Nomes.add(nome,v);
-			System.out.println("Adicionando função:"+nome);
 		}
 		Lorig = Locais;			// guarda a tabela de símbolos locais
 								// (isso permite definições encaixadas,
@@ -500,8 +494,11 @@ Vector<Comando> Chamada() :
 								   //pontos na tabela de símbolos e
 								   //corrija os pontos depois
 			f = new Função(0);
-			System.out.println("Erro no uso de "+nome);
-			System.out.println("FUDEU FUDEU FUDEU FUDEU FUDEU FUDEU VAI DAR MERDA");
+			
+
+			throw new ParseException("Função "+t.image+" não definida");
+			// O certo seria coletar os pontos e ver se é declarada depois,
+			// Mas o tempo disponível é um fator limitante.
 		}
 		Lorig = Locais;			// disponibiliza o nome dos argumentos
 		Locais = f.Vars;
@@ -543,13 +540,10 @@ Vector<Comando> ListParms(Função f) :
 			if (!Locais.exists(pnom))
 			{
 				// adiciona na tabela quando usada
-				System.out.println("GIROMBA:"+pnom);
 				v = new Variável();
 				Locais.add(pnom,v);
-				System.out.println("Nova variavel local:"+pnom+" em "+v.pos.get());
 			}
 			v = (Variável) Locais.get(pnom);
-			System.out.println("JIROMBA:"+pnom+"    "+v.pos.get()+"--- "+Locais.exists(pnom));
 			p.add(new Comando("LSTO", new Numero(v.pos.get())));
 		}
 		return p;
