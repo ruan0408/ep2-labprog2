@@ -291,6 +291,13 @@ Vector<Comando> Fator() :
 	 	return p;
 	}
 	|
+	t=<RESERVADA>
+	{
+		p.add(new Comando("PUSH",new Numero(TerrEnum.valueOf(t.image).id())));
+		System.out.println("PALAVRA RESERVADA USADA:"+t.image+" COM ID"+ TerrEnum.valueOf(t.image).id());
+		return p;
+	}
+	|
 	t=<ID> 
 	{					// variável, tratamento similar ao de cima
 		if ((Locais != null) && Locais.exists(t.image)) 
@@ -628,6 +635,8 @@ Vector<Comando> ItemPrint() :
 
 TOKEN :
 {
+	< RESERVADA: ("AGUA"|"LISO"|"RUGOSO")>
+	|
 	< NUM: ( ["0"-"9"] )+ >
 	|
 	< ID: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9","@"] )* >

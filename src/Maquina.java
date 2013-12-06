@@ -473,9 +473,9 @@ private int executaCmd(Comando cmd)
     int tipo = (int)((Numero)emp1).getVal();
     Empilhavel resp = new Numero(0); // Resposta default: FALSE
 
-    switch(tipo)
+    switch(TerrEnum.getTerr(tipo))
     {
-      case 0: //Numero
+     /* case 0: //Numero
         if(emp2 instanceof Numero) resp = new Numero(1);
         break;
       case 1: //Terreno
@@ -492,8 +492,8 @@ private int executaCmd(Comando cmd)
         break;
       case 5: //Rugoso
            if(emp2 instanceof Rugoso) resp = new Numero(1);
-        break;
-      case 6:
+        break;*/
+      case AGUA:
             if(emp2 instanceof Agua) resp = new Numero(1);
 
       default: break;
