@@ -23,25 +23,48 @@ public class Main
 		ArrayList<Programa> programas = new ArrayList<Programa>();
 		Programa[] progAux = new Programa[0];
 		int i = 0;
+		int time, timeAux;
+		time = timeAux = 0;
 		Parser parser = new Parser(System.in);
 		try
 		{
 			for(i =0;args.length > 0 && i<args.length;i++)
 			{
-				programas.add(parser.traduzRobo(args[i]));
+				try
+				{
+					time = Integer.parseInt(args[i]);
+					if(i != 0)
+					{
+						progAux = programas.toArray(progAux);
+						arena.insereExercito(progAux, timeAux);
+						programas = new ArrayList<Programa>();
+					}
+				}
+				catch(Exception e)
+				{
+					timeAux = time;
+					programas.add(parser.traduzRobo(args[i]));	
+				}
+				//programas.add(parser.traduzRobo(args[i]));
 			}
+			progAux = programas.toArray(progAux);
+			arena.insereExercito(progAux, timeAux);
+			/*for(i =0;args.length > 0 && i<args.length;i++)
+			{
+				programas.add(parser.traduzRobo(args[i]));
+			}*/
 		}
 		catch(Exception e)
 		{
 			System.out.println("Problema ao tentar traduzir o arquivo "+args[i]);
 			System.out.println(e.getMessage());
 			System.exit(-1);
-		}	
+		}
 
-		progAux = programas.toArray(progAux);
+		//progAux = programas.toArray(progAux);
 
 		System.out.println("Quantidade de robos: "+progAux.length);
-		arena.insereExercito(progAux, 1);
+		//arena.insereExercito(progAux, 1);
 		//arena.insereExercito(progAux,2);
 				
 		int larguraJanela, alturaJanela;
