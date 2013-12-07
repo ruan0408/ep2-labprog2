@@ -87,7 +87,7 @@ public class Mapa
 		     				if(mapaInt[i][j] < 0)
 		     				{
 		     					int timeId = Math.abs(mapaInt[i][j]);
-		     					System.out.println(timeId);
+		     					//System.out.println(timeId);
 		     					if(existeTime(timeId)) throw new IllegalArgumentException();
 		     					this.matriz[i][j] = new Base(pos, timeId);
 		     					times.add(new Time(timeId, this.matriz[i][j].toBase()));

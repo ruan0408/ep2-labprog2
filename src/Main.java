@@ -28,7 +28,6 @@ public class Main
 		{
 			for(i =0;args.length > 0 && i<args.length;i++)
 			{
-				
 				programas.add(parser.traduzRobo(args[i]));
 			}
 		}
