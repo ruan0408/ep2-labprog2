@@ -5,7 +5,20 @@ public class Main
 {
 	public static void main(String args[])
 	{
-		Mapa mapa = new Mapa("/home/ruan/Documentos/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
+		String path = null;
+		try 
+		{
+			path = new java.io.File(".").getCanonicalPath();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Problema ao achar path");
+			System.out.println(e.getMessage());
+			System.exit(-1);	
+		}
+
+		
+		Mapa mapa = new Mapa(path+"/data/map/mapa3.txt");   
   		Arena arena = new Arena(mapa);
 		ArrayList<Programa> programas = new ArrayList<Programa>();
 		Programa[] progAux = new Programa[0];
