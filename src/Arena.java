@@ -130,7 +130,7 @@ public class Arena
       case DROP :
       case LOOK:
       case GETROBO:
-               try
+              try
               {
                 Empilhavel arg = robo.pop();
                 if(arg instanceof Numero) dir = (int)((Numero)arg).getVal();

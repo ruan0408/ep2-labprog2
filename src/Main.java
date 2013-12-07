@@ -5,7 +5,7 @@ public class Main
 {
 	public static void main(String args[])
 	{
-		Mapa mapa = new Mapa("/home/bcc/ruan/Documents/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
+		Mapa mapa = new Mapa("/home/ruan/Documentos/labprog2/ep2-labprog2/bin/../data/map/mapa3.txt");   
   		Arena arena = new Arena(mapa);
 		ArrayList<Programa> programas = new ArrayList<Programa>();
 		Programa[] progAux = new Programa[0];

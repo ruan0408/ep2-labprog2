@@ -293,8 +293,8 @@ Vector<Comando> Fator() :
 	|
 	t=<RESERVADA>
 	{
-		p.add(new Comando("PUSH",new Numero(TerrEnum.valueOf(t.image).id())));
-		System.out.println("PALAVRA RESERVADA USADA:"+t.image+" COM ID"+ TerrEnum.valueOf(t.image).id());
+		p.add(new Comando("PUSH",new Numero(TipoEnum.valueOf(t.image).id())));
+		System.out.println("PALAVRA RESERVADA USADA:"+t.image+" COM ID"+ TipoEnum.valueOf(t.image).id());
 		return p;
 	}
 	|
@@ -635,7 +635,7 @@ Vector<Comando> ItemPrint() :
 
 TOKEN :
 {
-	< RESERVADA: ("AGUA"|"LISO"|"RUGOSO")>
+	< RESERVADA: ("AGUA"|"LISO"|"RUGOSO"|"DEPOSITO"|"ROBO"|"CRISTAL"|"NUMERO"|"TERRENO")>
 	|
 	< NUM: ( ["0"-"9"] )+ >
 	|

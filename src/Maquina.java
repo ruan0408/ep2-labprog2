@@ -473,7 +473,7 @@ private int executaCmd(Comando cmd)
     int tipo = (int)((Numero)emp1).getVal();
     Empilhavel resp = new Numero(0); // Resposta default: FALSE
 
-    switch(TerrEnum.getTerr(tipo))
+    switch(TipoEnum.getTerr(tipo))
     {
      /* case 0: //Numero
         if(emp2 instanceof Numero) resp = new Numero(1);
@@ -493,8 +493,30 @@ private int executaCmd(Comando cmd)
       case 5: //Rugoso
            if(emp2 instanceof Rugoso) resp = new Numero(1);
         break;*/
+      case NUMERO:
+            if(emp2 instanceof Numero) resp = new Numero(1);
+            break;  
+      case TERRENO:
+            if(emp2 instanceof Terreno) resp = new Numero(1);
+            break;
+      case CRISTAL:
+            if(emp2 instanceof Cristal) resp = new Numero(1);
+            break;
+      case ROBO:
+            if(emp2 instanceof Robo) resp = new Numero(1);
+            break;
+      case DEPOSITO:
+            if(emp2 instanceof Deposito) resp = new Numero(1);
+            break;  
+      case RUGOSO:
+            if(emp2 instanceof Rugoso) resp = new Numero(1);
+            break;
+      case LISO:
+            if(emp2 instanceof Liso) resp = new Numero(1);
+            break;
       case AGUA:
             if(emp2 instanceof Agua) resp = new Numero(1);
+            break;
 
       default: break;
     }

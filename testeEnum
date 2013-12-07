@@ -1,0 +1,17 @@
+i = 0;
+
+while(1) do
+{
+	j = 0;
+	move(i);
+	while(j < 7) do
+	{
+		terr = look(j);
+		if(terr isa LISO) then
+		{
+			print "É LISO PORRAAAAAAAAAAA";
+		}
+		j = j+1;
+	}
+	i = i+1;
+}
