@@ -69,6 +69,8 @@ class Campo extends JPanel
 	BufferedImage baseA = null;
 	BufferedImage roboV = null;
 	BufferedImage roboA = null;
+	BufferedImage roboVhit = null;
+	BufferedImage roboAhit = null;
 	BufferedImage depSemCristal = null;
 	BufferedImage depComCristal = null;
 	BufferedImage background = null;
@@ -100,6 +102,8 @@ class Campo extends JPanel
 			agua = ImageIO.read(this.getClass().getResource("/img/agua.jpg"));
 			roboV = ImageIO.read(this.getClass().getResource("/img/roboV.png"));
 			roboA = ImageIO.read(this.getClass().getResource("/img/roboA.png"));
+			roboVhit = ImageIO.read(this.getClass().getResource("/img/roboVhit.png"));
+			roboAhit = ImageIO.read(this.getClass().getResource("/img/roboAhit.png"));
 			baseV = ImageIO.read(this.getClass().getResource("/img/baseV.png"));
 			baseA = ImageIO.read(this.getClass().getResource("/img/baseA.png"));
 			background = ImageIO.read(this.getClass().getResource("/img/background.jpg"));
@@ -169,8 +173,18 @@ class Campo extends JPanel
 				{
 					switch(mapa.getTerreno(i,j).getRobo().getTime().getId())
 					{
-				 		case 1 :desenhaElemento(roboV, i, j, g2d);break;
-				 		case 2 :desenhaElemento(roboA, i, j, g2d);break;
+				 		case 1 :
+				 			if(mapa.getTerreno(i,j).getRobo().gotHit())
+				 				desenhaElemento(roboVhit, i, j, g2d);
+				 			else
+				 				desenhaElemento(roboV, i, j, g2d);
+				 		break;
+				 		case 2 :
+				 			if(mapa.getTerreno(i,j).getRobo().gotHit())
+				 				desenhaElemento(roboAhit, i, j, g2d);
+				 			else
+				 				desenhaElemento(roboA, i, j, g2d);
+				 		break;
 				 		default: System.out.println("Ainda não suportamos mais times");
 				 	}
 				}

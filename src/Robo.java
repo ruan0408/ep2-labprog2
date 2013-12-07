@@ -11,7 +11,7 @@ public class Robo implements Programavel, Empilhavel
   private Time time;
   private Atraso atraso;
   private Cristal cristal;
-
+  private boolean gotHit;
 
   /****** Construtor ******/
 
@@ -24,6 +24,7 @@ public class Robo implements Programavel, Empilhavel
     this.atraso = null; 
     this.time = time;
     this.ind = cont++;
+    this.gotHit = false;
     cristal = null;
   }
 
@@ -67,9 +68,18 @@ public class Robo implements Programavel, Empilhavel
     return this.atraso;
   }
 
+  public boolean gotHit()
+  {
+    return this.gotHit;
+  }
+
 
   /****** Setters ******/
 
+  void gotHit(boolean h)
+  {
+    this.gotHit = h;
+  }
 
   public void setPos(Posicao pos)
   {

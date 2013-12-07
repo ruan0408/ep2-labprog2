@@ -25,8 +25,14 @@ public class Arena
      {
       ArrayList<Robo> robosMortos = new ArrayList<Robo>();
       Robo roboTemp;
-      RndIterator<Robo> it;
+      RndIterator<Robo> it, it2;
       boolean alguemTemAcao = false; // ARRUMAR
+
+      for(it2 = new RndIterator<Robo>(robos); it2.hasNext();)
+      {
+        roboTemp = it2.next();
+        roboTemp.gotHit(false);
+      }
       
       /* Percorre a lista de robôs, executando os comandos de cada um (de acordo com o estado de seu atraso). */
       for(it = new RndIterator<Robo>(robos); it.hasNext();)
@@ -84,8 +90,6 @@ public class Arena
 
    /*Remove os times perdedores*/
    times.removeAll(timesMortos);
-   System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-   System.out.println(times.size());
    if(times.size() == 1)
    {
       String timeVencedor = null;
@@ -200,6 +204,7 @@ public class Arena
                       if(inim.getTime() != robo.getTime())
                       {
                         inim.perdeVida(10);
+                        inim.gotHit(true);
                         System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
                         if(!inim.temVida())
                         {
