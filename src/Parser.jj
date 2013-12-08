@@ -404,7 +404,7 @@ Vector<Comando> Condicional() :
 	{
 		delta = x.size(); 
 		pos = p.size(); // para arrumar no else, se preciso
-		p.add(new Comando("JIF",new Numero((delta+2)))); //ANTIGO: tam + delta + pos + 2 
+		p.add(new Comando("JIF",new Numero((delta+1)))); //ANTIGO: tam + delta + pos + 2 
 		p.addAll(x); 
 		//		return p;
 	}
@@ -412,7 +412,7 @@ Vector<Comando> Condicional() :
 		("else" | "senão" )
 		x = Bloco() 
 		{
-			//p.set(pos, new ZERO(delta+2));
+			p.set(pos, new Comando("JIF", new Numero(delta+2)));
 			delta = x.size();
 			p.add(new Comando("JMP", new Numero(delta+1))); //ANTIGO: tam + pos + delta+2
 			p.addAll(x);
