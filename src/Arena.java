@@ -283,7 +283,7 @@ public class Arena
             }
             else System.out.println("Robo "+indRobo+ " do time "+robo.getTime().getId()+" fez uso errado da chamada GETTIME!");
             break;
-      case MYTIME: robo.getTime(); break;
+      case MYTIME: resp = robo.getTime(); break;
       default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 

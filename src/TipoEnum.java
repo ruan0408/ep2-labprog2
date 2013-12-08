@@ -1,6 +1,6 @@
 public enum TipoEnum
 {
-	AGUA(0), LISO(1), RUGOSO(2), DEPOSITO(3), ROBO(4), CRISTAL(5), TERRENO(6), NUMERO(7);
+	AGUA(0), LISO(1), RUGOSO(2), DEPOSITO(3), ROBO(4), CRISTAL(5), TERRENO(6), NUMERO(7), BASE(8);
 
 	private final int id; 
     private TipoEnum(int id) 

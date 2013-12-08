@@ -517,6 +517,9 @@ private int executaCmd(Comando cmd)
       case AGUA:
             if(emp2 instanceof Agua) resp = new Numero(1);
             break;
+      case BASE:
+            if(emp2 instanceof Base) resp = new Numero(1);
+            break;
 
       default: break;
     }

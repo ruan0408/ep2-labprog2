@@ -1,7 +1,7 @@
 options {
 	IGNORE_CASE = true;
 	LOOKAHEAD   = 2;			// para eliminar conflitos
-	STATIC = true;
+	STATIC = false;
 }
 
 // Descrição da classe Calc
@@ -12,8 +12,8 @@ import java.io.*;
 
 public class Parser 
 {
-  	static TabSim Nomes  = new TabSim(); // nomes globais
-  	static TabSim Locais = null;		 // nomes locais (ativada dentro de função) 	
+  	TabSim Nomes  = new TabSim(); // nomes globais
+   	TabSim Locais = null;		 // nomes locais (ativada dentro de função)
 	static Programa programa;
 	static Vector<Comando> progTemp;
 	
@@ -22,22 +22,18 @@ public class Parser
 	public static Programa traduzRobo(String arq) throws ParseException, FileNotFoundException
   	{
   		FileInputStream fstream;
-  		//Parser parser;
+  		Parser parser;
 
   		tam = 0;
   		
 		fstream = new FileInputStream(arq);
-		//parser = new Parser(fstream); // cria o compilador
-		Parser.ReInit(fstream);
-		progTemp = Parser.Compila(); // compila e retorna o código de máquina
+		parser = new Parser(fstream); // cria o compilador
+		//Parser.ReInit(fstream);
+		parser.ReInit(fstream);
+		progTemp = parser.Compila(); // compila e retorna o código de máquina
 		programa = new Programa(progTemp);
 		return programa;
 	}
-
-
-
-
-	
 }
 
 PARSER_END(Parser)
@@ -202,7 +198,7 @@ Vector<Comando> Fator() :
 		return p;		
 	}
 	|
-	"myTime" "(" x=Expressão() ")" 
+	"myTime" "("")" 
 	{
 		p.addAll(x);
 		p.add(new Comando("MYTIME",null));	
@@ -241,6 +237,41 @@ Vector<Comando> Fator() :
 	{
 		p.addAll(x);
 		p.add(new Comando("TIMERB",null));
+		return p;			
+	}
+	|
+	"timeId" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("TIMEID",null));
+		return p;			
+	}
+	|
+	"getX" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("GETX",null));
+		return p;			
+	}
+	|
+	"getY" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("GETY",null));
+		return p;			
+	}
+	|
+	"mod" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("MOD",null));
+		return p;			
+	}
+	|
+	"getBase" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("GETBASE",null));
 		return p;			
 	}
 	|								// Atribuição
@@ -635,7 +666,7 @@ Vector<Comando> ItemPrint() :
 
 TOKEN :
 {
-	< RESERVADA: ("AGUA"|"LISO"|"RUGOSO"|"DEPOSITO"|"ROBO"|"CRISTAL"|"NUMERO"|"TERRENO")>
+	< RESERVADA: ("AGUA"|"LISO"|"RUGOSO"|"DEPOSITO"|"ROBO"|"CRISTAL"|"NUMERO"|"TERRENO"|"BASE")>
 	|
 	< NUM: ( ["0"-"9"] )+ >
 	|
