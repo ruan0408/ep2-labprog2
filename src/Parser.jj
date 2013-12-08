@@ -274,6 +274,13 @@ Vector<Comando> Fator() :
 		p.add(new Comando("GETBASE",null));
 		return p;			
 	}
+	|
+	"getPos" "(" x=Expressão() ")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("GETPOS",null));
+		return p;			
+	}
 	|								// Atribuição
 	t=<ID> "=" x=Expressão() 
    	{	
@@ -392,12 +399,12 @@ Vector<Comando> Condicional() :
     "(" 
 		x=Expressão() {p.addAll(x);} 
 	")" 
-	("then" | "então")
+	("then" | "então")?
 	x = Bloco() 
 	{
 		delta = x.size(); 
 		pos = p.size(); // para arrumar no else, se preciso
-		p.add(new Comando("JIF",new Numero((delta + 1)))); //ANTIGO: tam + delta + pos + 2 
+		p.add(new Comando("JIF",new Numero((delta+2)))); //ANTIGO: tam + delta + pos + 2 
 		p.addAll(x); 
 		//		return p;
 	}
@@ -407,7 +414,7 @@ Vector<Comando> Condicional() :
 		{
 			//p.set(pos, new ZERO(delta+2));
 			delta = x.size();
-			p.add(new Comando("JMP", new Numero(delta + 1)));  //ANTIGO: tam + pos + delta+2
+			p.add(new Comando("JMP", new Numero(delta+1))); //ANTIGO: tam + pos + delta+2
 			p.addAll(x);
 		} 
 	)?
@@ -428,7 +435,7 @@ Vector<Comando> Laço() :
 		p.addAll(x);
 	}
 	")" 
-    ( "do" | "faça" ) 
+    ( "do" | "faça" )?
 	x = Bloco() 
 	{
 		delta = x.size();

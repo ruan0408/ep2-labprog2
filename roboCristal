@@ -17,7 +17,7 @@ func achaBase(n)
 			{
 				if(timeId(getTime(roboTemp)) != timeId(myTime())) then
 				{
-					baseInim = getBase(roboTemp);
+					baseInim = getBase(getTime(roboTemp));
 					print "ACHEI BASE PORRAAAAAAAAAAAAAAAAAAAAAAAA";
 					return baseInim;
 				}
@@ -61,13 +61,20 @@ func pegaCristal(p)
 	}
 }
 
-func correBase(base)
+func correBase(baseT)
 {
-	x = getX(base);
-	y = getY(base);
+	print "ESTOU INDO PRA BASE!!";
+	pos = getPos(baseT);
+	x = getX(pos);
+	y = getY(pos);
+	print x;
+	print y;
 
-	meu_x = getX(look(0));
-	meu_x = getY(look(0));
+	meu_x = getX(getPos(look(0)));
+	meu_y = getY(getPos(look(0)));
+	print "ROLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+	print meu_x;
+	print meu_y;
 
 	delta = meu_x - x;
 	
@@ -75,11 +82,13 @@ func correBase(base)
 	{
 		if(meu_x - x < 0) then
 		{
-			move(4);
+			while(move(4) == 0) do
+			{}
 		}
 		else
 		{
-			move(1);
+			while(move(1) == 0) do
+			{}
 		}
 		delta = delta + 1;
 	}
@@ -90,30 +99,35 @@ func correBase(base)
 	{
 		if(meu_y - y < 0) then
 		{
-			move(2);
-			move(3);
+			while(move(2) == 0) do
+			{}
+			while(move(3) == 0) do
+			{}
 		}
 		else
 		{
-			move(6);
-			move(5);
+			while(move(6) == 0) do
+			{}
+			while(move(5) == 0) do
+			{}
 		}
 		delta = delta + 1;
 	}
 }
 
-base = achaBase(1);
+baseb = achaBase(1);
 while(1) do
 {
 	pegaCristal(1);
-	correBase(base);
-
+	correBase(baseb);//base
+	
 	k = 1;
 	while(k < 7) do
 	{
 		possivelBase = look(k);
 		if(possivelBase isa BASE) then
 		{
+			print "TO DO LADO DA BASE!!";
 			drop(k);
 			k = 7;
 		}

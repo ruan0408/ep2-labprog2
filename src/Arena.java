@@ -171,7 +171,7 @@ public class Arena
                     {
                       if(terrAtual.eRugoso() && !robo.temAtraso()) 
                       {
-                        System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
+                        //System.out.println("Robo "+indRobo+" tentou se mover, mas está em um terreno rugoso.\n Isso pode levar algum tempo");
                         robo.setAtraso(new Atraso(op,3));
                         robo.push(new Numero(dir)); //Reempilha a direção para uso futuro
                         return; // Se nao tiver robo atrapalhando, empilharemos 1 daqui a tres rodadas, quando ele de fato conseguir se mover, enquanto isso ele fica de boa
@@ -189,7 +189,7 @@ public class Arena
                     			return;
               		      }
                         this.moveRobo(terrAtual, terrTemp);
-                        System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
+                        //System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
                         resp = new Numero(1);
                       }
                     }
@@ -230,7 +230,7 @@ public class Arena
                       else System.out.println("O depósito esta vazio!");
                     }
                     else
-                      if(!terrTemp.eDeposito()) System.out.println("O terreno não é deposito!");
+                      if(!terrTemp.eDeposito());// System.out.println("O terreno não é deposito!");
                       else System.out.println("O robo ja tem cristal");
                     break;
               case LOOK :

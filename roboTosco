@@ -1,0 +1,43 @@
+meu_x = getX(getPos(look(0)));
+meu_y = getY(getPos(look(0)));
+print meu_x;
+print meu_y;
+delta = meu_x - 2;
+print delta;
+while(delta != 0)
+{
+	if(meu_x - 2 < 0)
+	{
+		while(move(4) == 0)
+		{}
+		delta = delta+1;
+	}
+	else
+	{
+		while(move(1) == 0)
+		{}
+		delta = delta - 1;
+	}
+}
+delta = meu_y - 17;
+
+while(delta != 0)
+{
+	if(delta/2 < 0)
+	{
+		while(move(2) == 0)
+		{}
+		while(move(3) == 0)
+		{}
+		delta = delta + 1;
+	}
+	
+	else
+	{
+		while(move(6) == 0)
+		{}
+		while(move(5) == 0)
+		{}
+		delta = delta - 1;
+	}
+}
