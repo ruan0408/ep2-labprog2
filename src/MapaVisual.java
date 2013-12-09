@@ -75,8 +75,7 @@ class Campo extends JPanel
 	BufferedImage roboAcostas = null;
 	BufferedImage roboAdireita = null;
 	BufferedImage roboAesquerda = null;
-	BufferedImage roboVhit = null;
-	BufferedImage roboAhit = null;
+	BufferedImage hit = null;
 	BufferedImage depSemCristal = null;
 	BufferedImage depComCristal = null;
 	BufferedImage background = null;
@@ -116,8 +115,7 @@ class Campo extends JPanel
 			roboAcostas = ImageIO.read(this.getClass().getResource("/img/roboAcostas.png"));
 			roboAdireita = ImageIO.read(this.getClass().getResource("/img/roboAdireita.png"));
 			roboAesquerda = ImageIO.read(this.getClass().getResource("/img/roboAesquerda.png"));
-			roboVhit = ImageIO.read(this.getClass().getResource("/img/roboVhit.png"));
-			roboAhit = ImageIO.read(this.getClass().getResource("/img/roboAhit.png"));
+			hit = ImageIO.read(this.getClass().getResource("/img/hit.png"));
 			baseV = ImageIO.read(this.getClass().getResource("/img/baseV.png"));
 			baseA = ImageIO.read(this.getClass().getResource("/img/baseA.png"));
 			background = ImageIO.read(this.getClass().getResource("/img/background.jpg"));
@@ -156,6 +154,8 @@ class Campo extends JPanel
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		BufferedImage robo_draw = null;
+		Terreno terr;
+		Robo robo;
 		
 		try 
 		{
@@ -170,74 +170,69 @@ class Campo extends JPanel
 		for (int i = 0; i < cel.length; i++) 
 			for (int j = 0; j < cel[0].length; j++)
 			{
-				if(mapa.getTerreno(i,j).eDeposito()) //&& mapa.getTerreno(i,j).toDeposito().temCristal())
+				terr = mapa.getTerreno(i,j);
+				if(terr.eDeposito()) //&& mapa.getTerreno(i,j).toDeposito().temCristal())
 				{
-					if(mapa.getTerreno(i,j).toDeposito().temCristal() ) cel[i][j].setIme(depComCristal);
+					if(terr.toDeposito().temCristal() ) cel[i][j].setIme(depComCristal);
 					else cel[i][j].setIme(depSemCristal);
 				}
 				
 				cel[i][j].draw(g2d); // pinta as células no contexto gráfico
-				if(mapa.getTerreno(i,j).eBase()) 
+				if(terr.eBase()) 
 				{
-					switch(mapa.getTerreno(i,j).toBase().getTime().getId())
+					switch(terr.toBase().getTime().getId())
 					{
 						case 1 :desenhaElemento(baseV, i, j, g2d);break;
 			 			case 2 :desenhaElemento(baseA, i, j, g2d);break;
 			 			default: System.out.println("Ainda não suportamos mais times");
 					}	
 				}
-				if(mapa.getTerreno(i,j).bombExploded())
+				if(terr.bombExploded())
 				{
 					desenhaElemento(explosion, i, j, g2d);
 					danoRobosRedor(i,j);
-					mapa.getTerreno(i,j).setNoBomb();
+					terr.setNoBomb();
 				}
-				if(mapa.getTerreno(i,j).hasBomb())
+				if(terr.hasBomb())
 				{
 					desenhaElemento(bomba, i, j, g2d);
-					mapa.getTerreno(i,j).decTimerBomb();
+					terr.decTimerBomb();
 				}
-				if(mapa.getTerreno(i,j).temRobo())
+				if(terr.temRobo())
 				{
-					switch(mapa.getTerreno(i,j).getRobo().getTime().getId())
+					robo = terr.getRobo();
+					switch(robo.getTime().getId())
 					{
 				 		case 1 :
-				 			if(mapa.getTerreno(i,j).getRobo().gotHit()) 
-				 				robo_draw = roboVhit;
-				 			else
-				 			{
-				 				switch(mapa.getTerreno(i,j).getRobo().getSide())
-				 				{
-				 					case UP:robo_draw = roboVcostas; break;
-				 					case DW:robo_draw = roboVfrente; break;
-				 					case UR:
-				 					case DR:robo_draw = roboVdireita; break;
-				 					case UL:
-				 					case DL:robo_draw = roboVesquerda; break;
-				 					default:robo_draw = roboVfrente;
-				 				}
-				 			}
+			 				switch(robo.getSide())
+			 				{
+			 					case UP:robo_draw = roboVcostas; break;
+			 					case DW:robo_draw = roboVfrente; break;
+			 					case UR:
+			 					case DR:robo_draw = roboVdireita; break;
+			 					case UL:
+			 					case DL:robo_draw = roboVesquerda; break;
+			 					default:robo_draw = roboVfrente;
+			 				}
+				 			
 				 			break;
 				 		case 2 :
-				 			if(mapa.getTerreno(i,j).getRobo().gotHit())
-				 				robo_draw = roboAhit;
-				 			else
-				 			{
-				 				switch(mapa.getTerreno(i,j).getRobo().getSide())
-				 				{
-				 					case UP:robo_draw = roboAcostas; break;
-				 					case DW:robo_draw = roboAfrente; break;
-				 					case UR:
-				 					case DR:robo_draw = roboAdireita; break;
-				 					case UL:
-				 					case DL:robo_draw = roboAesquerda; break;
-				 					default:robo_draw = roboAfrente;
-				 				}
-				 			}
+			 				switch(robo.getSide())
+			 				{
+			 					case UP:robo_draw = roboAcostas; break;
+			 					case DW:robo_draw = roboAfrente; break;
+			 					case UR:
+			 					case DR:robo_draw = roboAdireita; break;
+			 					case UL:
+			 					case DL:robo_draw = roboAesquerda; break;
+			 					default:robo_draw = roboAfrente;
+			 				}
+				 	
 				 			break;
 				 		default: System.out.println("Ainda não suportamos mais times");
 				 	}
 				 	desenhaElemento(robo_draw, i, j, g2d);
+				 	if(robo.gotHit()) desenhaElemento(hit, i, j, g2d);
 				}
 			}
 
