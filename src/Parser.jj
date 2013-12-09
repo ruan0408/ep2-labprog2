@@ -260,7 +260,7 @@ Vector<Comando> Fator() :
 		p.add(new Comando("GETY",null));
 		return p;			
 	}
-	|
+	| 
 	"mod" "(" x=Expressão() ")" 
 	{
 		p.addAll(x);
