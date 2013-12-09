@@ -124,6 +124,7 @@ public class Arena
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
     Empilhavel resp = new Numero(0);// por default a resposta é falso;
+    robo.ganhaEnergia();
         
     /* If's que verificarão o comando que foi passado como operação e
     o executarão de acordo com a funcionalidade de cada um.         */
@@ -286,6 +287,12 @@ public class Arena
             else System.out.println("Robo "+indRobo+ " do time "+robo.getTime().getId()+" fez uso errado da chamada GETTIME!");
             break;
       case MYTIME: resp = robo.getTime(); break;
+      case BOMBA: 
+            if(robo.canPutBomb() && !terrAtual.hasBomb())
+            {
+              robo.perdeEnergia(50);
+              terrAtual.setBomb();
+            }
       default://Talvez outras chamadas venham aqui
     }
     this.push(robo, resp);//empilha a resposta no robo 

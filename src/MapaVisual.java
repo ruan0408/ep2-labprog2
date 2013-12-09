@@ -81,6 +81,8 @@ class Campo extends JPanel
 	BufferedImage depComCristal = null;
 	BufferedImage background = null;
 	BufferedImage cristal = null;
+	BufferedImage bomba = null;
+	BufferedImage explosion = null;
 	BufferedImage game_over = null;
 
 
@@ -121,6 +123,8 @@ class Campo extends JPanel
 			background = ImageIO.read(this.getClass().getResource("/img/background.jpg"));
 			depSemCristal = ImageIO.read(this.getClass().getResource("/img/newDepVoid.png"));
 			depComCristal = ImageIO.read(this.getClass().getResource("/img/newDep.png"));
+			bomba = ImageIO.read(this.getClass().getResource("/img/bomba.png"));
+			explosion = ImageIO.read(this.getClass().getResource("/img/explosion.png"));
 			game_over = ImageIO.read(this.getClass().getResource("/img/game_over.png"));
 		}
 		catch (Exception e) 
@@ -181,6 +185,17 @@ class Campo extends JPanel
 			 			case 2 :desenhaElemento(baseA, i, j, g2d);break;
 			 			default: System.out.println("Ainda não suportamos mais times");
 					}	
+				}
+				if(mapa.getTerreno(i,j).bombExploded())
+				{
+					desenhaElemento(explosion, i, j, g2d);
+					danoRobosRedor(i,j);
+					mapa.getTerreno(i,j).setNoBomb();
+				}
+				if(mapa.getTerreno(i,j).hasBomb())
+				{
+					desenhaElemento(bomba, i, j, g2d);
+					mapa.getTerreno(i,j).decTimerBomb();
 				}
 				if(mapa.getTerreno(i,j).temRobo())
 				{
@@ -256,6 +271,51 @@ class Campo extends JPanel
 	    g2.drawImage(srcImg, 0, 0, w, h, null);
 	    g2.dispose();
 	    return resizedImg;
+	}
+
+	private void danoRobosRedor(int x, int y)
+	{
+		Robo robo;
+		try
+		{
+			if(mapa.getUp(x, y).temRobo())
+			{
+				robo = mapa.getUp(x, y).getRobo();
+				//robo.perdeVida(40);
+				robo.gotHit(true);
+			}
+			if(mapa.getUpRight(x, y).temRobo())
+			{
+				robo = mapa.getUpRight(x, y).getRobo();
+				//robo.perdeVida(40);
+				robo.gotHit(true);
+			}
+			if(mapa.getDownRight(x, y).temRobo())
+			{
+				robo = mapa.getDownRight(x, y).getRobo();
+				//robo.perdeVida(40);
+				robo.gotHit(true);
+			}
+			if(mapa.getDown(x, y).temRobo())
+			{
+				robo = mapa.getDown(x, y).getRobo();
+				//robo.perdeVida(40);
+				robo.gotHit(true);
+			}
+			if(mapa.getDownLeft(x, y).temRobo())
+			{
+				robo = mapa.getDownLeft(x, y).getRobo();
+				//robo.perdeVida(40);
+				robo.gotHit(true);
+			}
+			if(mapa.getUpLeft(x, y).temRobo())
+			{
+				robo = mapa.getUp(x, y).getRobo();
+				//robo.perdeVida(40);
+				robo.gotHit(true);
+			}
+		}
+		catch(Exception e){System.out.println("Bomba fora do mapa?");}
 	}
 }
 

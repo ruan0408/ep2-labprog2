@@ -13,6 +13,7 @@ public class Robo implements Programavel, Empilhavel
   private Cristal cristal;
   private boolean gotHit;
   private Direcao side;
+  private int energia;
 
   /****** Construtor ******/
 
@@ -21,6 +22,7 @@ public class Robo implements Programavel, Empilhavel
   {
     this.vm = new Maquina(arena,this);
     this.vida = 100; //Total de vida
+    this.energia = 100;
     this.pos = pos;
     this.atraso = null; 
     this.time = time;
@@ -29,8 +31,6 @@ public class Robo implements Programavel, Empilhavel
     this.side = Direcao.DW;
     cristal = null;
   }
-
-
 
 
   /****** Getters ******/
@@ -112,6 +112,31 @@ public class Robo implements Programavel, Empilhavel
 
   /****** Funções ******/
 
+  public boolean semEnergia()
+  {
+    return this.energia == 0;
+  }
+
+  public boolean fullEnergia()
+  {
+    return this.energia == 100;
+  }
+  
+  public void perdeEnergia(int power)
+  {
+    if(this.energia <= power) this.energia = 0;
+    else this.energia -= power;
+  }
+
+  public void ganhaEnergia()
+  {
+    if(this.energia >= 90) this.energia = 100;
+    else this.energia += 10;
+  }
+  public boolean canPutBomb()
+  {
+    return this.energia >= 50;
+  }
   public void perdeVida(int dano)
   {
     this.vida -= dano;

@@ -1,5 +1,5 @@
 options {
-	IGNORE_CASE = true;
+	IGNORE_CASE = false;
 	LOOKAHEAD   = 2;			// para eliminar conflitos
 	STATIC = false;
 }
@@ -279,6 +279,13 @@ Vector<Comando> Fator() :
 	{
 		p.addAll(x);
 		p.add(new Comando("GETPOS",null));
+		return p;			
+	}
+	|
+	"dropBomba" "("")" 
+	{
+		p.addAll(x);
+		p.add(new Comando("BOMBA",null));
 		return p;			
 	}
 	|								// Atribuição

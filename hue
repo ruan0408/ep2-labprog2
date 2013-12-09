@@ -1,0 +1,6 @@
+
+dropBomba();
+while(1)
+{
+	move(1);	
+}

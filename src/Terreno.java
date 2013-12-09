@@ -2,7 +2,7 @@ public class Terreno implements Empilhavel
 {
 	Robo robo;
 	Posicao pos;
-
+	int bomba;
 
  	/****** Construtor ******/
 
@@ -11,11 +11,35 @@ public class Terreno implements Empilhavel
 	{
 		this.pos = pos;
 		this.robo = null;
+		this.bomba = -1;
 	}	
 
 
 	/****** Getters ******/
 
+	public boolean bombExploded()
+	{
+		return this.bomba == 0;
+	}
+	public boolean hasBomb()
+	{
+		return this.bomba >= 0;
+	}
+
+	public void setBomb()
+	{
+		this.bomba = 5;
+	}
+
+	public void setNoBomb()
+	{
+		this.bomba = -1;
+	}
+
+	public void decTimerBomb()
+	{
+		this.bomba -= 1;
+	}
 
 	public Robo getRobo()
 	{
