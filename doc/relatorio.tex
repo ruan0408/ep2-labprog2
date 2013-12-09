@@ -29,7 +29,7 @@
 
 \section{Introdução}
 
-Nesta fase foram implementados o compilador da linguagem de alto nível do jogo, algumas instruções adicionais para melhor desenvolvimento dos robos através do nosso \emph{Assembly}, e foram impelmentados alguns melhoramentos de algumas instruções. Este relatório tem como objetivo dar uma visão geral de todas essas mudanças.
+Nesta fase foram implementados o compilador da linguagem de alto nível do jogo, algumas instruções adicionais para melhor desenvolvimento dos robos através do nosso \emph{Assembly}, e foram implementados melhoramentos de certas instruções. Este relatório tem como objetivo dar uma visão geral de todas essas mudanças.
 
 \section{Compilador}
 
@@ -40,19 +40,19 @@ OBS: Todas as funções abaixo retornam zero, caso os argumentos não sejam do t
 
 \begin{itemize}
 
-	\item \textbf{move(int)}: Move o robo para a direção x, caso x esteja entre 1 e 6 e a Arena permita o movimento do robô.
+	\item \textbf{move(int)}: Move o robô para a direção passada, caso esteja entre 1 e 6 e a Arena permita o movimento do robô.
 
-	\item \textbf{look(int)}: Retorna o terreno da direção x, caso x esteja entre 1 e 6 e a Arena permita a ação.
+	\item \textbf{look(int)}: Retorna o terreno da direção passada, caso esteja entre 1 e 6 e a Arena permita a ação.
     
-    \item \textbf{getRobo(int)}: Retorna o robo da direção dada, caso exista um robô lá.
+    \item \textbf{getRobo(int)}: Retorna o robo da direção passada, caso exista um robô lá.
     
-    \item \textbf{look(int)}: Retorna o terreno da direção x, caso x esteja entre 1 e 6 e a Arena permita a ação.
+    \item \textbf{look(int)}: Retorna o terreno da direção passada, caso esteja entre 1 e 6 e a Arena permita a ação.
     
-    \item \textbf{myTime()}: Retorna o objeto time do robo que está executando a ação.
+    \item \textbf{myTime()}: Retorna o objeto time do robô que está executando a ação.
     
     \item \textbf{atk(int)}: Executa um ataque na direção recebida. Caso haja um robô nessa direção, o mesmo perde 10 de vida(por padrão).
     
-    \item \textbf{drop(int)}: Caso o robo esteja carregando um cristal, abandona-o na direção dada, caso essa seja a base inimiga. Se não for, o cristal volta para seu depósito de origem. 
+    \item \textbf{drop(int)}: Caso o robô esteja carregando um cristal, abandona-o na direção dada, caso esta aponte para a base inimiga. Se não for, o cristal volta para seu depósito de origem. 
     
     \item \textbf{collect(int)}: Pega o cristal da direção dada, caso haja cristal no terreno daquela direção. Lembre-se que cada robô só pode carregar um cristal.
     
@@ -80,12 +80,12 @@ OBS: Todas as funções abaixo retornam zero, caso os argumentos não sejam do t
 
 \section{Interface Programável}
 
-Nessa fase começamos a usar a interface Programável. Ela define quais objetos podem ter comportamento programável.
+Nessa fase começamos a usar a interface Programável. Ela define quais objetos podem ter comportamento programável. Por enquanto apenas Míssil é programável(Robo também é, mas não usamos), e este foi implementado de última hora. Portanto o objeto míssil ainda está em versão "alfa".
 
 
-\section{Compilação e execução}
+\section{Compilação e Execução}
 
-Compilação e execução deve ser feitas dentro da pasta principal, isto é, pasta que contém as pastas bin, dist, etc...
+Compilação e execução devem ser feitas dentro da pasta principal, isto é, pasta que contém as pastas bin, dist, etc...
 Para compilar, execute o seguinte comando:
 
 
@@ -95,7 +95,7 @@ $> make
 
 \end{verbatim}
 OBS: supomos que o javacc está instalado.
-\\Com isso, o jogo será compilado, e será gerado um arquivo .jar localizado na pasta dist/. Assim, parara executar o jogo, a sintaxe é:
+\\Com isso, o jogo será compilado, e será gerado um arquivo .jar localizado na pasta dist/. Assim, para executar o jogo, a sintaxe é:
 
 \begin{verbatim}
 

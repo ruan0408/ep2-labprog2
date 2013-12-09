@@ -83,82 +83,90 @@ private int executaCmd(Comando cmd)
   String code = cmd.getCode();
   int novoIndice = this.index + 1;
   int arg;
-  switch(Instrucoes.valueOf(code))
+
+  try
   {
-    case PUSH: this.dados.push(valor); break;
-    case POP : this.dados.pop(); break;
-    case DUP : this.dados.push(this.dados.look()); break;
-    case ADD : this.add(); break;
-    case SUB : this.sub(); break;
-    case DIV : this.div(); break;
-    case MOD : this.mod(); break;
-    case MUL : this.mul(); break;
-    case EQ  : this.eq(); break;
-    case GT  : this.gt(); break;
-    case GE  : this.ge(); break;
-    case LT  : this.lt(); break;
-    case LE  : this.le(); break;
-    case NE  : this.ne(); break;
-    case RET : novoIndice = this.ret(); break;
-    case CALL : novoIndice = this.call((Endereco)valor); break;
-    
-    case JMP : novoIndice = this.index + (int) ((Numero)valor).getVal(); break;
-    
-    case JIT : arg = (int) ((Numero)valor).getVal();
-               novoIndice = this.jit(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
-    
-    case JIF : arg = (int) ((Numero)valor).getVal();
-               novoIndice = this.jif(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
-    
-    case STO : int index = ((int)((Numero)valor).getVal());
-               this.sto(index); break;
+    switch(Instrucoes.valueOf(code))
+    {
+      case PUSH: this.dados.push(valor); break;
+      case POP : this.dados.pop(); break;
+      case DUP : this.dados.push(this.dados.look()); break;
+      case ADD : this.add(); break;
+      case SUB : this.sub(); break;
+      case DIV : this.div(); break;
+      case MOD : this.mod(); break;
+      case MUL : this.mul(); break;
+      case EQ  : this.eq(); break;
+      case GT  : this.gt(); break;
+      case GE  : this.ge(); break;
+      case LT  : this.lt(); break;
+      case LE  : this.le(); break;
+      case NE  : this.ne(); break;
+      case RET : novoIndice = this.ret(); break;
+      case CALL : novoIndice = this.call((Endereco)valor); break;
+      
+      case JMP : novoIndice = this.index + (int) ((Numero)valor).getVal(); break;
+      
+      case JIT : arg = (int) ((Numero)valor).getVal();
+                 novoIndice = this.jit(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
+      
+      case JIF : arg = (int) ((Numero)valor).getVal();
+                 novoIndice = this.jif(arg, novoIndice); break;//vai pular para o indice arg, ou continuar em novoIndice
+      
+      case STO : int index = ((int)((Numero)valor).getVal());
+                 this.sto(index); break;
 
-    case LSTO: int index1 = ((int)((Numero)valor).getVal());
-               this.lsto(index1); break;
-    
-    case RCL : int index2;
-               index2 = (int) ((Numero)valor).getVal();
-               this.dados.push( this.mem.get(index2) ); break;//não remove o valor da memoria
+      case LSTO: int index1 = ((int)((Numero)valor).getVal());
+                 this.lsto(index1); break;
+      
+      case RCL : int index2;
+                 index2 = (int) ((Numero)valor).getVal();
+                 this.dados.push( this.mem.get(index2) ); break;//não remove o valor da memoria
 
-    case LRCL : int index3;
-               index3 = (int) ((Numero)valor).getVal();
-               if(memLocal == null) throw new ArrayIndexOutOfBoundsException();
-               this.dados.push( this.memLocal.get(index3) ); break;//não remove o valor da memoria
-    
-    case ENTRA: this.entra(); break;
-
-
-    case END : novoIndice = this.prog.size(); break;
-
-    case GETPOS: this.getpos();break;
-
-    case GETX: this.getx();break;
-
-    case GETY: this.gety();break;
+      case LRCL : int index3;
+                 index3 = (int) ((Numero)valor).getVal();
+                 if(memLocal == null) throw new ArrayIndexOutOfBoundsException();
+                 this.dados.push( this.memLocal.get(index3) ); break;//não remove o valor da memoria
+      
+      case ENTRA: this.entra(); break;
 
 
-    case  TIMEID: this.timeid();break;
+      case END : novoIndice = this.prog.size(); break;
 
-    case GETBASE: this.getbase();break;
-    
-    case PRN : this.prn(); break;
-    case ALO : this.alo(); break;
-    case SET : this.set(); break;
-    case GET : this.get(); break;
-    case ISA : this.isa(); break;
-    case BOMBA:
-    case GETROBO://empilha o robo que esta na direção dada ou zero se nao tiver robo
-    case GETTIME://retorna o time do robo passado
-    case MYTIME://retona meu time
-    case LOOK:
-    case WALK:
-    case MSL:
-    case EXPLD:
-    case COLLECT:
-    case DROP:
-    case ATK : this.sistema(cmd); break;
-    default  : System.out.println("Não é instrução válida!");
-               System.exit(1);
+      case GETPOS: this.getpos();break;
+
+      case GETX: this.getx();break;
+
+      case GETY: this.gety();break;
+
+
+      case  TIMEID: this.timeid();break;
+
+      case GETBASE: this.getbase();break;
+      
+      case PRN : this.prn(); break;
+      case ALO : this.alo(); break;
+      case SET : this.set(); break;
+      case GET : this.get(); break;
+      case ISA : this.isa(); break;
+      case BOMBA:
+      case GETROBO://empilha o robo que esta na direção dada ou zero se nao tiver robo
+      case GETTIME://retorna o time do robo passado
+      case MYTIME://retona meu time
+      case LOOK:
+      case WALK:
+      case MSL:
+      case EXPLD:
+      case COLLECT:
+      case DROP:
+      case ATK : this.sistema(cmd); break;
+      default  : System.out.println("Não é instrução válida!");
+                 System.exit(1);
+    }
+  }
+  catch(Exception e)
+  {
+    novoIndice = this.prog.size();
   }
   return novoIndice;
 }
