@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 import java.awt.event.*;
 import java.awt.TexturePaint;
 import javax.swing.*;
@@ -187,6 +188,26 @@ class Campo extends JPanel
 			 			default: System.out.println("Ainda não suportamos mais times");
 					}	
 				}
+				 Programavel programavel = terr.programavel;
+				 if(programavel != null && programavel instanceof Missel)
+				 {
+				 	Missel msl = (Missel) programavel;
+				 	if(msl.expld < 0) desenhaElemento(bomba,i,j,g2d);
+				 	else if(msl.expld == 1)
+				 	{
+				 		msl.expld--;
+				    	desenhaElemento(explosion,i,j,g2d);
+
+				    }
+				 	else terr.programavel = null;
+					
+				 }
+     			/* for(ListIterator<Programavel> it = programaveis.listIterator(); it.hasNext();)
+     			 {
+     			 	Programavel obj = it.next();
+     			 	if(obj instanceof Missel) desenhaElemento(bomba,i,j,g2d);
+     			 }*/
+
 				if(terr.bombExploded())
 				{
 					desenhaElemento(explosion, i, j, g2d);
@@ -229,7 +250,7 @@ class Campo extends JPanel
 			 				}
 				 	
 				 			break;
-				 		default: System.out.println("Ainda não suportamos mais times");
+				 		default: System.out.println("Ainda não suportamos mais times. Espere por Labprog 3");
 				 	}
 				 	desenhaElemento(robo_draw, i, j, g2d);
 				 	if(robo.gotHit()) desenhaElemento(hit, i, j, g2d);

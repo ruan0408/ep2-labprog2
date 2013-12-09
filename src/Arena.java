@@ -163,15 +163,29 @@ public class Arena
       }
         switch(Instrucoes.valueOf(code))
         {
-          case WALK:  terrAtual.removeProgramavel(missel);
-                      terrTemp.addProgramavel(missel);
+          case WALK:  terrAtual.programavel = null;
+                      terrTemp.programavel = missel;
                       missel.move(terrTemp.getPos());
+                      resp = new Numero(1);
 
         }
       break;
       case EXPLD: missel.explode();
-                  terrAtual.removeProgramavel(missel);
       break;
+       case GETTIME://pega o Time dado o timeId ou dado o robo passado
+            Empilhavel emp = missel.pop();
+            if(emp instanceof Numero)
+            {
+              int timeId = (int) ((Numero)emp).getVal();
+              if(existeTime(timeId)) resp = mapa.getTime(timeId);
+            }
+            else if(emp instanceof Robo)
+            {
+              resp = ((Robo)emp).getTime();
+            }
+            else System.out.println("Missel teve dificuldade ao indentificar o time do alvo!");
+            break;
+      case MYTIME: resp = missel.robo.getTime(); break;
     }
     missel.push(resp);
  }
@@ -339,7 +353,7 @@ public class Arena
                     if(terrTemp.temRobo()) resp = terrTemp.getRobo();
                     break;
               case MSL:
-                    terrAtual.addProgramavel(new Missel(direcao, this,new Posicao(x,y)));
+                    terrAtual.programavel = new Missel(direcao, this,new Posicao(x,y), robo);
             }
            break;
       case TIMERB:
@@ -523,9 +537,10 @@ public void atualizaProgramaveis()
   {
     for(int j = 0; j < mapa.largura(); j++ )
     {
-      Vector<Programavel> programaveis = mapa.getTerreno(i,j).programaveis;
-      for(ListIterator<Programavel> it = programaveis.listIterator(); it.hasNext();)
-        it.next().executaAcao();
+      Programavel programavel = mapa.getTerreno(i,j).programavel;
+      if(programavel != null)programavel.executaAcao();
+    /*  for(ListIterator<Programavel> it = programaveis.listIterator(); it.hasNext();)
+        it.next().executaAcao();*/
     }
   }
 }

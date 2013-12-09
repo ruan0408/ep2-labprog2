@@ -449,7 +449,7 @@ private int executaCmd(Comando cmd)
 
   private void prn()
   {
-    int indR = ( (Robo)this.obj).getInd(); //Sabemos, por enquanto, que é um robô.
+    int indR = 42 ;// ( (Robo)this.obj).getInd(); //Sabemos, por enquanto, que é um robô.
     Empilhavel aux1 = this.dados.pop();
     if(aux1 instanceof Numero)
     {

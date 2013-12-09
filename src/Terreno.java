@@ -4,7 +4,7 @@ public class Terreno implements Empilhavel
 {
 	Robo robo;
 	Posicao pos;
-	public Vector<Programavel> programaveis;
+	public Programavel programavel;
 	int bomba;
 
  	/****** Construtor ******/
@@ -15,7 +15,7 @@ public class Terreno implements Empilhavel
 		this.pos = pos;
 		this.robo = null;
 		this.bomba = -1;
-		this.programaveis = new Vector<Programavel>(0);
+		this.programavel = null;
 	}	
 
 
@@ -123,13 +123,6 @@ public class Terreno implements Empilhavel
 		return (Base)this;
 	}
 
-	public void addProgramavel(Programavel prg)
-	{
-		this.programaveis.add(prg);
-	}
 
-	public void removeProgramavel(Programavel prg)
-	{
-		this.programaveis.remove(prg);
-	}
+
 }
