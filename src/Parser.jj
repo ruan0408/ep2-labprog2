@@ -212,6 +212,13 @@ Vector<Comando> Fator() :
 		return p;		
 	}
 	|
+	"missel" "(" x=Expressão() ")"
+	{
+		p.addAll(x);
+		p.add(new Comando("MSL",null));	
+		return p;
+	}
+	|
 	"collect" "(" x=Expressão() ")" 
 	{
 		p.addAll(x);

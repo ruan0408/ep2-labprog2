@@ -207,4 +207,10 @@ public class Robo implements Programavel, Empilhavel
   }
 
 
+  public boolean temAcao()
+  {
+    return this.vm.temProx();
+  }
+
+
 }

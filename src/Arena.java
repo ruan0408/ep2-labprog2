@@ -21,12 +21,16 @@ public class Arena
   /* Função que percorrerá a lista de robôs presentes na arena (em ordem aleatória). 
      Para cada robô encontrado, chamará uma função que executará o próximo comando   
      presente no programa do robô, dado o devido respeito às condições de atraso.    */
-     public boolean atualiza()
+  public boolean atualiza()
      {
       ArrayList<Robo> robosMortos = new ArrayList<Robo>();
       Robo roboTemp;
       RndIterator<Robo> it, it2;
-      boolean alguemTemAcao = false; // ARRUMAR
+      boolean alguemTemAcao = false;
+
+
+      atualizaProgramaveis();
+
 
       for(it2 = new RndIterator<Robo>(robos); it2.hasNext();)
       {
@@ -106,12 +110,81 @@ public class Arena
    return alguemTemAcao;
  }
 
+ public void sistema(Operacao op)
+ {
+    Programavel prg = op.getOrigem();
+    if(prg instanceof Robo) this.sistemaRobo(op);
+    else if (prg instanceof Missel) this.sistemaMissel(op);
+ }
+
+ public void sistemaMissel(Operacao op)
+ {
+    Comando cmd = op.getCmd();
+    String code = cmd.getCode();
+    Missel missel = (Missel) op.getOrigem();
+    Posicao pos = missel.getPos();
+    int dir = 0;
+    int x = pos.getX();
+    int y = pos.getY();
+    Direcao direcao = null;
+    Terreno terrAtual = mapa.getTerreno(pos);
+    Terreno terrTemp = null;
+    Empilhavel resp = new Numero(0);// por default a resposta é falso;
+    switch(Instrucoes.valueOf(code))
+    {
+      case WALK :
+
+      try{ 
+          Empilhavel arg = missel.pop();
+          if(arg instanceof Numero) dir = (int)((Numero)arg).getVal();
+          else
+          {
+            System.out.println("Direção não numérica!");
+            System.exit(1);
+          }
+          direcao = Direcao.toDirecao(dir);
+          switch(direcao)
+          {
+            case UP : terrTemp = mapa.getUp(x, y);        break;
+            case UR : terrTemp = mapa.getUpRight(x, y);   break;
+            case DR : terrTemp = mapa.getDownRight(x, y); break;        
+            case DW : terrTemp = mapa.getDown(x, y);      break;        
+            case DL : terrTemp = mapa.getDownLeft(x, y);  break;        
+            case UL : terrTemp = mapa.getUpLeft(x, y);    break;
+            case HR : terrTemp = mapa.getTerreno(x,y);    break;       
+            default : System.out.println("Direçao inválida!");
+          }
+        }
+      catch(Exception e)
+      {
+        //System.out.println("Tentou acesssar posição inexistente:("+x+","+y+")");
+        missel.push(resp);
+        return;
+      }
+        switch(Instrucoes.valueOf(code))
+        {
+          case WALK:  terrAtual.removeProgramavel(missel);
+                      terrTemp.addProgramavel(missel);
+                      missel.move(terrTemp.getPos());
+
+        }
+      break;
+      case EXPLD: missel.explode();
+                  terrAtual.removeProgramavel(missel);
+      break;
+    }
+    missel.push(resp);
+ }
+
+
+
+
  /******
   Essa função recebe um objeto do tipo Operacao representando
   uma chamada ao sistema feita por algum robo.
   A função executa a ação necessária para executar a operação passada
   ***** */
-  public void sistema(Operacao op)
+  public void sistemaRobo(Operacao op)
   {
     Comando cmd = op.getCmd();
     String code = cmd.getCode();
@@ -136,6 +209,7 @@ public class Arena
       case COLLECT : 
       case DROP :
       case LOOK:
+      case MSL:
       case GETROBO:
               try
               {
@@ -264,6 +338,8 @@ public class Arena
               case GETROBO :
                     if(terrTemp.temRobo()) resp = terrTemp.getRobo();
                     break;
+              case MSL:
+                    terrAtual.addProgramavel(new Missel(direcao, this,new Posicao(x,y)));
             }
            break;
       case TIMERB:
@@ -297,6 +373,26 @@ public class Arena
     }
     this.push(robo, resp);//empilha a resposta no robo 
 }
+
+
+public void causaDano(Posicao pos, int dmg)
+{
+  Terreno terrTemp = mapa.getTerreno(pos);
+  if(terrTemp.temRobo())
+  {
+    Robo inim = terrTemp.getRobo();
+    inim.perdeVida(dmg);
+    inim.gotHit(true);
+    if(!inim.temVida())
+    {
+      System.out.println("Robo "+inim.getInd()+" morreu");
+      removeRobo(inim);
+    } 
+      
+  }  
+}
+
+
 /*
 public boolean addTime(Base base)
 {
@@ -418,6 +514,20 @@ public void removeExercito(int time)
   }
 
   robos.removeAll(robosMortos);
+}
+
+
+public void atualizaProgramaveis()
+{
+  for(int i = 0; i < mapa.altura(); i++)
+  {
+    for(int j = 0; j < mapa.largura(); j++ )
+    {
+      Vector<Programavel> programaveis = mapa.getTerreno(i,j).programaveis;
+      for(ListIterator<Programavel> it = programaveis.listIterator(); it.hasNext();)
+        it.next().executaAcao();
+    }
+  }
 }
 
  /* Recebe um robo, que será retirado da lista de robos

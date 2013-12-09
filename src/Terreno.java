@@ -1,7 +1,10 @@
+import java.util.Vector;
+
 public class Terreno implements Empilhavel
 {
 	Robo robo;
 	Posicao pos;
+	public Vector<Programavel> programaveis;
 	int bomba;
 
  	/****** Construtor ******/
@@ -12,6 +15,7 @@ public class Terreno implements Empilhavel
 		this.pos = pos;
 		this.robo = null;
 		this.bomba = -1;
+		this.programaveis = new Vector<Programavel>(0);
 	}	
 
 
@@ -117,5 +121,15 @@ public class Terreno implements Empilhavel
 	public Base toBase()
 	{
 		return (Base)this;
+	}
+
+	public void addProgramavel(Programavel prg)
+	{
+		this.programaveis.add(prg);
+	}
+
+	public void removeProgramavel(Programavel prg)
+	{
+		this.programaveis.remove(prg);
 	}
 }

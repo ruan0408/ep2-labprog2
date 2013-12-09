@@ -49,7 +49,7 @@ public class Maquina
   }
 
   /* Retorna TRUE se ainda não estivermos no fim do programa (se ainda houver um próximo comando) e FALSE c.c. */
-  private boolean temProx()
+  public boolean temProx()
   {
     return !(index >= prog.size() || index <0);
   }
@@ -152,6 +152,8 @@ private int executaCmd(Comando cmd)
     case MYTIME://retona meu time
     case LOOK:
     case WALK:
+    case MSL:
+    case EXPLD:
     case COLLECT:
     case DROP:
     case ATK : this.sistema(cmd); break;
@@ -182,8 +184,7 @@ private int executaCmd(Comando cmd)
 
 
 
-
-    arena.sistema(op); //Cast temporário de (Robo)
+    arena.sistema(op); 
 
     //Push resp
   }
