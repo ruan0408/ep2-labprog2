@@ -129,6 +129,8 @@ Vector<Comando> Expressão() :
 		">"  x = Arit() {p.addAll(x); p.add(new Comando("GT", null));}
 		|
 		"isa" x = Arit() {p.addAll(x); p.add(new Comando("ISA", null));}
+		|
+		"mod" x = Arit() {p.addAll(x); p.add(new Comando("MOD", null));}
 	)* 
 	{return p;}
 }
@@ -265,13 +267,6 @@ Vector<Comando> Fator() :
 	{
 		p.addAll(x);
 		p.add(new Comando("GETY",null));
-		return p;			
-	}
-	| 
-	"mod" "(" x=Expressão() ")" 
-	{
-		p.addAll(x);
-		p.add(new Comando("MOD",null));
 		return p;			
 	}
 	|

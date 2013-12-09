@@ -7,7 +7,7 @@
 \usepackage{graphicx}
 
 
-\title{Relatório - EP Fase 3 \\ Laboratório de Programação 2}
+\title{Relatório - EP Fase 4 \\ Laboratório de Programação 2}
 
 
 
@@ -29,167 +29,84 @@
 
 \section{Introdução}
 
-Nesta fase foram implementados a parte visual do jogo, algumas instruções adicionais para melhor desenvolvimento dos robos através do nosso \emph{Assembly}, e foram impelmentados alguns melhoramentos de algumas instruções. Este relatório tem como objetivo dar uma visão geral de todas essas mudanças.
+Nesta fase foram implementados o compilador da linguagem de alto nível do jogo, algumas instruções adicionais para melhor desenvolvimento dos robos através do nosso \emph{Assembly}, e foram impelmentados alguns melhoramentos de algumas instruções. Este relatório tem como objetivo dar uma visão geral de todas essas mudanças.
 
-\section{Interface gráfica}
+\section{Compilador}
 
-Toda a parte da interface gráfica está implementada no arquivo \textbf{\color{red}MapaVisual.java}. Neste arquivo há diversas classes e estruturas que controlam a parte gráfica do jogo. Uma breve explicação sobre algumas dessas estruturas:
+Optamos por adequar o código do professor ao nosso assembly. Em alguns casos foi necessário incluir instruções novas ao nosso assembly, como é o caso da instrução LRCL, LSTO e outras. O compilador está no arquivo \emph{src/Parser.jj}.
+Na linguagem de alto nível, além das funcionalidades que já haviam no compilador do professor, também temos os seguintes métodos:
 
-\begin{itemize}
-
-	\item \textbf{classe Célula}: Representa um hexagono do do campo. Seus atributos são o  centro (x, y), o raio, a imagem dessa célula e o hexagono(polígono). O construtor constrói o hexagono de maneira similar à disponibilizada no paca. A função draw desenha uma célula
-
-	\item \textbf{classe Campo}: Extensão de JPanel. Tem como atributos uma matriz de células, o mapa, um boolean que diz se o jogo acabou e as imagens usadas no jogo. O construtor seta o mapa e cria um campo com hexagonos de lado L. 
-	
-	A função \textbf{\color{red}criaCampo()} carrega as imagens e varre a matriz de células configurando suas respectivas coordenadas de centro e a imagem de fundo de cada célula, de acordo com o Terreno que aquela célula representa.
-	
-	A função \textbf{\color{red}paintComponent(Graphics g)} é um override da função de mesmo nome implementada em JPanel. Percorre o campo desenhando os hexagonos com suas respectivas imagens. Caso o jogo já tenha acabado, também exibe uma imagem de game over.
-	
-	A função \textbf{\color{red}desenhaElemento(...)} desenha o elemento passado em cima da imagem de fundo da célula de coordenadas passadas. É usada para desenhar robos e bases.
-	
-	A função \textbf{\color{red}getScaledImage(...)} converte a imagem passada por argumento para uma outra com as dimensões passadas também por argumento.
-
-	\item \textbf{classe Tela}: Extensão de JFrame. O construtor dá o título da janela, seta seu tamanho, adiciona um listener e adiciona o JPanel campo.
-
-	\item \textbf{classe MapaVisual}: Classe que interfaceia a comunicação entre a estrutura do jogo e a parte gráfica. Possui como atributos o mapa, os valores estáticos de largura, altura (da janela) e lado do hexagono (em pixels), um objeto Tela e um objeot Campo.	O construtor apenas seta os atributos.
-	
-	A função \textbf{\color{red}atualiza()} repinta a tela(que é uma janela).
-	
-	A função \textbf{\color{red}abreJanela()} seta os atributos campo e tela e cria um Runnable, tal que o método sobrecarregado run() apenas faz com que a tela(janela), seja visível.
-	
-	A função \textbf{\color{red}gameOver()} seta para true o boolean gameOver do atributo campo e assim encerra o jogo.
-
-\end{itemize}
-
-
-\section{Arquivos de mapas}
-
-Nessa fase, para uma edição e criação facilitada de mapas, fizemos com que os mapas fossem gerados a partir de um aruqivo 
-de entrada de texto.
-Exemplo:
-\begin{verbatim}
-
-6 6
-1 1 1 1 1 1
-1 -1 0 0 0 1
-1 0 1 1 0 1
-1 0 1 1 0 1
-1 0 0 0 0 1
-1 2 2 2 2 1
-
-\end{verbatim}
-
-Na primeira linha deve ter um par de números representando o número de \textbf{linhas} e de \textbf{colunas}, respectivamente.
-Em seguida, cada linha de números representa uma linha do mapa, onde cada número representa um terreno. Legenda dos números:
-
-\begin{center}
-	\begin{tabular}{ | c | c |}
-	\hline
-	Número & Terreno\\
-	\hline 
-	-N & Base do time de Id N\\
-	\hline
-	0 & Liso\\
-	\hline
-	1 & Rugoso\\
-	\hline
-	2 & Água\\
-	\hline
-	3 & Depósito de cristais\\
-	\hline
-	Default & Liso \\
-	\hline
-
-	\end{tabular} 
-\end{center}
-
-\section{Novas instruções}
+OBS: Todas as funções abaixo retornam zero, caso os argumentos não sejam do tipo certo.
 
 \begin{itemize}
 
-\item \textbf{\color{red}MOD}: Desempilha dois números da pilha, e empilha o resto da divisão do segundo pelo primeiro.
+	\item \textbf{move(int)}: Move o robo para a direção x, caso x esteja entre 1 e 6 e a Arena permita o movimento do robô.
 
-\item \textbf{\color{red}GETPOS}: Desempilha um Terreno da pilha, e empilha a posição do mesmo (obejto \textbf{Posicao}) do mesmo como resposta. 
-
-\item \textbf{\color{red}GETX}: Desempilha um objeto Posicao da pilha, e empilha sua coordenada x como resposta.
-
-\item \textbf{\color{red}GETY}: Desempilha um objeto Posicao da pilha, e empilha sua coordenada y como resposta.
-
-\item \textbf{\color{red}TIMEID}: Desempilha um time da pilha de dados, e empilha o número que representa aquela time (o ID do time).
-
-\item \textbf{\color{red}GETBASE}: Desempilha um time da pilha de dados, e empilha o Terreno do tipo Base daquele time.
-
-\item \textbf{\color{red}ISA}: Desempilha um número e um empilhável. Esse comando irá empilhar 1 caso o objeto desempilhado seja do tipo representado por aquele número (Vide tabela abaixo), e 0 c.c.
-\begin{center}
-	\begin{tabular}{ | c | c |}
-	\hline
-	Número & Tipo\\
-	\hline
-	0 & Numero\\
-	\hline
-	1 & Terreno\\
-	\hline
-	2 & Liso\\
-	\hline
-	3 & Robo\\
-	\hline
-	4 & Deposito\\
-	\hline
-	5 & Rugoso\\
-	\hline
-	\end{tabular}
-
-\end{center}
-
-\item \textbf{\color{red}GETROBO}: Desempilha um número, representando uma direção, e empilha o Robo que está naquele terreno, e empilha 0 caso não haja Robo. 
-
-\item \textbf{\color{red}GETTIME}: Desempilha um número, e é empilhado como resposta o time correspondente a aquele número. Empilha 0 caso não existe tal time.
-
-\item \textbf{\color{red}MYTIME}: Empilha o time do próprio robo.
-
-\item \textbf{\color{red}LOOK}: Desempilha um número representando uma direção, e empilha o terreno daquela posição. Empilha 0 caso não exista nada naquela direção.
-
+	\item \textbf{look(int)}: Retorna o terreno da direção x, caso x esteja entre 1 e 6 e a Arena permita a ação.
+    
+    \item \textbf{getRobo(int)}: Retorna o robo da direção dada, caso exista um robô lá.
+    
+    \item \textbf{look(int)}: Retorna o terreno da direção x, caso x esteja entre 1 e 6 e a Arena permita a ação.
+    
+    \item \textbf{myTime()}: Retorna o objeto time do robo que está executando a ação.
+    
+    \item \textbf{atk(int)}: Executa um ataque na direção recebida. Caso haja um robô nessa direção, o mesmo perde 10 de vida(por padrão).
+    
+    \item \textbf{drop(int)}: Caso o robo esteja carregando um cristal, abandona-o na direção dada, caso essa seja a base inimiga. Se não for, o cristal volta para seu depósito de origem. 
+    
+    \item \textbf{collect(int)}: Pega o cristal da direção dada, caso haja cristal no terreno daquela direção. Lembre-se que cada robô só pode carregar um cristal.
+    
+    \item \textbf{getTime(Robo/int)}: Retorna um objeto time. O argmento pode ser tanto um robô quanto um inteiro. No segundo caso, retornará o time cujo ID é o inteiro.
+    
+    \item \textbf{timeId(Time)}: Retorna o ID do objeto time passado.
+    
+    \item \textbf{timeRb(Robo)}: Retorna o objeto time do robô passado.
+    
+    \item \textbf{getX(Posicao)}: Retorna a coordenada x de um objeto posição.
+	
+    \item \textbf{getY(Posicao)}: Retorna a coordenada y de um objeto posição.
+    
+    \item \textbf{getPos(Terreno)}: Retorna o objeto Posicao do terreno passado.
+    
+    \item \textbf{getBase(Time)}: Retorna a base do time passado.
+    
+    \item \textbf{dropBomba()}: Coloca uma bomba na posição atual do robô. Esta explodirá daqui a 5 rodadas. TODOS ao redor tomam 40 de dano, portanto cuidado.
+    
+    \item \textbf{x isa y}: Retorna 1 caso x seja do tipo y. y tem que ser uma das palavras reservadas declaradas no final do compilador. Ex: x isa ROBO, x isa BASE, etc..
+    
+    \item \textbf{x mod y}: Retorna o resto da divisão de x por y.
 \end{itemize}
 
-Além disso, os comandos de chamada ao sistema: \textbf{WALK}, \textbf{ATK}, \textbf{COLLECT} e \textbf{DROP} usam como argumento de direção um número no topo da pilha da máquina virtual.
-Outra modificação foi que, para evitar que o robô se "teletransportasse", já que a cada iteração cada robo executa 5 comandos de máquina, fizemos com que o robô acabe sua
-rodada ao tentar se mover. Caso isso não acontecesse, seria possível que ele conseguisse andar duas vezes em uma só iteração, dando a impressão que o robô pudesse "voar".
+
+\section{Interface Programável}
+
+Nessa fase começamos a usar a interface Programável. Ela define quais objetos podem ter comportamento programável.
 
 
+\section{Compilação e execução}
 
-
-
-
-\section{Tradutor em Perl}
-
-Nessa fase, o nosso tradutor em Perl recebe o mapa, diversos robos como argumento e é possível separá-los em diversos times. Apesar do número de times ser indefinido,
-nossa interface gráfica suporta somente 2 times. O mapa deve ser estar na pasta \textbf{\color{red}data/map}. Os robos na pasta \textbf{\color{red}test} e com extensão .asm.
-Sintaxe:
-
-\begin{verbatim}
-
-$>perl bin/montador.pl mapa3.txt 1 robo1_time1 robo2_time1 2 robo1_time2
-  robo2_time2  ... n robo1_timen
-
-\end{verbatim}
-Com isso, será gerado um novo arquivo Main.java na pasta src.
-
-\section{Modo de compilação}
-
+Compilação e execução deve ser feitas dentro da pasta principal, isto é, pasta que contém as pastas bin, dist, etc...
 Para compilar, execute o seguinte comando:
 
+
 \begin{verbatim}
 
-$> ant
+$> make
+
+\end{verbatim}
+OBS: supomos que o javacc está instalado.
+\\Com isso, o jogo será compilado, e será gerado um arquivo .jar localizado na pasta dist/. Assim, parara executar o jogo, a sintaxe é:
+
+\begin{verbatim}
+
+$> java -jar dist/EP4.jar 1 robo1 robo2 ... roboN 2 robo1 robo2 ... roboM
 
 \end{verbatim}
 
-Com isso, o jogo será compilado, e será gerado um arquivo .jar localizado na pasta dist/. Assim, parara executar o jogo, a sintaxe é:
+Por exemplo: 
 
 \begin{verbatim}
-
-$> java -jar dist/EP3.jar
-
+java -jar dist/EP4.jar 1 roboEzio 2 roboAndador
 \end{verbatim}
 
 
