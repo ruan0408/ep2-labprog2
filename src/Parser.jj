@@ -547,10 +547,11 @@ Vector<Comando> Chamada() :
 		}
 		Lorig = Locais;			// disponibiliza o nome dos argumentos
 		Locais = f.Vars;
+		p.add(new Comando("ENTRA",null));		// novo contexto
 	}
 	"("
-		x=ListParms(f) {p.addAll(x);} // lista de parâmetros
-	")" 
+		(x=ListParms(f) {p.addAll(x);})? // lista de parâmetros
+	")"
     {
 		p.add(new Comando("CALL",e)); 	// chama
 		Locais = Lorig;			// restaura
@@ -576,7 +577,7 @@ Vector<Comando> ListParms(Função f) :
 		x = Parm(f,n++) {p.addAll(x);}
 	)*
 	{ 
-		p.add(new Comando("ENTRA",null));		// novo contexto
+		
 		// populando
 		for (int i = n-1; i >=0 ; i--) 
 		{
