@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="LabProgII-EP4" default="dist" basedir=".">
+<project name="LabProgII-EP4" default="dist" basedir="."
+    xmlns:ivy="antlib:org.apache.ivy.ant">
     
     <!-- Atributos -->
-    <property name="src.dir"   value="src"                 />
-    <property name="build.dir" value="build"               />
-    <property name="data.dir"  value="data"                />
-    <property name="dist.dir"  value="dist"                />
-    <property name="jar.path"  value="${dist.dir}/EP4.jar" />
-    <property name="main.mf"   value="Main"              />
+    <property name="src.dir"        value="src"                 />
+    <property name="lib.dir"        value="lib"                 />
+    <property name="build.dir"      value="build"               />
+    <property name="data.dir"       value="data"                />
+    <property name="dist.dir"       value="dist"                />
+    <property name="jar.path"       value="${dist.dir}/EP4.jar" />
+    <property name="src.parser.dir" value="${src.dir}"          />
+    <property name="main.mf"        value="Main"                />
+   
+    <!-- Resolve dependencias -->
+    <target name="resolve">
+        <ivy:retrieve pattern="${lib.dir}/[artifact].[ext]" type="jar"/>
+    </target>
+    
+    <!-- Chama JavaCC -->
+    <target name="parser" depends="resolve">
+        <javacc
+            target          = "${src.dir}/Parser.jj"
+            javacchome      = "${lib.dir}"
+            outputdirectory = "${src.parser.dir}"
+            static          = "yes">
+        </javacc>
+    </target>
     
     <!-- Cria diretórios -->
     <target name="init">
-        <mkdir dir="${dist.dir}"  />
-        <mkdir dir="${build.dir}" />
+        <mkdir dir="${lib.dir}"        />
+        <mkdir dir="${dist.dir}"       />
+        <mkdir dir="${build.dir}"      />
+        <mkdir dir="${src.parser.dir}" />
     </target>
     
     <!-- Compila -->
-    <target name="compile" depends="init">
+    <target name="compile" depends="init,parser">
         <javac destdir = "${build.dir}"
             srcdir  = "${src.dir}"
             includeAntRuntime = "no"/>
