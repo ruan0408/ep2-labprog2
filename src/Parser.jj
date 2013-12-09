@@ -341,11 +341,13 @@ Vector<Comando> Fator() :
 		if ((Locais != null) && Locais.exists(t.image)) 
     	{
   			v = Locais.get(t.image);	
+  			System.out.println("Acessando variavel local ------- :"+t.image);
   			p.add(new Comando("LRCL", new Numero(v.pos.get()))); // V é símbolo. Lembre-se.
    		}
 		else if (Nomes.exists(t.image)) 
     	{
 			v = Nomes.get(t.image);
+			System.out.println("Acessando variavel global:"+t.image);
 			if (!(v instanceof Função)) p.add(new Comando("RCL", new Numero(v.pos.get()))); // V é símbolo. Sacou né?
 			else
       		{
@@ -361,12 +363,14 @@ Vector<Comando> Fator() :
 			if (Locais != null) 
       		{
 				Locais.add(t.image,v);
+				System.out.println("Ciando variavel local:"+t.image);
 			  p.add(new Comando("LSTO", new Numero(v.pos.get())));// V é....adivinha?
 				//p.add(new Comando("SET", null);
 			}
 			else 
       		{
 				Nomes.add(t.image,v);
+				System.out.println("Ciando variavel global:"+t.image);
         		p.add(new Comando("STO", new Numero(v.pos.get())));
 				//p.add(new Comando("SET", null);
 			}
@@ -511,7 +515,7 @@ void Arg(String fnom, Função f) :
 {
 	t=<ID> 
 	{
-		if (!f.exists(t.image)) f.addarg(t.image);	
+		if (!f.exists(t.image)){ f.addarg(t.image);System.out.println("Criando variavel arg:"+t.image);	}
 	}
 }
 
@@ -545,13 +549,22 @@ Vector<Comando> Chamada() :
 			// O certo seria coletar os pontos e ver se é declarada depois,
 			// Mas o tempo disponível é um fator limitante.
 		}
+
 		Lorig = Locais;			// disponibiliza o nome dos argumentos
-		Locais = f.Vars;
-		p.add(new Comando("ENTRA",null));		// novo contexto
+		
 	}
+	(
 	"("
 		(x=ListParms(f) {p.addAll(x);})? // lista de parâmetros
 	")"
+	|
+	"("")"{
+		
+		Locais = f.Vars;
+		p.add(new Comando("ENTRA",null));		// novo contexto
+
+		}
+	)
     {
 		p.add(new Comando("CALL",e)); 	// chama
 		Locais = Lorig;			// restaura
@@ -579,6 +592,8 @@ Vector<Comando> ListParms(Função f) :
 	{ 
 		
 		// populando
+		Locais = f.Vars;
+		p.add(new Comando("ENTRA",null));		// novo contexto
 		for (int i = n-1; i >=0 ; i--) 
 		{
 			pnom = f.getarg(i);
@@ -588,8 +603,10 @@ Vector<Comando> ListParms(Função f) :
 				// adiciona na tabela quando usada
 				v = new Variável();
 				Locais.add(pnom,v);
+				System.out.println("Ciando variavel local via arg 23:"+pnom);
 			}
 			v = (Variável) Locais.get(pnom);
+			System.out.println("Endereço da var arg local:"+v.pos.get());
 			p.add(new Comando("LSTO", new Numero(v.pos.get())));
 		}
 		return p;

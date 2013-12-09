@@ -17,7 +17,7 @@ public class Programa
 	public Programa(Vector<Comando> prog)
 	{
 		this.prog = new ArrayList<Comando>(prog);
-		//this.dump();
+		this.dump();
 	}
 
 	private void dump()
