@@ -287,7 +287,7 @@ public class Arena
                     break; 
 
               case ATK :
-                    System.out.println("Robo "+indRobo+" está tentando atacar");
+                    //System.out.println("Robo "+indRobo+" está tentando atacar");
                     if(terrTemp.temRobo())
                     {
                       Robo inim = terrTemp.getRobo();
@@ -295,10 +295,10 @@ public class Arena
                       {
                         inim.perdeVida(10);
                         inim.gotHit(true);
-                        System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
+                        //System.out.println("Robo "+indRobo+" atacou o robo "+inim.getInd()+"!");
                         if(!inim.temVida())
                         {
-                          System.out.println("Robo "+inim.getInd()+" morreu");
+                          //System.out.println("Robo "+inim.getInd()+" morreu");
                           removeRobo(inim);
                         } 
                         resp = new Numero(1);
@@ -311,7 +311,7 @@ public class Arena
               case COLLECT : 
                     if(terrTemp.eDeposito() && !robo.temCristal())
                     {
-                      System.out.println("Robo "+indRobo+" coletou 1 cristal");
+                      //System.out.println("Robo "+indRobo+" coletou 1 cristal");
                       Deposito dep = terrTemp.toDeposito();
                       if(dep.temCristal())
                       {
