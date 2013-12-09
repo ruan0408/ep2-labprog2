@@ -67,8 +67,14 @@ class Campo extends JPanel
 	boolean gameOver = false;
 	BufferedImage baseV = null;
 	BufferedImage baseA = null;
-	BufferedImage roboV = null;
-	BufferedImage roboA = null;
+	BufferedImage roboVfrente = null;
+	BufferedImage roboVcostas = null;
+	BufferedImage roboVdireita = null;
+	BufferedImage roboVesquerda = null;
+	BufferedImage roboAfrente = null;
+	BufferedImage roboAcostas = null;
+	BufferedImage roboAdireita = null;
+	BufferedImage roboAesquerda = null;
 	BufferedImage roboVhit = null;
 	BufferedImage roboAhit = null;
 	BufferedImage depSemCristal = null;
@@ -100,8 +106,14 @@ class Campo extends JPanel
 			lama = ImageIO.read(this.getClass().getResource("/img/lama.jpg"));
 			grama = ImageIO.read(this.getClass().getResource("/img/grama.png"));
 			agua = ImageIO.read(this.getClass().getResource("/img/agua.jpg"));
-			roboV = ImageIO.read(this.getClass().getResource("/img/roboV.png"));
-			roboA = ImageIO.read(this.getClass().getResource("/img/roboA.png"));
+			roboVfrente = ImageIO.read(this.getClass().getResource("/img/roboVfrente.png"));
+			roboVcostas = ImageIO.read(this.getClass().getResource("/img/roboVcostas.png"));
+			roboVdireita = ImageIO.read(this.getClass().getResource("/img/roboVdireita.png"));
+			roboVesquerda = ImageIO.read(this.getClass().getResource("/img/roboVesquerda.png"));
+			roboAfrente = ImageIO.read(this.getClass().getResource("/img/roboAfrente.png"));
+			roboAcostas = ImageIO.read(this.getClass().getResource("/img/roboAcostas.png"));
+			roboAdireita = ImageIO.read(this.getClass().getResource("/img/roboAdireita.png"));
+			roboAesquerda = ImageIO.read(this.getClass().getResource("/img/roboAesquerda.png"));
 			roboVhit = ImageIO.read(this.getClass().getResource("/img/roboVhit.png"));
 			roboAhit = ImageIO.read(this.getClass().getResource("/img/roboAhit.png"));
 			baseV = ImageIO.read(this.getClass().getResource("/img/baseV.png"));
@@ -139,6 +151,7 @@ class Campo extends JPanel
 	{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		BufferedImage robo_draw = null;
 		
 		try 
 		{
@@ -174,19 +187,42 @@ class Campo extends JPanel
 					switch(mapa.getTerreno(i,j).getRobo().getTime().getId())
 					{
 				 		case 1 :
-				 			if(mapa.getTerreno(i,j).getRobo().gotHit())
-				 				desenhaElemento(roboVhit, i, j, g2d);
+				 			if(mapa.getTerreno(i,j).getRobo().gotHit()) 
+				 				robo_draw = roboVhit;
 				 			else
-				 				desenhaElemento(roboV, i, j, g2d);
-				 		break;
+				 			{
+				 				switch(mapa.getTerreno(i,j).getRobo().getSide())
+				 				{
+				 					case UP:robo_draw = roboVcostas; break;
+				 					case DW:robo_draw = roboVfrente; break;
+				 					case UR:
+				 					case DR:robo_draw = roboVdireita; break;
+				 					case UL:
+				 					case DL:robo_draw = roboVesquerda; break;
+				 					default:robo_draw = roboVfrente;
+				 				}
+				 			}
+				 			break;
 				 		case 2 :
 				 			if(mapa.getTerreno(i,j).getRobo().gotHit())
-				 				desenhaElemento(roboAhit, i, j, g2d);
+				 				robo_draw = roboAhit;
 				 			else
-				 				desenhaElemento(roboA, i, j, g2d);
-				 		break;
+				 			{
+				 				switch(mapa.getTerreno(i,j).getRobo().getSide())
+				 				{
+				 					case UP:robo_draw = roboAcostas; break;
+				 					case DW:robo_draw = roboAfrente; break;
+				 					case UR:
+				 					case DR:robo_draw = roboAdireita; break;
+				 					case UL:
+				 					case DL:robo_draw = roboAesquerda; break;
+				 					default:robo_draw = roboAfrente;
+				 				}
+				 			}
+				 			break;
 				 		default: System.out.println("Ainda não suportamos mais times");
 				 	}
+				 	desenhaElemento(robo_draw, i, j, g2d);
 				}
 			}
 

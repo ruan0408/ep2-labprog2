@@ -12,6 +12,7 @@ public class Robo implements Programavel, Empilhavel
   private Atraso atraso;
   private Cristal cristal;
   private boolean gotHit;
+  private Direcao side;
 
   /****** Construtor ******/
 
@@ -25,6 +26,7 @@ public class Robo implements Programavel, Empilhavel
     this.time = time;
     this.ind = cont++;
     this.gotHit = false;
+    this.side = Direcao.DW;
     cristal = null;
   }
 
@@ -73,8 +75,18 @@ public class Robo implements Programavel, Empilhavel
     return this.gotHit;
   }
 
+  Direcao getSide()
+  {
+    return this.side;
+  }
+
 
   /****** Setters ******/
+
+  void setSide(Direcao dir)
+  {
+    this.side = dir;
+  }
 
   void gotHit(boolean h)
   {

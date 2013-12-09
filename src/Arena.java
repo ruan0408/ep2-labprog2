@@ -120,6 +120,7 @@ public class Arena
     int y = robo.getY();
     int dir = 0;
     int indRobo = robo.getInd();
+    Direcao direcao = null;
     Terreno terrAtual = mapa.getTerreno(x, y);
     Terreno terrTemp = null;
     Empilhavel resp = new Numero(0);// por default a resposta é falso;
@@ -144,16 +145,16 @@ public class Arena
                   System.out.println("Direção não numérica!");
                   System.exit(1);
                 }
-                Direcao direcao = Direcao.toDirecao(dir);
+                direcao = Direcao.toDirecao(dir);
                 switch(direcao)
                 {
-                  case UP : terrTemp = mapa.getUp(x, y); break;
-                  case UR : terrTemp = mapa.getUpRight(x, y); break;      
+                  case UP : terrTemp = mapa.getUp(x, y);        break;
+                  case UR : terrTemp = mapa.getUpRight(x, y);   break;
                   case DR : terrTemp = mapa.getDownRight(x, y); break;        
-                  case DW : terrTemp = mapa.getDown(x, y); break;        
-                  case DL : terrTemp = mapa.getDownLeft(x, y); break;        
-                  case UL : terrTemp = mapa.getUpLeft(x, y); break; 
-                  case HR : terrTemp = mapa.getTerreno(x,y); break;       
+                  case DW : terrTemp = mapa.getDown(x, y);      break;        
+                  case DL : terrTemp = mapa.getDownLeft(x, y);  break;        
+                  case UL : terrTemp = mapa.getUpLeft(x, y);    break;
+                  case HR : terrTemp = mapa.getTerreno(x,y);    break;       
                   default : System.out.println("Direçao inválida!");
                 }
               }
@@ -188,6 +189,7 @@ public class Arena
                     			robo.push(new Numero(dir)); // Reempilha a direção para que possa ser usada depois.
                     			return;
               		      }
+                        robo.setSide(direcao);
                         this.moveRobo(terrAtual, terrTemp);
                         //System.out.println("Robo "+indRobo+" se moveu para a posição ("+terrTemp.getX()+","+terrTemp.getY()+")");
                         resp = new Numero(1);

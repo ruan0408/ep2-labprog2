@@ -1,10 +1,7 @@
-x = 0;
-if(x == 0)
+func vadias()
 {
-	print "AUEHUAHEA";
+	a = 1+1;
+	print a;
 }
-else
-{
-	print "AUEHUAHEAauehuaheuaheuhaueha";	
-}
-print"ROLA";
+
+vadias();
